@@ -1,6 +1,15 @@
 import tweepy
 import sys
 
+class MyStreamListener(tweepy.StreamListener):
+
+    def on_status(self, status):
+        print(status.text)
+
+    def on_error(self, status_code):
+        print("Error")
+
+
 try:
     secretsFile = open("secrets.txt", 'r')
     APIKey = secretsFile.readline().strip()
@@ -15,7 +24,7 @@ auth = tweepy.OAuthHandler(APIKey, APISecretKey)
 auth.set_access_token(accessToken, acessTokenSecret)
 api = tweepy.API(auth)
 
-tweets = api.user_timeline(screen_name = "elonmusk", count=200)
+streamListener = MyStreamListener()
+stream = tweepy.Stream(auth = api.auth, listener=streamListener)
 
-for tweet in tweets:
-    print(tweet.text)
+stream.filter(languages=["en"], track=["$AMC", "$GME", "$TSLA"])
