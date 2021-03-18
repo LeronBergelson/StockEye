@@ -9,7 +9,15 @@ import sys
 class MyStreamListener(tweepy.StreamListener):
 
     def on_status(self, status):
-        print(status.text)
+
+        # If tweet has been truncated, get full text
+        if hasattr(status, "extended_tweet"):
+            text = (status.extended_tweet["full_text"])
+
+        else:
+            text = status.text
+
+        print(text)
 
     def on_error(self, status_code):
         print("Error")
