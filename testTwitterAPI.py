@@ -44,7 +44,10 @@ class MyStreamListener(tweepy.StreamListener):
         currentTweet = Tweet(text, status.id, status.created_at)
 
     def on_error(self, status_code):
-        print("Error")
+        print("Error: ", status_code)
+
+        # Attepmts to reconnect to Twitter stream (with backoff)
+        return True
 
 
 # Try to open secrets.txt
