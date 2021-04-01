@@ -6,6 +6,28 @@ import tweepy
 import sys
 import time
 
+class Tweet():
+    __text = ""
+    __id = -1
+    __date = None
+
+    # Class constructor
+    def __init__(self, text, id, date):
+        self.__text = text
+        self.__id = id
+        self.__date = date
+        return
+
+    # Getter methods
+    def getText(self):
+        return self.__text
+
+    def getID(self):
+        return self.__id
+
+    def getDate(self):
+        return self.__date
+
 
 class MyStreamListener(tweepy.StreamListener):
 
