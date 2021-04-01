@@ -39,8 +39,9 @@ class MyStreamListener(tweepy.StreamListener):
 
         else:
             text = status.text
-
-        print(text)
+        
+        # Construct Tweet object from streamed data
+        currentTweet = Tweet(text, status.id, status.created_at)
 
     def on_error(self, status_code):
         print("Error")
