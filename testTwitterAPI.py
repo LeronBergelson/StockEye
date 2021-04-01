@@ -4,6 +4,7 @@
 
 import tweepy
 import sys
+import time
 
 
 class MyStreamListener(tweepy.StreamListener):
@@ -63,4 +64,9 @@ api = tweepy.API(auth)
 # Connect to twitter stream and filter by stocks list
 streamListener = MyStreamListener()
 stream = tweepy.Stream(auth = api.auth, listener=streamListener)
-stream.filter(languages=["en"], track=stocks)
+stream.filter(languages=["en"], track=stocks, is_async=True)
+
+# is_async parameter sets stream filter to its own thread, allowing execution to continue
+while(1):
+    time.sleep(1)
+    print("The program is continuing")
