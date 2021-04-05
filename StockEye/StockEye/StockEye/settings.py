@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 import posixpath
 
+# Set the login URL, where an un-logged in user gets redirected to 
+# when they try to access a page with @login_required
+LOGIN_URL = '/login'
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 

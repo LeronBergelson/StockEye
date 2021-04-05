@@ -10,7 +10,16 @@
     </div>
 
     <!-- Container (Watchlist Section) -->
- 
+    <!-- Lets use a simple unordered list to display the stocks in a watchlist for now -->
+    {% if user_watchlist %}
+        <ul>
+        {% for stock in user_watchlist %}
+            <li></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No watchlists available!</p>
+    {% endif %}
    
 </body>
 {% endblock %}

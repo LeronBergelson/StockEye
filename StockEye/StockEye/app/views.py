@@ -5,6 +5,7 @@ Definition of views.
 from datetime import datetime
 from django.shortcuts import render
 from django.http import HttpRequest
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     """Renders the home page."""
@@ -44,6 +45,7 @@ def about(request):
         }
     )
 
+@login_required
 def watchlists(request):
     """ Renders the watchlists page """
     assert isinstance(request, HttpRequest)
