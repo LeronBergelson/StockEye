@@ -60,8 +60,13 @@
   <ItemGroup>
     <Content Include="app\static\Images\analysis.jpg" />
     <Content Include="app\static\Images\graph.jpg" />
+    <Content Include="app\static\Images\interfacePic.jpeg" />
     <Content Include="app\static\Images\laptop.png" />
     <Content Include="app\static\Images\ProfilePicture.jpg" />
+    <Content Include="app\static\Images\stocker.jpg" />
+    <Content Include="app\static\Images\twitter-stocks.jpg" />
+    <Content Include="app\static\Images\uStock.jpg" />
+    <Content Include="app\static\Images\viewer.jpg" />
     <Content Include="app\static\Images\websiteBackground.jpg" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />

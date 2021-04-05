@@ -1,9 +1,218 @@
 {% extends "app/layout.html" %}
-
+{% load static %}
 {% block content %}
 
-<h2>{{ title }}.</h2>
-<h3>{{ message }}</h3>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - My Django Application</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}" />
+    <script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
+</head>
+
+<body>
+<div class="jumbotron text-center">
+        <h1>StockEye</h1>
+        <p>Slogan</p>
+    </div>
+
+    <!-- Container (About Section) -->
+    <div id="about" class="container-fluid">
+        <div class="row">
+            <div class="col-sm-8">
+                <h2>About StockEye / Product Description</h2>
+                <strong>
+
+                    StockEye provides a streamlined web-based platform for investors and market enthusiasts to view the prospective performance of popular stocks based on Twitter sentiment analysis.
+
+                </strong>
+            </div>
+            <div class="col-sm-4">
+                <p><img src="{% static 'Images/laptop.png'%}" class="img-responsive center-block" width="1000" alt="Home"></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="info" class="container-fluid bg-grey">
+        <div class="row">
+            <div class="col-sm-4">
+                <img src="{% static 'Images/graph.jpg'%}" class="img-responsive center-block" alt="Graph" width="500">
+            </div>
+            <div class="col-sm-8">
+                <h2>Product Functions</h2>
+                <p>
+                    <strong>StockEye must be fully documented and implemented by April 12th, and so time is a chief constraint. Machine learning is a key component of sentiment analysis, and the development team, as a whole, is largely unacquainted with its mechanism and details. Thus, it is expected that more time than ideal will be allocated to gathering and learning the prerequisites of machine learning demanded by the application. This is the primary obstruction in our objective to have a fully-functional implementation by the deadline. Furthermore, due to the COVID-19 pandemic, the team will be unable to coordinate in-person meetings, which could result in a reduction in productivity and clarity of communication. The project will have no expenses, due to the usage of free services during production of the application (django, python, etc). As such, the budget for this project is 0 dollars.</strong> 
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div id="assumptions" class="container-fluid bg-grey">
+        <div class="row">
+            <!--<h2>Info</h2>-->
+
+            <div class="col-sm-4">
+                <img src="{% static 'Images/interfacePic.jpeg'%}" class="img-responsive center-block" alt="Graph" width="500">
+            </div>
+            <div class="col-sm-8">
+                <h2>Assumptions and Dependencies</h2>
+                <strong>
+                    Users will be required to have access to the internet in order to access StockEye. Due to StockEye being entirely web-based, the user operating system is irrelevant.
+                </strong>
+            </div>
+        </div>
+    </div>
+
+    <!-- Container (Services Section) -->
+    <div id="team" class="container-fluid text-center">
+        <h2>Meet The Team</h2>
+        <p>&nbsp;</p>
+
+        <div class="row">
+            <div class="col-sm-4">
+                <p class="text-center"><strong>Anshul Khatri</strong></p>
+                <a href="#demo" data-toggle="collapse">    
+                    <img src="{% static 'Images/ProfilePicture.jpg'%}" class="img-circle person" alt="Person" width="150" height="150">
+                </a>
+                <div id="demo" class="collapse">
+                    <p>Email: khat3680@mylaurier.ca</p>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <p class="text-center"><strong>Brayden Mckay</strong></p>
+                <a href="#demo2" data-toggle="collapse">
+                    <img src="{% static 'Images/ProfilePicture.jpg'%}" class="img-circle person" alt="Person" width="150" height="150">
+                </a>
+                <div id="demo2" class="collapse">
+                    <p>Email: mcka7400@mylaurier.ca</p>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <p class="text-center"><strong>Campbell Leckie</strong></p>
+                <a href="#demo3" data-toggle="collapse">
+                    <img src="{% static 'Images/ProfilePicture.jpg'%}" class="img-circle person" alt="Person" width="150" height="150">
+                </a>
+                <div id="demo3" class="collapse">
+                    <p>Email: leck6240@mylaurier.ca</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <p class="text-center"><strong>Jeff Kolnick</strong></p>
+                <a href="#demo4" data-toggle="collapse">
+                    <img src="{% static 'Images/ProfilePicture.jpg'%}" class="img-circle person" alt="Person" width="150" height="150">
+                </a>
+                <div id="demo4" class="collapse">
+                    <p>Email: koln3930@mylaurier.ca</p>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <p class="text-center"><strong>Leron Bergelson</strong></p>
+                <a href="#demo5" data-toggle="collapse">
+                    <img src="{% static 'Images/ProfilePicture.jpg'%}" class="img-circle person" alt="Person" width="150" height="150">
+                </a>
+                <div id="demo5" class="collapse">
+                    <p>Email: berg5310@mylaurier.ca</p>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <p class="text-center"><strong>Nick Mills</strong></p>
+                <a href="#demo6" data-toggle="collapse">
+                    <img src="{% static 'Images/ProfilePicture.jpg'%}" class="img-circle person" alt="Person" width="150" height="150">
+                </a>
+                <div id="demo6" class="collapse">
+                    <p>Email: mill6100@mylaurier.ca</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <p class="text-center"><strong>Pericles Tsikrikis</strong></p>
+                <a href="#demo7" data-toggle="collapse">
+                    <img src="{% static 'Images/ProfilePicture.jpg'%}" class="img-circle person" alt="Person" width="150" height="150">
+                </a>
+                <div id="demo7" class="collapse">
+                    <p>Email: tsik9350@mylaurier.ca</p>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <p class="text-center"><strong>Roy Ceyleon</strong></p>
+                <a href="#demo8" data-toggle="collapse">
+                    <img src="{% static 'Images/ProfilePicture.jpg'%}" class="img-circle person" alt="Person" width="150" height="150">
+                </a>
+                <div id="demo8" class="collapse">
+                    <p>Email: ceyl0550@mylaurier.ca</p>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <p class="text-center"><strong>Ruth Schmidt</strong></p>
+                <a href="#demo9" data-toggle="collapse">
+                    <img src="{% static 'Images/ProfilePicture.jpg'%}" class="img-circle person" alt="Person" width="150" height="150">
+                </a>
+                <div id="demo9" class="collapse">
+                    <p>Email: schm4780@mylaurier.ca</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <p class="text-center"><strong>Tyler Price</strong></p>
+                <a href="#demo10" data-toggle="collapse">
+                    <img src="{% static 'Images/ProfilePicture.jpg'%}" class="img-circle person" alt="Person" width="150" height="150">
+                </a>
+                <div id="demo10" class="collapse">
+                    <p>Email: pric5180@mylaurier.ca</p>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <p class="text-center"><strong>Yasmine Ali</strong></p>
+                <a href="#demo11" data-toggle="collapse">
+                    <img src="{% static 'Images/ProfilePicture.jpg'%}" class="img-circle person" alt="Person" width="150" height="150">
+                </a>
+                <div id="demo11" class="collapse">
+                    <p>Email: alix7910@mylaurier.ca</p>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <p class="text-center"><strong>Mohsin Malik</strong></p>
+                <a href="#demo12" data-toggle="collapse">
+                    <img src="{% static 'Images/ProfilePicture.jpg'%}" class="img-circle person" alt="Person" width="150" height="150">
+                </a>
+                <div id="demo12" class="collapse">
+                    <p>Email: mali7370@mylaurier.ca</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <p class="text-center"><strong>Rafay Ahmed</strong></p>
+                <a href="#demo13" data-toggle="collapse">
+                    <img src="{% static 'Images/ProfilePicture.jpg'%}" class="img-circle person" alt="Person" width="150" height="150">
+                </a>
+                <div id="demo13" class="collapse">
+                    <p>Email: ahme0880@mylaurier.ca</p>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <p class="text-center"><strong>Michael Okenye</strong></p>
+                <a href="#demo14" data-toggle="collapse">
+                    <img src="{% static 'Images/ProfilePicture.jpg'%}" class="img-circle person" alt="Person" width="150" height="150">
+                </a>
+                <div id="demo14" class="collapse">
+                    <p>Email: oken8340@mylaurier.ca</p>
+                </div>
+            </div>
+
+        </div>
+     </div>
+     <br><br><br><br><br>
+     <p>&nbsp;</p>
+   
+</body>
 
 <p>Use this area to provide additional information.</p>
 
