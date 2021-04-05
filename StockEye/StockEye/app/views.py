@@ -43,3 +43,16 @@ def about(request):
             'year':datetime.now().year,
         }
     )
+
+def watchlists(request):
+    """ Renders the watchlists page """
+    assert isinstance(request, HttpRequest)
+    return render(
+        request,
+        'app/watchlists_test.html',
+        {
+            'title':'Watchlists',
+            'message':'Your Watchlist page.',
+            'year':datetime.now().year,
+        }
+    )
