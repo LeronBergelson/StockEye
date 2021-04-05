@@ -73,6 +73,14 @@ class Extract(TimezoneMixin, Transform):
             raise ValueError(
                 "Cannot extract time component '%s' from DateField '%s'. " % (copy.lookup_name, field.name)
             )
+        if (
+            isinstance(field, DurationField) and
+            copy.lookup_name in ('year', 'iso_year', 'month', 'week', 'week_day', 'iso_week_day', 'quarter')
+        ):
+            raise ValueError(
+                "Cannot extract component '%s' from DurationField '%s'."
+                % (copy.lookup_name, field.name)
+            )
         return copy
 
 
@@ -110,6 +118,11 @@ class ExtractWeekDay(Extract):
     lookup_name = 'week_day'
 
 
+class ExtractIsoWeekDay(Extract):
+    """Return Monday=1 through Sunday=7, based on ISO-8601."""
+    lookup_name = 'iso_week_day'
+
+
 class ExtractQuarter(Extract):
     lookup_name = 'quarter'
 
@@ -130,6 +143,7 @@ DateField.register_lookup(ExtractYear)
 DateField.register_lookup(ExtractMonth)
 DateField.register_lookup(ExtractDay)
 DateField.register_lookup(ExtractWeekDay)
+DateField.register_lookup(ExtractIsoWeekDay)
 DateField.register_lookup(ExtractWeek)
 DateField.register_lookup(ExtractIsoYear)
 DateField.register_lookup(ExtractQuarter)
@@ -170,8 +184,9 @@ class TruncBase(TimezoneMixin, Transform):
     kind = None
     tzinfo = None
 
-    def __init__(self, expression, output_field=None, tzinfo=None, **extra):
+    def __init__(self, expression, output_field=None, tzinfo=None, is_dst=None, **extra):
         self.tzinfo = tzinfo
+        self.is_dst = is_dst
         super().__init__(expression, output_field=output_field, **extra)
 
     def as_sql(self, compiler, connection):
@@ -222,7 +237,7 @@ class TruncBase(TimezoneMixin, Transform):
                 pass
             elif value is not None:
                 value = value.replace(tzinfo=None)
-                value = timezone.make_aware(value, self.tzinfo)
+                value = timezone.make_aware(value, self.tzinfo, is_dst=self.is_dst)
             elif not connection.features.has_zoneinfo_database:
                 raise ValueError(
                     'Database returned an invalid datetime value. Are time '
@@ -240,9 +255,12 @@ class TruncBase(TimezoneMixin, Transform):
 
 class Trunc(TruncBase):
 
-    def __init__(self, expression, kind, output_field=None, tzinfo=None, **extra):
+    def __init__(self, expression, kind, output_field=None, tzinfo=None, is_dst=None, **extra):
         self.kind = kind
-        super().__init__(expression, output_field=output_field, tzinfo=tzinfo, **extra)
+        super().__init__(
+            expression, output_field=output_field, tzinfo=tzinfo,
+            is_dst=is_dst, **extra
+        )
 
 
 class TruncYear(TruncBase):

@@ -69,7 +69,6 @@
     <Content Include="app\static\Images\viewer.jpg" />
     <Content Include="app\static\Images\websiteBackground.jpg" />
     <Content Include="requirements.txt" />
-    <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />
     <Content Include="app\static\app\content\bootstrap.min.css" />
     <Content Include="app\static\app\content\site.css" />
