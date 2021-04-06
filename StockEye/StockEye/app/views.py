@@ -5,6 +5,7 @@ Definition of views.
 from datetime import datetime
 from django.shortcuts import render
 from django.http import HttpRequest
+from django.contrib.auth.forms import UserCreationForm
 
 def home(request):
     """Renders the home page."""
@@ -43,3 +44,14 @@ def about(request):
             'year':datetime.now().year,
         }
     )
+
+def register(request):
+    form = UserCreationForm()
+
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+
+    return render(request, 'app/registration.html', {'form':form})
+
