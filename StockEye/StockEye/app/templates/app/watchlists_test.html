@@ -10,16 +10,28 @@
     </div>
 
     <!-- Container (Watchlist Section) -->
-    <!-- Lets use a simple unordered list to display the stocks in a watchlist for now -->
-    {% if user_watchlist %}
-        <ul>
-        {% for stock in user_watchlist %}
-            <li></li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>No watchlists available!</p>
-    {% endif %}
+    <div class="content">
+
+        <p>Username: {{ user.username }}</p>
+
+        <!-- Lets use a simple table to display the stocks in a watchlist for now -->
+        {% if watchlists %}
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Stock Name</th>
+                </tr>
+                {% for stock in watchlists %}
+                <tr>
+                    <td>{{stock.id}}</td>
+                    <td>{{stock.stocks}}</td>
+                </tr>
+                {% endfor %}
+        {% else %}
+            <p>No watchlists available!</p>
+        {% endif %}
+
+    </div>
    
 </body>
 {% endblock %}
