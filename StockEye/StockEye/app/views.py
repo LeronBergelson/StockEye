@@ -78,7 +78,7 @@ def watchlists(request):
     except UserData.DoesNotExist:
         # Unable to find a matching user, default to currently logged in 
         # user and no watchlists
-        
+
         user = request.user
         watchlists = None
     # Additional data to pass to the templating engine
@@ -86,7 +86,7 @@ def watchlists(request):
         'title':'Watchlists',
         'message':'Your Watchlist page.',
         'year':datetime.now().year,
-        'user': request.user,
+        'user': user,
         'valid_user': True if watchlists is not None else False,
         'watchlists': watchlists,
     }
