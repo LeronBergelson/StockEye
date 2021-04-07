@@ -1,0 +1,37 @@
+﻿{% extends "app/layout.html" %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div classs="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <br><br>
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Join Today</legend>
+                {{ form }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn-outline-info" type="submit">Sign Up</button>
+
+            </div>
+        </form>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Already Have An Account? <a class="ml-2" href="../login/">Sign In</a>
+            </small>
+
+        </div>
+
+    </div>
+</body>
+</html>
+
+{% endblock %}
