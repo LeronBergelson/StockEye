@@ -12,7 +12,11 @@
     <!-- Container (Watchlist Section) -->
     <div class="content">
 
-        <p>Username: {{ user.username }}</p>
+        {% if valid_user %}
+            <p>Username: {{ user.username }}</p>
+        {% else %}
+            <p>Username: {{ user.username }} (Not a valid user)</p>
+        {% endif %}
 
         <!-- Lets use a simple table to display the stocks in a watchlist for now -->
         {% if watchlists %}
