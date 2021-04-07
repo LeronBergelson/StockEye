@@ -53,6 +53,16 @@ class MyStreamListener(tweepy.StreamListener):
         # Attepmts to reconnect to Twitter stream (with backoff)
         return True
 
+    def __parseSymbol(tweet, stocks):
+        for symbol in stocks:
+
+            if symbol in tweet.getText():
+                result = symbol
+            else:
+                result = -1
+
+        return result
+
 
 # Try to open secrets.txt
 try:
