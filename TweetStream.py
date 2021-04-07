@@ -13,10 +13,11 @@ class Tweet():
     __symbol = None
 
     # Class constructor
-    def __init__(self, text, id, date):
+    def __init__(self, text, id, date, symbol):
         self.__text = text
         self.__id = id
         self.__date = date
+        self.__symbol = symbol
         return
 
     # Getter methods
@@ -42,11 +43,14 @@ class MyStreamListener(tweepy.StreamListener):
             text = (status.extended_tweet["full_text"])
         else:
             text = status.text
-        
-        print(text)
 
-        # Construct Tweet object from streamed data
-        currentTweet = Tweet(text, status.id, status.created_at)
+        symbol = self.__parseSymbol(text)
+
+        if symbol != -1:
+            # Construct Tweet object from streamed data
+            currentTweet = Tweet(text, status.id, status.created_at, symbol)
+
+            #TODO Pass tweet object to Machine Learning Module by calling evaluate(currentTweet)
 
 
     def on_error(self, status_code):
@@ -55,15 +59,14 @@ class MyStreamListener(tweepy.StreamListener):
         return True
 
 
-    def __parseSymbol(self, tweet):
+    def __parseSymbol(self, text):
+
         for symbol in self.stocks:
 
-            if symbol in tweet.getText():
-                result = symbol
-            else:
-                result = -1
+            if symbol in text:
+                return symbol
 
-        return result
+        return -1
 
 
     def start():
