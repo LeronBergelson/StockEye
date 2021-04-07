@@ -10,6 +10,7 @@ class Tweet():
     __text = ""
     __id = -1
     __date = None
+    __symbol = None
 
     # Class constructor
     def __init__(self, text, id, date):
@@ -28,6 +29,9 @@ class Tweet():
     def getDate(self):
         return self.__date
 
+    def getSymbol(self):
+        return self.__symbol
+        
 
 class MyStreamListener(tweepy.StreamListener):
 
