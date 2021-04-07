@@ -10,12 +10,14 @@ class Tweet():
     __text = ""
     __id = -1
     __date = None
+    __symbol = None
 
     # Class constructor
-    def __init__(self, text, id, date):
+    def __init__(self, text, id, date, symbol):
         self.__text = text
         self.__id = id
         self.__date = date
+        self.__symbol = symbol
         return
 
     # Getter methods
@@ -28,71 +30,87 @@ class Tweet():
     def getDate(self):
         return self.__date
 
+    def getSymbol(self):
+        return self.__symbol
+        
 
 class MyStreamListener(tweepy.StreamListener):
-
+    stocks = []
+    
     def on_status(self, status):
-
         # If tweet has been truncated, get full text
         if hasattr(status, "extended_tweet"):
             text = (status.extended_tweet["full_text"])
-
         else:
             text = status.text
-        
-        # Construct Tweet object from streamed data
-        currentTweet = Tweet(text, status.id, status.created_at)
+
+        symbol = self.__parseSymbol(text)
+
+        if symbol != -1:
+            # Construct Tweet object from streamed data
+            currentTweet = Tweet(text, status.id, status.created_at, symbol)
+
+            #TODO Pass tweet object to Machine Learning Module by calling evaluate(currentTweet)
+
 
     def on_error(self, status_code):
         print("Error: ", status_code)
-
-        # Attepmts to reconnect to Twitter stream (with backoff)
+        # Attempts to reconnect to Twitter stream (with backoff)
         return True
 
 
-# Try to open secrets.txt
-try:
-    secretsFile = open("secrets.txt", 'r')
+    def __parseSymbol(self, text):
 
-except:
-    print("ERROR: Unable to open/read secrets.txt")
-    sys.exit(1)
+        for symbol in self.stocks:
 
-# Read in tokens from secrets.txt file
-APIKey = secretsFile.readline().strip()
-APISecretKey = secretsFile.readline().strip()
-accessToken = secretsFile.readline().strip()
-acessTokenSecret = secretsFile.readline().strip()
-secretsFile.close()
+            if symbol in text:
+                return symbol
 
-# Try to open stocks.txt
-try:
-    stocksFile = open("stocks.txt", "r")
+        return -1
 
-except:
-    print("ERROR: Unable to open/read stocks.txt")
-    sys.exit(1)
 
-# Read all tickers from stocks.txt into list
-stocksFile.seek(0)
-stocks = []
+    def start():
+        # Try to open secrets.txt
+        try:
+            secretsFile = open("secrets.txt", 'r')
 
-for line in stocksFile:
-    stocks.append("$" + line.strip())
+        except:
+            print("ERROR: Unable to open/read secrets.txt")
+            sys.exit(1)
 
-stocksFile.close()
+        # Read in tokens from secrets.txt file
+        APIKey = secretsFile.readline().strip()
+        APISecretKey = secretsFile.readline().strip()
+        accessToken = secretsFile.readline().strip()
+        acessTokenSecret = secretsFile.readline().strip()
+        secretsFile.close()
 
-# Authenticate with twitter API
-auth = tweepy.OAuthHandler(APIKey, APISecretKey)
-auth.set_access_token(accessToken, acessTokenSecret)
-api = tweepy.API(auth)
+        # Authenticate with twitter API
+        auth = tweepy.OAuthHandler(APIKey, APISecretKey)
+        auth.set_access_token(accessToken, acessTokenSecret)
+        api = tweepy.API(auth)
 
-# Connect to twitter stream and filter by stocks list
-streamListener = MyStreamListener()
-stream = tweepy.Stream(auth = api.auth, listener=streamListener)
-stream.filter(languages=["en"], track=stocks, is_async=True)
+        # Create StreamListener instance
+        streamListener = MyStreamListener()
 
-# is_async parameter sets stream filter to its own thread, allowing execution to continue
-while(1):
-    time.sleep(1)
-    print("The program is continuing")
+        # Try to open stocks.txt
+        try:
+            stocksFile = open("stocks.txt", "r")
+
+        except:
+            print("ERROR: Unable to open/read stocks.txt")
+            sys.exit(1)
+
+        # Read all tickers from stocks.txt into class attribute list
+        stocksFile.seek(0)
+
+        for line in stocksFile:
+            streamListener.stocks.append("$" + line.strip())
+
+        stocksFile.close()
+
+        # Connect to twitter stream and filter by stocks list
+        stream = tweepy.Stream(auth = api.auth, listener=streamListener)
+        stream.filter(languages=["en"], track=streamListener.stocks, is_async=True)
+
+        # is_async parameter sets stream filter to its own thread, allowing execution to continue
