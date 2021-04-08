@@ -18,23 +18,27 @@
             <p>Username: {{ user.username }} (Not a valid user)</p>
         {% endif %}
 
-        <!-- Lets use a simple table to display the stocks in a watchlist for now -->
-        {% if watchlists %}
-            <table>
-                <tr>
-                    <th>ID</th>
-                    <th>Stock Name</th>
-                </tr>
-                {% for stock in watchlists %}
-                <tr>
-                    <td>{{stock.id}}</td>
-                    <td>{{stock.stocks}}</td>
-                </tr>
-                {% endfor %}
-        {% else %}
-            <p>No watchlists available!</p>
-        {% endif %}
-
+        {% for watchlist_id, stocklist in stocks.items %}
+        <table>
+            <tr>
+                <th>Watchlist {{watchlist_id}}</th>
+            </tr>
+            <tr>
+                <th>Symbol</th>
+                <th>Pos Sentiment Count</th>
+                <th>Neg Sentiment Count</th>
+                <th>Value</th>
+            </tr>
+            {% for stock in stocklist %}
+            <tr>
+                <td>{{ stock.symbol }}</td>
+                <td>{{ stock.positiveSentimentCount }}</td>
+                <td>{{ stock.negativeSentimentCount }}</td>
+                <td>{{ stock.value }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endfor %}
     </div>
    
 </body>

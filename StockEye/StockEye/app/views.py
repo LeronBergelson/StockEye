@@ -9,7 +9,7 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 
-from .models import UserData
+from .models import UserData, WatchList
 
 def home(request):
     """Renders the home page."""
@@ -72,26 +72,44 @@ def watchlists(request):
 
     # Since these can throw Django errors if they don't exist, catch them
     try:
-
-        # Get the current user
-        user = UserData.objects.filter(user=request.user).get()
-
         # Get all of the user's watchlists
-        watchlists = user.stockResults.all()
-    except UserData.DoesNotExist:
-        # Unable to find a matching user, default to currently logged in 
-        # user and no watchlists
+        watchlists = WatchList.objects.filter(user=request.user).all()
+        
+        # Store the stocks in each watchlist in a dictionary
+        # Each key is the watchList_id from the user's watchlists
+        # Each value is a list of Stocks present in the watchlist
+        stocks = {}
 
-        user = request.user
+        for w in watchlists:
+            for stock in w.stockResults.all():
+                # Check if this is the first stock of the watchlist
+                if w.watchList_id in stocks.keys():
+                    # Already present, append to list at this key
+                    stocks[w.watchList_id].append(stock)
+                else:
+                    # Key not in dict, set key and create list for this stock
+                    stocks[w.watchList_id] = [stock]
+                    # stock is of type StockList(models.Model) which is 
+                    # not iterable, so use [] instead of list()        
+
+    except UserData.DoesNotExist:
+        # Unable to find a matching user, default to no watchlists & stocks
         watchlists = None
+        stocks = None
+ 
     # Additional data to pass to the templating engine
     context = {
         'title':'Watchlists',
         'message':'Your Watchlist page.',
         'year':datetime.now().year,
-        'user': user,
+        'user': request.user,
         'valid_user': True if watchlists is not None else False,
-        'watchlists': watchlists,
+        'watchlists': watchlists,   # Not sure if this is really needed 
+                                    # since the stocks dict has the 
+                                    # watchlist_id as its keys
+        'stocks': stocks,
+        # Previously included the watchlist ids, but since the keys of the 
+        # stock dict *are* the watchlist_ids, no need to include them
     }
 
     return render(
