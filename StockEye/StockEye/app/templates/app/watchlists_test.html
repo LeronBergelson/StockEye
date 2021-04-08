@@ -25,8 +25,8 @@
             </tr>
             <tr>
                 <th>Symbol</th>
-                <th>Pos Sentiment Count</th>
-                <th>Neg Sentiment Count</th>
+                <th># + Sentiments</th>
+                <th># - Sentiments</th>
                 <th>Value</th>
             </tr>
             {% for stock in stocklist %}
@@ -34,7 +34,7 @@
                 <td>{{ stock.symbol }}</td>
                 <td>{{ stock.positiveSentimentCount }}</td>
                 <td>{{ stock.negativeSentimentCount }}</td>
-                <td>{{ stock.value }}</td>
+                <td>${{ stock.value }}</td>
             </tr>
             {% endfor %}
         </table>
