@@ -12,7 +12,7 @@
     <!-- Container (Watchlist Section) -->
     <div class="content">
 
-        {% if valid_user %}
+        {% if user.is_authenticated %}
             <p>Username: {{ user.username }}</p>
         {% else %}
             <p>Username: {{ user.username }} (Not a valid user)</p>
@@ -21,7 +21,7 @@
         {% for watchlist_id, stocklist in stocks.items %}
         <table>
             <tr>
-                <th>Watchlist {{watchlist_id}}</th>
+                <th><a href="{% url 'edit_watchlist' id=watchlist_id %}">Watchlist {{watchlist_id}}</a></th>
             </tr>
             <tr>
                 <th>Symbol</th>
