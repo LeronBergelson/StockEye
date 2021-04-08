@@ -21,6 +21,8 @@
                 </button>
                 <a href="/" class="navbar-brand">StockEye</a>
             </div>
+            <li><a href="{% url 'Home' %}">Home</a></li>
+                <li><a href="{% url 'Trending' %}">Trending</a></li>
                 {% if user.is_authenticated %}
                     <form id="logoutForm" action="/logout/" method="post" class="navbar-right">
                         {% csrf_token %}
