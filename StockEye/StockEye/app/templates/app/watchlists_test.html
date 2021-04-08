@@ -12,25 +12,33 @@
     <!-- Container (Watchlist Section) -->
     <div class="content">
 
-        <p>Username: {{ user.username }}</p>
-
-        <!-- Lets use a simple table to display the stocks in a watchlist for now -->
-        {% if watchlists %}
-            <table>
-                <tr>
-                    <th>ID</th>
-                    <th>Stock Name</th>
-                </tr>
-                {% for stock in watchlists %}
-                <tr>
-                    <td>{{stock.id}}</td>
-                    <td>{{stock.stocks}}</td>
-                </tr>
-                {% endfor %}
+        {% if valid_user %}
+            <p>Username: {{ user.username }}</p>
         {% else %}
-            <p>No watchlists available!</p>
+            <p>Username: {{ user.username }} (Not a valid user)</p>
         {% endif %}
 
+        {% for watchlist_id, stocklist in stocks.items %}
+        <table>
+            <tr>
+                <th>Watchlist {{watchlist_id}}</th>
+            </tr>
+            <tr>
+                <th>Symbol</th>
+                <th># + Sentiments</th>
+                <th># - Sentiments</th>
+                <th>Value</th>
+            </tr>
+            {% for stock in stocklist %}
+            <tr>
+                <td>{{ stock.symbol }}</td>
+                <td>{{ stock.positiveSentimentCount }}</td>
+                <td>{{ stock.negativeSentimentCount }}</td>
+                <td>${{ stock.value }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endfor %}
     </div>
    
 </body>
