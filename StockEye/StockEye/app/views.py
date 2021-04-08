@@ -62,6 +62,50 @@ def register(request):
     return render(request, 'app/registration.html', {'form':form})
 
 @login_required
+def edit_watchlist(request, id):
+    """
+    Page where Users can add/remove Stocks from a specific Watchlist 
+    
+    Parameters:
+        id  -   The id of the Watchlist to edit (int)
+    """
+    assert isinstance(request, HttpRequest)
+
+    stocks = []
+
+    try:
+        # Get the user's watchlist that matches the provided id
+        watchlist = WatchList.objects.filter(user=request.user, watchList_id=id).get()
+        watchlist_id = watchlist.watchList_id
+
+        for stock in watchlist.stockResults.all():
+            stocks.append(stock)
+
+        print(f'Stocks: {stocks}')
+
+    except WatchList.DoesNotExist:
+        # Given an invalid watchlist id
+        # For now, redirect to the watchlists page
+        # TODO: Possibly change the behaviour of invalid ids (maybe 
+        #       show a message on the watchlists page that a watchlist 
+        #       with the given id doesn't exist?)
+        return redirect('watchlists')
+    
+    context = {
+        'title': 'Edit Watchlist',
+        'year': datetime.now().year,
+        'user': request.user,
+        'watchlist_id': watchlist_id,
+        'stocks': stocks,
+    }
+
+    return render(
+        request,
+        'app/edit_watchlist.html',
+        context
+    )
+
+@login_required
 def watchlists(request):
     """ Renders the watchlists page """
     """
@@ -103,7 +147,6 @@ def watchlists(request):
         'message':'Your Watchlist page.',
         'year':datetime.now().year,
         'user': request.user,
-        'valid_user': True if watchlists is not None else False,
         'watchlists': watchlists,   # Not sure if this is really needed 
                                     # since the stocks dict has the 
                                     # watchlist_id as its keys

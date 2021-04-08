@@ -1,0 +1,43 @@
+{% extends "app/layout.html" %}
+{#{% load staticfiles %}#}
+{% load static %}
+{% block content %}
+
+<body>
+<div class="jumbotron text-center">
+        <h1>StockEye: Watchlist {{ watchlist_id }}</h1>
+        <p>Edit your Watchlist</p>
+    </div>
+
+    <!-- Container (Watchlist Section) -->
+    <div class="content">
+
+        {% if user.is_authenticated %}
+            <p>Username: {{ user.username }}</p>
+        {% else %}
+            <p>Username: {{ user.username }} (Not a valid user)</p>
+        {% endif %}
+
+        <table>
+            <tr>
+                <th>Watchlist {{watchlist_id}}</th>
+            </tr>
+            <tr>
+                <th>Symbol</th>
+                <th># + Sentiments</th>
+                <th># - Sentiments</th>
+                <th>Value</th>
+            </tr>
+            {% for stock in stocks %}
+            <tr>
+                <td>{{ stock.symbol }}</td>
+                <td>{{ stock.positiveSentimentCount }}</td>
+                <td>{{ stock.negativeSentimentCount }}</td>
+                <td>${{ stock.value }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+   
+</body>
+{% endblock %}
