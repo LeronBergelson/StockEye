@@ -261,3 +261,32 @@ def watchlists(request):
         'app/watchlists_test.html',
         context
     )
+    
+
+def accountSettings(request):
+    """
+    Allows Users to edit their account info, such as their email and password.
+
+    Implementation of the AccountSettingsView.
+    """
+    assert isinstance(request, HttpRequest)
+
+    try:
+        user = request.user
+        change_user_form = UserChangeForm()
+        change_password_form = AdminPasswordChangeForm()
+    except UserData.DoesNotExist:
+        return redirect('register')
+        
+    context = {
+        'title': 'User Profile',
+        'message': 'Edit Account Settings',
+        'year': datetime.now().year,
+        'user': request.user,
+    }
+
+    return render(
+        request,
+        'app/accountSettings.html',
+        context,
+    )
