@@ -121,17 +121,7 @@ def create_watchlist(request):
 
     new_watchlist.save()
 
-    context = {
-        'title': 'Create Watchlist',
-        'year': datetime.now().year,
-        'user': request.user,
-    }
-
-    return render(
-        request,
-        'app/watchlists/',
-        context
-    )
+    return redirect('watchlists')
 
 
 @login_required
