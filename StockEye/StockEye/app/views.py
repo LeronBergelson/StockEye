@@ -121,7 +121,7 @@ def create_watchlist(request):
 
     new_watchlist.save()
 
-    return redirect('watchlists')
+    return redirect('edit_watchlist', w_id=watchlist_id)
 
 
 @login_required
