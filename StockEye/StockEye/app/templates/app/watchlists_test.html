@@ -19,10 +19,14 @@
         {% endif %}
 
         <a href="{% url 'manage_watchlists' %}" class="btn btn-warning">Manage Watchlists</a>
-        {% for watchlist_id, stocklist in stocks.items %}
+        {% for watchlist, stocklist in data %}
         <table>
             <tr>
-                <th><a href="{% url 'edit_watchlist' w_id=watchlist_id %}">Watchlist {{watchlist_id}}</a></th>
+                {% if watchlist.watchList_name %}
+                    <th><a href="{% url 'edit_watchlist' w_id=watchlist.watchList_id %}">{{ watchlist.watchList_name }}</a></th>
+                {% else %}
+                <th><a href="{% url 'edit_watchlist' w_id=watchlist.watchList_id %}">Watchlist {{ watchlist.watchList_id }}</a></th>
+                {% endif %}
             </tr>
             <tr>
                 <th>Symbol</th>

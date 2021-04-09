@@ -5,7 +5,13 @@
 
 <body>
 <div class="jumbotron text-center">
-        <h1>StockEye: Watchlist {{ watchlist_id }}</h1>
+        {% if watchlist_name %}
+            <h1>Watchlist: {{ watchlist_name }}</h1>
+        {% elif watchlist_id %}
+            <h1>Watchlist: {{ watchlist_id }}</h1>
+        {% else %}
+            <h1>StockEye: Watchlist</h1>
+        {% endif %}
         <p>Edit your Watchlist</p>
     </div>
 
