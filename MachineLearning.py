@@ -18,12 +18,12 @@ class Sentiment():
     __stock_ID = -1
     __date = None
     
-    def __init__(tweet, result):
+    def __init__(result, message, stock_ID, date):
     
         self.__weight = result
-        self.__message_ID = getText(tweet)
-        self.__stock_id = getID(tweet)
-        self.__date = getDate(tweet)
+        self.__message_ID = message
+        self.__stock_id = stock_ID
+        self.__date = date
         
         return
     
@@ -95,7 +95,7 @@ def evaluate(tweet):
     # result is "Postive" or "Negative"
     result = classifier.classify(dict([token, True] for token in current_tokens))
     
-    current_sentiment = Sentiment(tweet, result)
+    current_sentiment = Sentiment(result, getText(tweet), getID(tweet), getDate(tweet))
     current_connection = connection(r"StockEye\StockEye\db.sqlite3")
     
     updateDatabase(current_connection, current_sentiment)
