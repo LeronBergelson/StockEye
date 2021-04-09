@@ -41,11 +41,10 @@ def get_tweets_for_model(cleaned_tokens_list):
 
 def evaluate(tweet):
     
-    curr_ticker = tweet.getSymbol()
+    symbol = tweet.getSymbol()
+    current_tokens = remove_noise(word_tokenize(tweet.getText()))
 
-    current_tweet = tweet.getText()
-    current_tokens = remove_noise(word_tokenize(current_tweet))
-
+    # result is "Postive" or "Negative"
     result = classifier.classify(dict([token, True] for token in current_tokens))
 
     #print(result)
