@@ -17,7 +17,7 @@ class WatchList(models.Model):
 class StockList(models.Model):
     stock_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     symbol = models.CharField(max_length=6, blank=False, default = '')
-    postiveSentimentCount = models.PositiveIntegerField(blank=False, default=0)
+    positiveSentimentCount = models.PositiveIntegerField(blank=False, default=0)
     negativeSentimentCount = models.PositiveIntegerField(blank=False, default=0)
     value = models.FloatField(blank=False, default = 0.0)
     tweet_id = models.CharField(max_length=6, blank=True, default = '')

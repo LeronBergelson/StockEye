@@ -2,6 +2,7 @@
 # Date: March 18th, 2021
 # Additional Contributors: 
 
+import MachineLearning
 import tweepy
 import sys
 import time
@@ -50,7 +51,8 @@ class MyStreamListener(tweepy.StreamListener):
             # Construct Tweet object from streamed data
             currentTweet = Tweet(text, status.id, status.created_at, symbol)
 
-            #TODO Pass tweet object to Machine Learning Module by calling evaluate(currentTweet)
+            #print(text)
+            MachineLearning.evaluate(currentTweet)
 
 
     def on_error(self, status_code):
@@ -114,3 +116,6 @@ class MyStreamListener(tweepy.StreamListener):
         stream.filter(languages=["en"], track=streamListener.stocks, is_async=True)
 
         # is_async parameter sets stream filter to its own thread, allowing execution to continue
+        
+if __name__ != "__main__"
+MyStreamListener.start()
