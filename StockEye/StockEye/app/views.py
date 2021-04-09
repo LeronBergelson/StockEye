@@ -164,7 +164,7 @@ def manage_watchlists(request):
 
     try:
         watchlists = WatchList.objects.filter(user=request.user).all()
-
+        
     except WatchList.DoesNotExist:
         watchlists = []
 
