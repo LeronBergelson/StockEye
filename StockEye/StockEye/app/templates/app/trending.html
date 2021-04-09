@@ -1,0 +1,46 @@
+{% extends "app/layout.html" %}
+{% load static %}
+{% block content %}
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - Search Stocks</title>
+    {% load static %}
+    <link rel="stylesheet" href="reqd css.css">
+    <script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
+</head>
+
+<body>
+<div class="jumbotron text-center">
+        <h1>Search Stocks</h1>
+
+        <h2>
+         <span class="green_dot"></span> = Positive Sentiment
+        <br>
+        <span class="red_dot"></span> = Negative Sentiment </h2>
+    </div>
+  <div>
+      <table>
+  	<tr>
+                <th>Symbol</th>
+                <th># + Sentiments</th>
+                <th># - Sentiments</th>
+                <th>Value</th>
+            </tr>
+            {% for stocklist in stocks.items %}
+            <tr>
+                <td>{{ stock.symbol }}</td>
+                <td>{{ stock.positiveSentimentCount }}</td>
+                <td>{{ stock.negativeSentimentCount }}</td>
+                <td>${{ stock.value }}</td>
+            </tr>
+            </table>
+            {% endfor %}
+  </div>
+
+
+    
+
+</body>
+{% endblock %}
