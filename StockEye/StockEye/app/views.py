@@ -194,6 +194,8 @@ def edit_watchlist(request, w_id):
     """
     assert isinstance(request, HttpRequest)
 
+    stocks = []
+
     try:
         # Get the user's watchlist that matches the provided id
         watchlist = WatchList.objects.filter(user=request.user, watchList_id=w_id).get()
