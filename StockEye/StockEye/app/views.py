@@ -57,6 +57,18 @@ def register(request):
 
     return render(request, 'app/registration.html', {'form':form})
 
+def trending(request):
+    """renders the trending page"""
+    assert isinstance(request, HttpRequest)
+    return render (
+        request,
+        'app/trending.html',
+        {
+            'title': 'Trending',
+            'message': 'Your trending page',
+            'year': datetime.now().year,
+        }
+    )
 @login_required
 def watchlists(request):
     """ Renders the watchlists page """
