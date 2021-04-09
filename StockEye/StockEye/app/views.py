@@ -12,7 +12,11 @@ from django.contrib.auth.decorators import login_required
 from .models import UserData, WatchList
 
 def home(request):
-    """Renders the home page."""
+    """
+    The landing page of the StockEye application.
+
+    Direct implementation of the HomeView.
+    """
     assert isinstance(request, HttpRequest)
     return render(
         request,
@@ -24,7 +28,11 @@ def home(request):
     )
 
 def contact(request):
-    """Renders the contact page."""
+    """
+    Provides Users with information on how to contact the StockEye team.
+
+    Does not directly implement a view.
+    """
     assert isinstance(request, HttpRequest)
     return render(
         request,
@@ -37,7 +45,11 @@ def contact(request):
     )
 
 def about(request):
-    """Renders the about page."""
+    """
+    Includes various information about the StockEye project itself.
+
+    Does not directly implement a view.
+    """
     assert isinstance(request, HttpRequest)
     return render(
         request,
@@ -50,6 +62,12 @@ def about(request):
     )
 
 def register(request):
+    """
+    Allows guest Users to register for an account, allowing them to track 
+    Stocks of their choosing in Watchlists.
+
+    Direct implementation of the RegistrationView.
+    """
     form = UserCreationForm()
 
     if request.method == 'POST':
@@ -61,13 +79,80 @@ def register(request):
 
     return render(request, 'app/registration.html', {'form':form})
 
+def stocks(request):
+    """
+    Displays all stocks. User is able to filter stocks, using buttons 
+    provided to the user, by Price, Sentiment, and StockName. All of 
+    these filters can be toggled to be in either ascending or descending order.
+
+    Direct implementation of the FilterStockView.
+    """
+
+
+
+    context = {
+
+    }
+
+    return render(
+        request,
+        'app/'
+    )
+
+@login_required
+def edit_watchlist(request, id):
+    """
+    Page where Users can add/remove Stocks from a specific Watchlist 
+    
+    Direct implementation of the EditWatchlistView.
+
+    Parameters:
+        id  -   The id of the Watchlist to edit (int)
+    """
+    assert isinstance(request, HttpRequest)
+
+    stocks = []
+
+    try:
+        # Get the user's watchlist that matches the provided id
+        watchlist = WatchList.objects.filter(user=request.user, watchList_id=id).get()
+        watchlist_id = watchlist.watchList_id
+
+        for stock in watchlist.stockResults.all():
+            stocks.append(stock)
+
+        print(f'Stocks: {stocks}')
+
+    except WatchList.DoesNotExist:
+        # Given an invalid watchlist id
+        # For now, redirect to the watchlists page
+        # TODO: Possibly change the behaviour of invalid ids (maybe 
+        #       show a message on the watchlists page that a watchlist 
+        #       with the given id doesn't exist?)
+        return redirect('watchlists')
+    
+    context = {
+        'title': 'Edit Watchlist',
+        'year': datetime.now().year,
+        'user': request.user,
+        'watchlist_id': watchlist_id,
+        'stocks': stocks,
+    }
+
+    return render(
+        request,
+        'app/edit_watchlist.html',
+        context
+    )
+
 @login_required
 def watchlists(request):
-    """ Renders the watchlists page """
+    """ 
+    Page where Users can view their Watchlists.
+
+    Direct implementation of the WatchlistView.
     """
-    Alternative to @login_required decorator: manually test with:
-        request.user.is_authenticated
-    """
+
     assert isinstance(request, HttpRequest)
 
     # Since these can throw Django errors if they don't exist, catch them
@@ -103,13 +188,7 @@ def watchlists(request):
         'message':'Your Watchlist page.',
         'year':datetime.now().year,
         'user': request.user,
-        'valid_user': True if watchlists is not None else False,
-        'watchlists': watchlists,   # Not sure if this is really needed 
-                                    # since the stocks dict has the 
-                                    # watchlist_id as its keys
         'stocks': stocks,
-        # Previously included the watchlist ids, but since the keys of the 
-        # stock dict *are* the watchlist_ids, no need to include them
     }
 
     return render(

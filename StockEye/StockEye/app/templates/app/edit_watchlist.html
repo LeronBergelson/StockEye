@@ -5,8 +5,8 @@
 
 <body>
 <div class="jumbotron text-center">
-        <h1>StockEye: Watchlists</h1>
-        <p>Personalized Watchlists</p>
+        <h1>StockEye: Watchlist {{ watchlist_id }}</h1>
+        <p>Edit your Watchlist</p>
     </div>
 
     <!-- Container (Watchlist Section) -->
@@ -18,10 +18,9 @@
             <p>Username: {{ user.username }} (Not a valid user)</p>
         {% endif %}
 
-        {% for watchlist_id, stocklist in stocks.items %}
         <table>
             <tr>
-                <th><a href="{% url 'edit_watchlist' id=watchlist_id %}">Watchlist {{watchlist_id}}</a></th>
+                <th>Watchlist {{watchlist_id}}</th>
             </tr>
             <tr>
                 <th>Symbol</th>
@@ -29,7 +28,7 @@
                 <th># - Sentiments</th>
                 <th>Value</th>
             </tr>
-            {% for stock in stocklist %}
+            {% for stock in stocks %}
             <tr>
                 <td>{{ stock.symbol }}</td>
                 <td>{{ stock.positiveSentimentCount }}</td>
@@ -38,7 +37,6 @@
             </tr>
             {% endfor %}
         </table>
-        {% endfor %}
     </div>
    
 </body>
