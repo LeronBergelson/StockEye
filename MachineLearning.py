@@ -18,7 +18,7 @@ class Sentiment():
     __stock_ID = -1
     __date = None
     
-    def __init__(result, message, stock_ID, date):
+    def __init__(self, result, message, stock_ID, date):
     
         self.__weight = result
         self.__message_ID = message
