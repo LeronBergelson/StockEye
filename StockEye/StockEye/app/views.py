@@ -106,12 +106,13 @@ def create_watchlist(request):
     Allows Users to create a new Watchlist
     """
 
+    # Below loop seems very inefficient, since it querys the database
+    # TODO: See if the below loop can be optimized, or another solution
+    #       is available.
+
     # Get the current highest watchList_id
-    watchlist_id = 0
-    for watchlist in WatchList.objects.filter(user=request.user).all():
-        if watchlist.watchList_id > watchlist_id:
-            watchlist_id = watchlist.watchList_id
-    
+    watchlist = WatchList.objects.latest()
+    watchlist_id = watchlist.watchList_id
     watchlist_id += 1
 
     if request.method == 'POST':

@@ -14,6 +14,9 @@ class WatchList(models.Model):
     watchList_id = models.PositiveIntegerField(blank=False, default=0)
     watchList_name = models.CharField(max_length=15, blank=False, default = '')
 
+    class Meta:
+        get_latest_by = "watchList_id"
+
 
 
 class StockList(models.Model):

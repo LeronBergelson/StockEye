@@ -26,7 +26,11 @@
 
         <table>
             <tr>
-                <th>Watchlist {{watchlist_id}}</th>
+                {% if watchlist_name %}
+                    <th>{{ watchlist_name }}</th>
+                {% else %}
+                    <th>Watchlist {{watchlist_id}}</th>
+                {% endif %}
             </tr>
             <tr>
                 <th>Symbol</th>
