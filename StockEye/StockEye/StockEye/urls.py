@@ -22,6 +22,7 @@ urlpatterns = [
     path('watchlist/<int:w_id>/delete/', views.delete_watchlist, name='delete_watchlist'),
     # ========================================================
 
+    path('trending/', views.trending, name = 'trending'),
     path('contact/', views.contact, name='contact'),
     path('about/', views.about, name='about'),
     path('login/',

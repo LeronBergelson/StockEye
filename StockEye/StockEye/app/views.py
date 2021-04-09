@@ -79,6 +79,18 @@ def register(request):
 
     return render(request, 'app/registration.html', {'form':form})
 
+def trending(request):
+    """renders the trending page"""
+    assert isinstance(request, HttpRequest)
+    return render (
+        request,
+        'app/trending.html',
+        {
+            'title': 'Trending',
+            'message': 'Your trending page',
+            'year': datetime.now().year,
+        }
+    )
 def stocks(request):
     """
     Displays all stocks. User is able to filter stocks, using buttons 
