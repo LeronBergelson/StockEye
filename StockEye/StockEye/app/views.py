@@ -13,11 +13,7 @@ from .models import UserData, WatchList
 from .forms import CreateWatchListForm
 
 def home(request):
-    """
-    The landing page of the StockEye application.
-
-    Direct implementation of the HomeView.
-    """
+    """Renders the home page."""
     assert isinstance(request, HttpRequest)
     return render(
         request,
@@ -29,11 +25,7 @@ def home(request):
     )
 
 def contact(request):
-    """
-    Provides Users with information on how to contact the StockEye team.
-
-    Does not directly implement a view.
-    """
+    """Renders the contact page."""
     assert isinstance(request, HttpRequest)
     return render(
         request,
@@ -46,11 +38,7 @@ def contact(request):
     )
 
 def about(request):
-    """
-    Includes various information about the StockEye project itself.
-
-    Does not directly implement a view.
-    """
+    """Renders the about page."""
     assert isinstance(request, HttpRequest)
     return render(
         request,
@@ -63,12 +51,6 @@ def about(request):
     )
 
 def register(request):
-    """
-    Allows guest Users to register for an account, allowing them to track 
-    Stocks of their choosing in Watchlists.
-
-    Direct implementation of the RegistrationView.
-    """
     form = UserCreationForm()
 
     if request.method == 'POST':
@@ -232,12 +214,11 @@ def edit_watchlist(request, w_id):
 
 @login_required
 def watchlists(request):
-    """ 
-    Page where Users can view their Watchlists.
-
-    Direct implementation of the WatchlistView.
+    """ Renders the watchlists page """
     """
-
+    Alternative to @login_required decorator: manually test with:
+        request.user.is_authenticated
+    """
     assert isinstance(request, HttpRequest)
 
     # Since these can throw Django errors if they don't exist, catch them
