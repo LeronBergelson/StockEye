@@ -1,0 +1,36 @@
+{% extends "app/layout.html" %}
+{#{% load staticfiles %}#}
+{% load static %}
+{% block content %}
+
+<body>
+<div class="jumbotron text-center">
+        <h1>StockEye: Watchlist {{ watchlist_id }}</h1>
+        <p>Edit your Watchlist</p>
+    </div>
+
+    <!-- Container (Watchlist Section) -->
+    <div class="content">
+
+        {% if user.is_authenticated %}
+            <p>Username: {{ user.username }}</p>
+        {% else %}
+            <p>Username: {{ user.username }} (Not a valid user)</p>
+        {% endif %}
+
+        <h2>Manage Watchlists</h2>
+        <a href="{% url 'create_watchlist' %}">Create a new Watchlist</a>
+        {% if watchlists %}
+        <table>
+            {% for watchlist in watchlists %}
+            <tr>
+                <td>Watchlist {{ watchlist.watchList_id }}</td>
+                <td><a href="{% url 'delete_watchlist' w_id=watchlist.watchList_id %}" class="btn btn-danger">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    </div>
+   
+</body>
+{% endblock %}
