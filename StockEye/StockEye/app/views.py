@@ -100,7 +100,84 @@ def stocks(request):
     )
 
 @login_required
-def edit_watchlist(request, id):
+def create_watchlist(request):
+    """
+    Allows Users to create a new Watchlist
+    """
+
+    # Get the current highest watchList_id
+    watchlist_id = 0
+    for watchlist in WatchList.objects.filter(user=request.user).all():
+        if watchlist.watchList_id > watchlist_id:
+            watchlist_id = watchlist.watchList_id
+    
+    watchlist_id += 1
+
+    # Create a new Watchlist in the database
+    new_watchlist = WatchList.objects.create(
+        user=request.user,
+        watchList_id=watchlist_id
+    )
+
+    new_watchlist.save()
+
+    context = {
+        'title': 'Create Watchlist',
+        'year': datetime.now().year,
+        'user': request.user,
+    }
+
+    return render(
+        request,
+        'app/watchlists/',
+        context
+    )
+
+
+@login_required
+def delete_watchlist(request, w_id):
+    """
+    Deletes a User's Watchlist where watchList_id=id.
+    Redirects to /watchlists/ after execution.
+    """
+    try:
+        watchlist = WatchList.objects.filter(user=request.user).get(watchList_id=w_id)
+    except WatchList.DoesNotExist:
+        return redirect('watchlists')
+    watchlist.delete()
+    return redirect('watchlists')
+
+@login_required
+def manage_watchlists(request):
+    """
+    Allows Users to create and delete Watchlists from their account.
+
+    Direct implementation of the ManageWatchlistView.
+    """
+    assert isinstance(request, HttpRequest)
+
+    try:
+        watchlists = WatchList.objects.filter(user=request.user).all()
+
+    except WatchList.DoesNotExist:
+        watchlists = []
+
+    context = {
+        'title': 'Manage Watchlists',
+        'year': datetime.now().year,
+        'user': request.user,
+        'watchlists': watchlists,
+    }
+
+    return render(
+        request,
+        'app/manage_watchlists.html',
+        context,
+    )
+
+
+@login_required
+def edit_watchlist(request, w_id):
     """
     Page where Users can add/remove Stocks from a specific Watchlist 
     
@@ -115,7 +192,7 @@ def edit_watchlist(request, id):
 
     try:
         # Get the user's watchlist that matches the provided id
-        watchlist = WatchList.objects.filter(user=request.user, watchList_id=id).get()
+        watchlist = WatchList.objects.filter(user=request.user, watchList_id=w_id).get()
         watchlist_id = watchlist.watchList_id
 
         for stock in watchlist.stockResults.all():
@@ -162,27 +239,25 @@ def watchlists(request):
         
         # Store the stocks in each watchlist in a dictionary
         # Each key is the watchList_id from the user's watchlists
-        # Each value is a list of Stocks present in the watchlist
+        # Each value is a list of Stocks (as StockList model objects) 
+        # present in the watchlist
         stocks = {}
 
         for w in watchlists:
+            stocks[w.watchList_id] = []
             for stock in w.stockResults.all():
-                # Check if this is the first stock of the watchlist
-                if w.watchList_id in stocks.keys():
-                    # Already present, append to list at this key
-                    stocks[w.watchList_id].append(stock)
-                else:
-                    # Key not in dict, set key and create list for this stock
-                    stocks[w.watchList_id] = [stock]
-                    # stock is of type StockList(models.Model) which is 
-                    # not iterable, so use [] instead of list()        
+                # No need to check if key is in the dict, since 
+                # it is added above
+                stocks[w.watchList_id].append(stock)
 
     except UserData.DoesNotExist:
         # Unable to find a matching user, default to no watchlists & stocks
         watchlists = None
         stocks = None
- 
-    # Additional data to pass to the templating engine
+    
+    # DEBUG
+    #print(stocks)
+
     context = {
         'title':'Watchlists',
         'message':'Your Watchlist page.',

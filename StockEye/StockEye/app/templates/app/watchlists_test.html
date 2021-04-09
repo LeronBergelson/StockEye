@@ -18,10 +18,11 @@
             <p>Username: {{ user.username }} (Not a valid user)</p>
         {% endif %}
 
+        <a href="{% url 'manage_watchlists' %}" class="btn btn-warning">Manage Watchlists</a>
         {% for watchlist_id, stocklist in stocks.items %}
         <table>
             <tr>
-                <th><a href="{% url 'edit_watchlist' id=watchlist_id %}">Watchlist {{watchlist_id}}</a></th>
+                <th><a href="{% url 'edit_watchlist' w_id=watchlist_id %}">Watchlist {{watchlist_id}}</a></th>
             </tr>
             <tr>
                 <th>Symbol</th>
