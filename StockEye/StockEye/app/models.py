@@ -12,8 +12,6 @@ class WatchList(models.Model):
     stockResults = models.ManyToManyField('app.StockList')
     #stockResults = models.ForeignKey('app.StockList', blank=True, default = '', on_delete=models.PROTECT)
     watchList_id = models.PositiveIntegerField(blank=False, default=0)
-    watchList_name = models.CharField(max_length=15, blank=False, default = '')
-
 
 
 class StockList(models.Model):
