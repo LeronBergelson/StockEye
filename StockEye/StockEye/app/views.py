@@ -79,7 +79,7 @@ def register(request):
 
     return render(request, 'app/registration.html', {'form':form})
 
-def trending(request):
+def search(request):
     """renders the trending page"""
     assert isinstance(request, HttpRequest)
     return render (
