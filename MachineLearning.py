@@ -86,7 +86,7 @@ def updateDatabase(connection, tweet, result):
               ON CONFLICT(getID(tweet)) DO UPDATE SET sentiment = sentiment + result'''
     
     cursor = connection.cursor()
-    cursor.execute(sql_code, sentiment)
+    cursor.execute(sql_code, result)
     connection.commit()
     
     return cursor.lastrowid
