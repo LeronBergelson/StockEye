@@ -6,7 +6,8 @@
     <title>{{ title }} - StockEye</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap.min.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}" />
+    {% now "U" as u_time %}
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}?{{ u_time }}" />
     <script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
 </head>
 
@@ -21,8 +22,6 @@
                 </button>
                 <a href="/" class="navbar-brand">StockEye</a>
             </div>
-            <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'search' %}">Trending</a></li>
                 {% if user.is_authenticated %}
                     <form id="logoutForm" action="/logout/" method="post" class="navbar-right">
                         {% csrf_token %}
@@ -35,6 +34,7 @@
                     </form>
                 {% else %}
                     <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{% url 'trending' %}">Trending</a></li>
                         <li><a href="{% url 'register' %}">Register</a></li>
                         <li><a href="{% url 'login' %}">Log in</a></li>
                     </ul>

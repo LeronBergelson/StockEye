@@ -1,0 +1,33 @@
+{% extends "app/layout.html" %}
+{% load static %}
+{% block content %}
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - trending</title>
+    {% load static %}
+    <link rel="stylesheet" href="site.css">
+    <script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
+</head>
+
+<body>
+<div class="jumbotron text-center">
+        <h1>Trending Stocks</h1>
+</div>
+
+    <div class = "sentiments"> 
+        <h2><span class="green_dot"></span> = Positive Sentiment
+        <br>
+        <span class="red_dot"></span> = Negative Sentiment </h2>
+    </div>
+
+  <div>
+      
+  </div>
+
+
+    
+
+</body>
+{% endblock %}
