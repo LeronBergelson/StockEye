@@ -123,6 +123,7 @@ def search(request):
             'year': datetime.now().year,
         }
     )
+
 def stocks(request):
     """
     Displays all stocks. User is able to filter stocks, using buttons 
@@ -238,55 +239,54 @@ def edit_watchlist(request, w_id):
     assert isinstance(request, HttpRequest)
 
     # Get the user's watchlist that matches the provided id
-    watchlist = WatchList.objects.filter(user=request.user, watchList_id=w_id).get()
+    try:
+        watchlist = WatchList.objects.filter(user=request.user, watchList_id=w_id).get()
+        watchlist_id = watchlist.watchList_id
+        watchlist_name = watchlist.watchList_name
 
-    if request.method == 'POST':
-        form = EditWatchListForm(request.POST, instance=watchlist)
-        if form.is_valid:
-            updated_watchlist = form.save(commit=False)
-            updated_watchlist.watchList_id = watchlist.watchList_id
-            updated_watchlist.user = request.user
-            updated_watchlist.name = watchlist.watchList_name
-            updated_watchlist.save()
-            form.save_m2m()
-            return redirect('watchlists')
-    else:
-
-        form = EditWatchListForm(instance=watchlist)
         stocks = []
 
-        try:
-            watchlist_id = watchlist.watchList_id
-            watchlist_name = watchlist.watchList_name
-
-            for stock in watchlist.stockResults.all():
-                stocks.append(stock)
-
-            print(f'Stocks: {stocks}')
-
-        except WatchList.DoesNotExist:
-            # Given an invalid watchlist id
+    except WatchList.DoesNotExist:
+        # Given an invalid watchlist id
             # For now, redirect to the watchlists page
             # TODO: Possibly change the behaviour of invalid ids (maybe 
             #       show a message on the watchlists page that a watchlist 
             #       with the given id doesn't exist?)
             return redirect('watchlists')
-        
-        context = {
-            'title': 'Edit Watchlist',
-            'year': datetime.now().year,
-            'user': request.user,
-            'watchlist_id': watchlist_id,
-            'watchlist_name': watchlist_name,
-            'stocks': stocks,
-            'form': form,
-        }
 
-        return render(
-            request,
-            'app/edit_watchlist.html',
-            context
-        )
+    if request.method == 'POST':
+        form = EditWatchListForm(request.POST, instance=watchlist)
+        if form.is_valid:
+            updated_watchlist = form.save(commit=False)
+            updated_watchlist.watchList_id = watchlist_id
+            updated_watchlist.user = request.user
+            updated_watchlist.name = watchlist_name
+            updated_watchlist.save()
+            form.save_m2m()
+    else:
+
+        form = EditWatchListForm(instance=watchlist)
+
+    for stock in watchlist.stockResults.all():
+        stocks.append(stock)
+
+    print(f'Stocks: {stocks}')
+
+    context = {
+        'title': 'Edit Watchlist',
+        'year': datetime.now().year,
+        'user': request.user,
+        'watchlist_id': watchlist_id,
+        'watchlist_name': watchlist_name,
+        'stocks': stocks,
+        'form': form,
+    }
+
+    return render(
+        request,
+        'app/edit_watchlist.html',
+        context
+    )
 
 @login_required
 def watchlists(request):
