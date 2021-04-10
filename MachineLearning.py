@@ -75,9 +75,13 @@ def get_tweets_for_model(cleaned_tokens_list):
         yield dict([token, True] for token in tweet_tokens)
        
 def connection(db):
-
-    connection = sqlite3.connect(db)
-
+    
+    connection = None
+    try:
+        connection = sqlite3.connect(db)
+    except Error as e:
+        print(e)
+        
     return connection
 
 def updateDatabase(connection, update):
