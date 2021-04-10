@@ -117,5 +117,5 @@ class MyStreamListener(tweepy.StreamListener):
 
         # is_async parameter sets stream filter to its own thread, allowing execution to continue
         
-if __name__ != "__main__"
+#if __name__ != "__main__":
 MyStreamListener.start()
