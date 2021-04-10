@@ -101,9 +101,9 @@ def evaluate(tweet):
     #current_sentiment = Sentiment(result, getText(tweet), getID(tweet), getDate(tweet), getSymbol(tweet))
     
     if result == "Positive":
-        update = (positive_sentiment, positive_sentiment, getStock_ID(tweet))
+        update = (positive_sentiment, positive_sentiment, getStock_id(tweet))
     else:
-        update = (negative_sentiment, negative_sentiment, getStock_ID(tweet))
+        update = (negative_sentiment, negative_sentiment, getStock_id(tweet))
         
     current_connection = connection(r"StockEye\StockEye\db.sqlite3")
     
