@@ -10,7 +10,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 
 from .models import UserData, WatchList
-from .forms import CreateWatchListForm, UserChangeForm
+from .forms import CreateWatchListForm, UserChangeForm, EditWatchListForm
 
 def home(request):
     """
@@ -18,6 +18,7 @@ def home(request):
 
     Direct implementation of the HomeView.
     """
+
     assert isinstance(request, HttpRequest)
     return render(
         request,
@@ -236,41 +237,56 @@ def edit_watchlist(request, w_id):
     """
     assert isinstance(request, HttpRequest)
 
-    stocks = []
+    # Get the user's watchlist that matches the provided id
+    watchlist = WatchList.objects.filter(user=request.user, watchList_id=w_id).get()
 
-    try:
-        # Get the user's watchlist that matches the provided id
-        watchlist = WatchList.objects.filter(user=request.user, watchList_id=w_id).get()
-        watchlist_id = watchlist.watchList_id
-        watchlist_name = watchlist.watchList_name
+    if request.method == 'POST':
+        form = EditWatchListForm(request.POST, instance=watchlist)
+        if form.is_valid:
+            updated_watchlist = form.save(commit=False)
+            updated_watchlist.watchList_id = watchlist.watchList_id
+            updated_watchlist.user = request.user
+            updated_watchlist.name = watchlist.watchList_name
+            updated_watchlist.save()
+            form.save_m2m()
+            return redirect('watchlists')
+    else:
 
-        for stock in watchlist.stockResults.all():
-            stocks.append(stock)
+        form = EditWatchListForm(instance=watchlist)
+        stocks = []
 
-        print(f'Stocks: {stocks}')
+        try:
+            watchlist_id = watchlist.watchList_id
+            watchlist_name = watchlist.watchList_name
 
-    except WatchList.DoesNotExist:
-        # Given an invalid watchlist id
-        # For now, redirect to the watchlists page
-        # TODO: Possibly change the behaviour of invalid ids (maybe 
-        #       show a message on the watchlists page that a watchlist 
-        #       with the given id doesn't exist?)
-        return redirect('watchlists')
-    
-    context = {
-        'title': 'Edit Watchlist',
-        'year': datetime.now().year,
-        'user': request.user,
-        'watchlist_id': watchlist_id,
-        'watchlist_name': watchlist_name,
-        'stocks': stocks,
-    }
+            for stock in watchlist.stockResults.all():
+                stocks.append(stock)
 
-    return render(
-        request,
-        'app/edit_watchlist.html',
-        context
-    )
+            print(f'Stocks: {stocks}')
+
+        except WatchList.DoesNotExist:
+            # Given an invalid watchlist id
+            # For now, redirect to the watchlists page
+            # TODO: Possibly change the behaviour of invalid ids (maybe 
+            #       show a message on the watchlists page that a watchlist 
+            #       with the given id doesn't exist?)
+            return redirect('watchlists')
+        
+        context = {
+            'title': 'Edit Watchlist',
+            'year': datetime.now().year,
+            'user': request.user,
+            'watchlist_id': watchlist_id,
+            'watchlist_name': watchlist_name,
+            'stocks': stocks,
+            'form': form,
+        }
+
+        return render(
+            request,
+            'app/edit_watchlist.html',
+            context
+        )
 
 @login_required
 def watchlists(request):

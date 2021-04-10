@@ -47,6 +47,19 @@
             </tr>
             {% endfor %}
         </table>
+
+        <form id="editWatchListForm" action="{% url 'edit_watchlist' w_id=watchlist_id %}" method="post">
+            {% csrf_token %}
+            <br><br>
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Edit your Watchlist</legend>
+                {{ form }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn-outline-info" type="submit">Save Changes</button>
+            </div>
+        </form>
+
     </div>
    
 </body>
