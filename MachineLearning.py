@@ -39,21 +39,6 @@ def get_tweets_for_model(cleaned_tokens_list):
     for tweet_tokens in cleaned_tokens_list:
         yield dict([token, True] for token in tweet_tokens)
        
-def connection(db):
-
-    connection = sqlite3.connect(db)
-
-    return connection
-
-def updateDatabase(connection, update):
-    
-    sql_code = ''' UPDATE stock SET ? = ? + 1 WHERE stock_id = ? '''
-    
-    cursor = connection.cursor()
-    cursor.execute(sql_code, update)
-    connection.commit()
-    
-    return cursor.lastrowid
     
 def evaluate(tweet):
     
@@ -79,8 +64,25 @@ def evaluate(tweet):
     # TODO Create a sentiment object
     
     # TODO Pass sentiment object to function for updating database
-    
 
+
+def connection(db):
+
+    connection = sqlite3.connect(db)
+
+    return connection
+
+
+def updateDatabase(connection, update):
+    
+    sql_code = ''' UPDATE stock SET ? = ? + 1 WHERE stock_id = ? '''
+    
+    cursor = connection.cursor()
+    cursor.execute(sql_code, update)
+    connection.commit()
+    
+    return cursor.lastrowid
+    
 
 if __name__ != "__main__":
     positive_tweets = twitter_samples.strings('positive_tweets.json')
