@@ -362,6 +362,6 @@ def watchlists(request):
 
     return render(
         request,
-        'app/watchlists_test.html',
+        'app/watchlists.html',
         context
     )
