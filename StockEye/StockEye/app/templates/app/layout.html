@@ -22,7 +22,7 @@
                 <a href="/" class="navbar-brand">StockEye</a>
             </div>
             <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'trending' %}">Trending</a></li>
+                <li><a href="{% url 'search' %}">Trending</a></li>
                 {% if user.is_authenticated %}
                     <form id="logoutForm" action="/logout/" method="post" class="navbar-right">
                         {% csrf_token %}

@@ -10,7 +10,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 
 from .models import UserData, WatchList
-from .forms import CreateWatchListForm
+from .forms import CreateWatchListForm, UserChangeForm
 
 def home(request):
     """
@@ -80,12 +80,42 @@ def register(request):
 
     return render(request, 'app/registration.html', {'form':form})
 
+@login_required
+def account_settings(request):
+    """
+    Allows Users to edit their account info, such as their email and password.
+
+    Implementation of the AccountSettingsView.
+    """
+    assert isinstance(request, HttpRequest)
+
+    try:
+        user = request.user
+        change_user_form = UserChangeForm()
+        #change_password_form = AdminPasswordChangeForm()
+    except UserData.DoesNotExist:
+        return redirect('register')
+        
+    context = {
+        'title': 'User Profile',
+        'message': 'Edit Account Settings',
+        'year': datetime.now().year,
+        'user': request.user,
+        'form': change_user_form,
+    }
+
+    return render(
+        request,
+        'app/accountSettings.html',
+        context,
+    )
+
 def search(request):
     """renders the trending page"""
     assert isinstance(request, HttpRequest)
     return render (
         request,
-        'app/trending.html',
+        'app/search.html',
         {
             'title': 'Trending',
             'message': 'Your trending page',
@@ -291,33 +321,4 @@ def watchlists(request):
         request,
         'app/watchlists_test.html',
         context
-    )
-    
-
-def accountSettings(request):
-    """
-    Allows Users to edit their account info, such as their email and password.
-
-    Implementation of the AccountSettingsView.
-    """
-    assert isinstance(request, HttpRequest)
-
-    try:
-        user = request.user
-        change_user_form = UserChangeForm()
-        change_password_form = AdminPasswordChangeForm()
-    except UserData.DoesNotExist:
-        return redirect('register')
-        
-    context = {
-        'title': 'User Profile',
-        'message': 'Edit Account Settings',
-        'year': datetime.now().year,
-        'user': request.user,
-    }
-
-    return render(
-        request,
-        'app/accountSettings.html',
-        context,
     )
