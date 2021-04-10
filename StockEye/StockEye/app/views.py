@@ -148,7 +148,7 @@ def stock(request, s_id):
     assert isinstance(request, HttpRequest)
 
     try:
-        # Get the requested stock (stock_id) from stockList
+        #Get the requested stock with (stock_id)
         stocks = StockList.objects.filter(stock_id=s_id).get()
         stock_id = stocks.stock_id
         stock_name = stocks.symbol
@@ -156,8 +156,8 @@ def stock(request, s_id):
         #do we have a sentiment object?
 
     except StockList.DoesNotExist:
-        # If no stocks exist aka no list, redirected to manage_watchlist to create one. 
-        return redirect('manage_watchlists')
+        #If no stock is not found, returns to stock view to search for new one.
+        return redirect('stock')
    
     context = {
         'title': 'Stocks',
