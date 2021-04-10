@@ -21,8 +21,11 @@
                 </button>
                 <a href="/" class="navbar-brand">StockEye</a>
             </div>
-            <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'search' %}">Search</a></li>
+                <div>
+                    <ul class="nav navbar-nav navbar-left">
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'search' %}">Search</a></li>
+                </div>
                 {% if user.is_authenticated %}
                     <form id="logoutForm" action="/logout/" method="post" class="navbar-right">
                         {% csrf_token %}
