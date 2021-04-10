@@ -113,7 +113,7 @@ def stocks(request):
     Direct implementation of the FilterStockView.
     """
 
-
+    
 
     context = {
 
@@ -122,6 +122,43 @@ def stocks(request):
     return render(
         request,
         'app/'
+    )
+
+def stock(request, s_id):
+    """
+    Displays the selected stock, providing the name, sentiment, and the price of said stock.
+
+    Direct implementation of the StockView.
+
+    Parameters: s_id - is the id of the desired stock to view.
+    """
+    assert isinstance(request, HttpRequest)
+
+    try:
+        # Get the requested stock (stock_id) from stockList
+        stocks = StockList.objects.filter(stock_id=s_id).get()
+        stock_id = stocks.stock_id
+        stock_name = stocks.symbol
+        stock_value = stocks.value
+        #do we have a sentiment object?
+
+    except StockList.DoesNotExist:
+        # If no stocks exist aka no list, redirected to manage_watchlist to create one. 
+        return redirect('manage_watchlists')
+   
+    context = {
+        'title': 'Stocks',
+        'year': datetime.now().year,
+        'user': request.user,
+        'stock_id': stock_id,
+        'stock_name': stock_name,
+        'stock_value': stock_value,
+    }
+
+    return render(
+        request,
+        'app/stock.html',
+        context
     )
 
 @login_required
