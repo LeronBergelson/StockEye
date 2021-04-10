@@ -10,41 +10,6 @@ from sqlite3 import Error
 import re, string, random
 
 
-# TODO create sentiment class
-"""class Sentiment():
-    
-    __weight = 0
-    __message_ID = ""
-    __stock_ID = -1
-    __date = None
-    __symbol = None
-    
-    def __init__(self, result, message, stock_ID, date, symbol):
-    
-        self.__weight = result
-        self.__message_ID = message
-        self.__stock_id = stock_ID
-        self.__date = date
-        self.__symbol = symbol
-        
-        return
-    
-    def getWeight(self):
-        return self.__weight
-    
-    def getMessage(self):
-        return self.__message_ID
-
-    def getID(self):
-        return self.__stock_id
-
-    def getDate(self):
-        return self.__date
-    
-    def getSymbol(self):
-        return self.__symbol    
-"""
-
 def remove_noise(tweet_tokens, stop_words = ()):
 
     cleaned_tokens = []
