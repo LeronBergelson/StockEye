@@ -82,8 +82,7 @@ def connection(db):
 
 def updateDatabase(connection, update):
     
-    sql_code = ''' INSERT INTO stock(symbol, sentiment), VALUES(?,?)
-              ON CONFLICT(symbol) DO UPDATE SET sentiment = sentiment + update[1]'''
+    sql_code = ''' UPDATE stock SET ? = ? + 1 WHERE stock_id = ? '''
     
     cursor = connection.cursor()
     cursor.execute(sql_code, update)
@@ -100,7 +99,12 @@ def evaluate(tweet):
     result = classifier.classify(dict([token, True] for token in current_tokens))
     
     #current_sentiment = Sentiment(result, getText(tweet), getID(tweet), getDate(tweet), getSymbol(tweet))
-    update = (getSymbol(tweet), result)
+    
+    if result = "Positive":
+        update = (positive_sentiment, positive_sentiment, getStock_ID(tweet))
+    else:
+        update = (negative_sentiment, negative_sentiment, getStock_ID(tweet))
+        
     current_connection = connection(r"StockEye\StockEye\db.sqlite3")
     
     updateDatabase(current_connection, update)
