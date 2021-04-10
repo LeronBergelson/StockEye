@@ -80,6 +80,18 @@ def register(request):
 
     return render(request, 'app/registration.html', {'form':form})
 
+def search(request):
+    """renders the trending page"""
+    assert isinstance(request, HttpRequest)
+    return render (
+        request,
+        'app/trending.html',
+        {
+            'title': 'Trending',
+            'message': 'Your trending page',
+            'year': datetime.now().year,
+        }
+    )
 def stocks(request):
     """
     Displays all stocks. User is able to filter stocks, using buttons 
@@ -279,4 +291,33 @@ def watchlists(request):
         request,
         'app/watchlists_test.html',
         context
+    )
+    
+
+def accountSettings(request):
+    """
+    Allows Users to edit their account info, such as their email and password.
+
+    Implementation of the AccountSettingsView.
+    """
+    assert isinstance(request, HttpRequest)
+
+    try:
+        user = request.user
+        change_user_form = UserChangeForm()
+        change_password_form = AdminPasswordChangeForm()
+    except UserData.DoesNotExist:
+        return redirect('register')
+        
+    context = {
+        'title': 'User Profile',
+        'message': 'Edit Account Settings',
+        'year': datetime.now().year,
+        'user': request.user,
+    }
+
+    return render(
+        request,
+        'app/accountSettings.html',
+        context,
     )

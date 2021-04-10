@@ -31,3 +31,8 @@ class CreateWatchListForm(forms.ModelForm):
         model = WatchList
         fields = ['watchList_name']
         exclude = ['user', 'stockResults', 'watchList_id']
+        
+class changeUserInfoForm():
+    class Meta:
+        model = User
+        fields = ['email', 'password3']

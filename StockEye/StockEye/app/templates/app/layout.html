@@ -21,14 +21,24 @@
                 </button>
                 <a href="/" class="navbar-brand">StockEye</a>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><a href="{% url 'about' %}">About</a></li>
-                    <li><a href="{% url 'contact' %}">Contact</a></li>
-                    <li><a href="{% url 'watchlists' %}">Watchlists</a></li>
-                </ul>
-                {% include 'app/loginpartial.html' %}
+            <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'trending' %}">Trending</a></li>
+                {% if user.is_authenticated %}
+                    <form id="logoutForm" action="/logout/" method="post" class="navbar-right">
+                        {% csrf_token %}
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><span class="navbar-brand">Hello {{ user.username }}!</span></li>
+                            <li><a href="{% url 'watchlists' %}">My Watchlists</a></li>
+                            <li><a href="{% url 'profile' %}">Profile Settings</a></li>            
+                            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                        </ul>
+                    </form>
+                {% else %}
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{% url 'register' %}">Register</a></li>
+                        <li><a href="{% url 'login' %}">Log in</a></li>
+                    </ul>
+                {% endif %}
             </div>
         </div>
     </div>
