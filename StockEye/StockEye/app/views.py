@@ -169,8 +169,8 @@ def stock(request, s_id):
         'year': datetime.now().year,
         'user': request.user,
         'stock_id': stock_id,
-        'stock_name': stock_name,
-        'stock_value': stock_value,
+        'stock_name': symbol,
+        'stock_value': value,
     }
 
     return render(
