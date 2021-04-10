@@ -1,0 +1,47 @@
+{% extends "app/layout.html" %}
+{% load static %}
+{% block content %}
+
+<h2>User Profile</h2>
+<div class="content">
+    <div class="col-md-8">
+        <section id="UserChangeForm">
+            <form action="." method="POST" class="form-horizontal">
+                {% csrf_token %}
+                <h4>Change your Account Settings</h4>
+                <hr>
+                <fieldset class ="form-group">
+                    <legend class="border-bottom mb-4">Edit User</legend>
+                        <label for="id_email" class="col-md-2 control-label">Email</label>
+                        <div class="col-md-10">
+                            {{ form.email }}
+                        </div>
+                    <div class="form-group">
+                        <label for="id_password" class="col-md-2 control-label">Password</label>
+                        <div class="col-md-10">
+                            {{ form.password}}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="hidden" name="next" value="/" />
+                        <input type="Submit" value="Save Changes" class="btn btn-default" />
+                    </div>
+                </div>
+
+                {% if form.errors %}
+                <p class="validation-summary-errors">Please enter a valid email address and/or password.</p>
+                {% endif %}
+                <div class="border-top pt-3">
+                    <small class="text-muted">
+                        Don't Have An Account? <a class="ml-2" href="../register/">Register Here</a>
+                    </small>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+
+{% endblock %}
+

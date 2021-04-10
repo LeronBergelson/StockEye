@@ -21,13 +21,15 @@ class BootstrapAuthenticationForm(AuthenticationForm):
                                    'class': 'form-control',
                                    'placeholder':'Password'}))
 
-class CreateUserForm():
-    class Meta:
-        model = User
-        fields = ['username', 'email', 'password1','password2']
-
 class CreateWatchListForm(forms.ModelForm):
     class Meta:
         model = WatchList
         fields = ['watchList_name']
         exclude = ['user', 'stockResults', 'watchList_id']
+
+class UserChangeForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['email', 'password']
+
+

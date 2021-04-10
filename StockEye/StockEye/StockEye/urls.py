@@ -22,6 +22,7 @@ urlpatterns = [
     path('watchlist/<int:w_id>/delete/', views.delete_watchlist, name='delete_watchlist'),
     # ========================================================
 
+    path('search/', views.search, name = 'search'),
     path('contact/', views.contact, name='contact'),
     path('about/', views.about, name='about'),
     path('login/',
@@ -37,6 +38,7 @@ urlpatterns = [
          ),
          name='login'),
     path('register/', views.register, name='register'),
+    path('profile/', views.account_settings, name='profile'),
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
     path('admin/', admin.site.urls),
 ]
