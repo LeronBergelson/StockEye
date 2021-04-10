@@ -1,5 +1,4 @@
 {% extends "app/layout.html" %}
-{#{% load staticfiles %}#}
 {% load static %}
 {% block content %}
 
@@ -24,12 +23,12 @@
             <p>Username: {{ user.username }} (Not a valid user)</p>
         {% endif %}
 
-        <table>
+        <table class="table table-bordered">
             <tr>
                 {% if watchlist_name %}
-                    <th>{{ watchlist_name }}</th>
+                    <td colspan="4" style="text-align: center;">{{ watchlist_name }}</th>
                 {% else %}
-                    <th>Watchlist {{watchlist_id}}</th>
+                    <td colspan="4" style="text-align: center;">Watchlist {{watchlist_id}}</th>
                 {% endif %}
             </tr>
             <tr>

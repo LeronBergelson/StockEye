@@ -9,7 +9,7 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 
-from .models import UserData, WatchList
+from .models import UserData, WatchList, StockList
 from .forms import CreateWatchListForm, UserChangeForm, EditWatchListForm
 
 def home(request):
@@ -133,15 +133,22 @@ def stocks(request):
     Direct implementation of the FilterStockView.
     """
 
-
+    try:
+        stocks = StockList.objects.all()
+    except StockList.DoesNotExist:
+        stocks = None
 
     context = {
-
+        'title': 'Filter Stocks',
+        'year': datetime.now().year,
+        'user': request.user,
+        'stocks': stocks,
     }
 
     return render(
         request,
-        'app/'
+        'app/stocksview.html',
+        context,
     )
 
 @login_required
