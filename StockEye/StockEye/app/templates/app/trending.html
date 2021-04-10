@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }} - search</title>
+    <title>{{ title }} - trending</title>
     {% load static %}
     <link rel="stylesheet" href="site.css">
     <script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
@@ -13,30 +13,17 @@
 
 <body>
 <div class="jumbotron text-center">
-        <h1>Search Stocks</h1>
+        <h1>Trending Stocks</h1>
+</div>
 
-        <h2>
-         <span class="green_dot"></span> = Positive Sentiment
+    <div class = "sentiments"> 
+        <h2><span class="green_dot"></span> = Positive Sentiment
         <br>
         <span class="red_dot"></span> = Negative Sentiment </h2>
     </div>
+
   <div>
-      <table>
-  	<tr>
-                <th>Symbol</th>
-                <th># + Sentiments</th>
-                <th># - Sentiments</th>
-                <th>Value</th>
-            </tr>
-            {% for stocklist in stocks.items %}
-            <tr>
-                <td>{{ stock.symbol }}</td>
-                <td>{{ stock.positiveSentimentCount }}</td>
-                <td>{{ stock.negativeSentimentCount }}</td>
-                <td>${{ stock.value }}</td>
-            </tr>
-            </table>
-            {% endfor %}
+      
   </div>
 
 

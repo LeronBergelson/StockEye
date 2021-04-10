@@ -243,3 +243,7 @@ footer .glyphicon {
     border-radius: 50%;
     display: inline-block;
   }
+  .sentiments{
+      float:right;
+      
+  }
