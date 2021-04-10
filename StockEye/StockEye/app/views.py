@@ -111,14 +111,14 @@ def account_settings(request):
     )
 
 def search(request):
-    """renders the trending page"""
+    """renders the search page"""
     assert isinstance(request, HttpRequest)
     return render (
         request,
         'app/search.html',
         {
-            'title': 'Trending',
-            'message': 'Your trending page',
+            'title': 'search',
+            'message': 'Your search page',
             'year': datetime.now().year,
         }
     )
