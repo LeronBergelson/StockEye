@@ -11,19 +11,21 @@ import re, string, random
 
 
 # TODO create sentiment class
-class Sentiment():
+"""class Sentiment():
     
     __weight = 0
     __message_ID = ""
     __stock_ID = -1
     __date = None
+    __symbol = None
     
-    def __init__(self, result, message, stock_ID, date):
+    def __init__(self, result, message, stock_ID, date, symbol):
     
         self.__weight = result
         self.__message_ID = message
         self.__stock_id = stock_ID
         self.__date = date
+        self.__symbol = symbol
         
         return
     
@@ -38,8 +40,10 @@ class Sentiment():
 
     def getDate(self):
         return self.__date
-
     
+    def getSymbol(self):
+        return self.__symbol    
+"""
 
 def remove_noise(tweet_tokens, stop_words = ()):
 
@@ -76,10 +80,10 @@ def connection(db):
 
     return connection
 
-def updateDatabase(connection, sentiment):
+def updateDatabase(connection, tweet, result):
     
-    sql_code = ''' INSERT INTO sentiments(getWeight(sentiment), getMessage(sentiment), getID(sentiment), getDate(sentiment))
-              VALUES(?,?,?,?) '''
+    sql_code = ''' INSERT INTO stock(getID(tweet)), VALUES(getID(tweet),getSymbol(tweet), ?, result)
+              ON CONFLICT(getID(tweet)) DO UPDATE SET sentiment = sentiment + result'''
     
     cursor = connection.cursor()
     cursor.execute(sql_code, sentiment)
@@ -95,10 +99,10 @@ def evaluate(tweet):
     # result is "Postive" or "Negative"
     result = classifier.classify(dict([token, True] for token in current_tokens))
     
-    current_sentiment = Sentiment(result, getText(tweet), getID(tweet), getDate(tweet))
+    #current_sentiment = Sentiment(result, getText(tweet), getID(tweet), getDate(tweet), getSymbol(tweet))
     current_connection = connection(r"StockEye\StockEye\db.sqlite3")
     
-    updateDatabase(current_connection, current_sentiment)
+    updateDatabase(current_connection, tweet, result)
 
     #print(result)
 
