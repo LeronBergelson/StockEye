@@ -282,32 +282,30 @@ def watchlists(request):
 
     assert isinstance(request, HttpRequest)
 
-    # Since these can throw Django errors if they don't exist, catch them
-    try:
-        # Get all of the user's watchlists
-        watchlists = WatchList.objects.filter(user=request.user).all()
-        
-        # Store the stocks in each watchlist in a dictionary
-        # Each key is the watchList_name from the user's watchlists
-        # Each value is a list of Stocks (as StockList model objects) 
-        # present in the watchlist
-        stocks = []
-        counter = 0
-
-        for w in watchlists:
-            stocks.append([])
-            for stock in w.stockResults.all():
-                # No need to check if key is in the dict, since 
-                # it is added above
-                stocks[counter].append(stock)
-            counter += 1
-
-    except UserData.DoesNotExist:
-        # Unable to find a matching user, default to no watchlists & stocks
-        watchlists = None
-        stocks = None
+    # Get all of the user's watchlists
+    watchlists = WatchList.objects.filter(user=request.user).all()
     
-    watchlist_stocks = zip(watchlists, stocks)
+    # Store the stocks in each watchlist in a dictionary
+    # Each key is the watchList_name from the user's watchlists
+    # Each value is a list of Stocks (as StockList model objects) 
+    # present in the watchlist
+    stocks = []
+    counter = 0
+
+    for w in watchlists:
+        stocks.append([])
+        for stock in w.stockResults.all():
+            # No need to check if key is in the dict, since 
+            # it is added above
+            stocks[counter].append(stock)
+        counter += 1
+
+    print(f'Watchlists:{watchlists}\tStocks:{stocks}')
+
+    if watchlists.count() != 0 and len(stocks) != 0:
+        watchlist_stocks = zip(watchlists, stocks)
+    else:
+        watchlist_stocks = None
 
     context = {
         'title':'Watchlists',

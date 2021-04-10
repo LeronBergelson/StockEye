@@ -18,7 +18,11 @@
             <p>Username: {{ user.username }} (Not a valid user)</p>
         {% endif %}
 
+        {% if data %}
         <a href="{% url 'manage_watchlists' %}" class="btn btn-warning">Manage Watchlists</a>
+        {% else %}
+        <a href="{% url 'create_watchlist' %}">Create a new Watchlist</a>
+        {% endif %}
         {% for watchlist, stocklist in data %}
         <table>
             <tr>
