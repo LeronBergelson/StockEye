@@ -30,11 +30,7 @@ def home(request):
     )
 
 def contact(request):
-    """
-    Provides Users with information on how to contact the StockEye team.
-
-    Does not directly implement a view.
-    """
+    """Renders the contact page."""
     assert isinstance(request, HttpRequest)
     return render(
         request,
@@ -47,11 +43,7 @@ def contact(request):
     )
 
 def about(request):
-    """
-    Includes various information about the StockEye project itself.
-
-    Does not directly implement a view.
-    """
+    """Renders the about page."""
     assert isinstance(request, HttpRequest)
     return render(
         request,
@@ -64,12 +56,6 @@ def about(request):
     )
 
 def register(request):
-    """
-    Allows guest Users to register for an account, allowing them to track 
-    Stocks of their choosing in Watchlists.
-
-    Direct implementation of the RegistrationView.
-    """
     form = UserCreationForm()
 
     if request.method == 'POST':
@@ -149,6 +135,43 @@ def stocks(request):
         request,
         'app/stocksview.html',
         context,
+    )
+
+def stock(request, s_id):
+    """
+    Displays the selected stock, providing the name, sentiment, and the price of said stock.
+
+    Direct implementation of the StockView.
+
+    Parameters: s_id - is the id of the desired stock to view.
+    """
+    assert isinstance(request, HttpRequest)
+
+    try:
+        # Get the requested stock (stock_id) from stockList
+        stocks = StockList.objects.filter(stock_id=s_id).get()
+        stock_id = stocks.stock_id
+        stock_name = stocks.symbol
+        stock_value = stocks.value
+        #do we have a sentiment object?
+
+    except StockList.DoesNotExist:
+        # If no stocks exist aka no list, redirected to manage_watchlist to create one. 
+        return redirect('manage_watchlists')
+   
+    context = {
+        'title': 'Stocks',
+        'year': datetime.now().year,
+        'user': request.user,
+        'stock_id': stock_id,
+        'stock_name': stock_name,
+        'stock_value': stock_value,
+    }
+
+    return render(
+        request,
+        'app/stock.html',
+        context
     )
 
 @login_required
@@ -297,12 +320,11 @@ def edit_watchlist(request, w_id):
 
 @login_required
 def watchlists(request):
-    """ 
-    Page where Users can view their Watchlists.
-
-    Direct implementation of the WatchlistView.
+    """ Renders the watchlists page """
     """
-
+    Alternative to @login_required decorator: manually test with:
+        request.user.is_authenticated
+    """
     assert isinstance(request, HttpRequest)
 
     # Get all of the user's watchlists

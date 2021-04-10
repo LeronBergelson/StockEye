@@ -41,5 +41,9 @@ urlpatterns = [
     path('profile/', views.account_settings, name='profile'),
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
     path('admin/', admin.site.urls),
+<<<<<<< HEAD
     path('stocks/', views.stocks, name='stocks'),
+=======
+    path('stock/', views.stock, name='stock'),
+>>>>>>> origin
 ]
