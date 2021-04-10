@@ -10,6 +10,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 
 from .models import UserData, WatchList
+from .forms import CreateWatchListForm, UserChangeForm
 
 def home(request):
     """
@@ -79,12 +80,42 @@ def register(request):
 
     return render(request, 'app/registration.html', {'form':form})
 
+@login_required
+def account_settings(request):
+    """
+    Allows Users to edit their account info, such as their email and password.
+
+    Implementation of the AccountSettingsView.
+    """
+    assert isinstance(request, HttpRequest)
+
+    try:
+        user = request.user
+        change_user_form = UserChangeForm()
+        #change_password_form = AdminPasswordChangeForm()
+    except UserData.DoesNotExist:
+        return redirect('register')
+        
+    context = {
+        'title': 'User Profile',
+        'message': 'Edit Account Settings',
+        'year': datetime.now().year,
+        'user': request.user,
+        'form': change_user_form,
+    }
+
+    return render(
+        request,
+        'app/accountSettings.html',
+        context,
+    )
+
 def search(request):
     """renders the trending page"""
     assert isinstance(request, HttpRequest)
     return render (
         request,
-        'app/trending.html',
+        'app/search.html',
         {
             'title': 'Trending',
             'message': 'Your trending page',
@@ -117,23 +148,38 @@ def create_watchlist(request):
     Allows Users to create a new Watchlist
     """
 
+    # Below loop seems very inefficient, since it querys the database
+    # TODO: See if the below loop can be optimized, or another solution
+    #       is available.
+
     # Get the current highest watchList_id
-    watchlist_id = 0
-    for watchlist in WatchList.objects.filter(user=request.user).all():
-        if watchlist.watchList_id > watchlist_id:
-            watchlist_id = watchlist.watchList_id
-    
+    watchlist = WatchList.objects.latest()
+    watchlist_id = watchlist.watchList_id
     watchlist_id += 1
 
-    # Create a new Watchlist in the database
-    new_watchlist = WatchList.objects.create(
-        user=request.user,
-        watchList_id=watchlist_id
+    if request.method == 'POST':
+        form = CreateWatchListForm(request.POST)
+        if form.is_valid():
+            new_watchlist = form.save(commit=False)
+            new_watchlist.user = request.user
+            new_watchlist.watchList_id = watchlist_id
+            new_watchlist.save()
+            form.save_m2m()
+            return redirect('edit_watchlist', w_id=watchlist_id)
+
+    else:
+        # Create a blank form otherwise
+        form = CreateWatchListForm()
+
+    context = {
+        'form': form,
+    }
+
+    return render(
+        request,
+        'app/create_watchlist.html',
+        context,
     )
-
-    new_watchlist.save()
-
-    return redirect('edit_watchlist', w_id=watchlist_id)
 
 
 @login_required
@@ -160,7 +206,7 @@ def manage_watchlists(request):
 
     try:
         watchlists = WatchList.objects.filter(user=request.user).all()
-
+        
     except WatchList.DoesNotExist:
         watchlists = []
 
@@ -196,6 +242,7 @@ def edit_watchlist(request, w_id):
         # Get the user's watchlist that matches the provided id
         watchlist = WatchList.objects.filter(user=request.user, watchList_id=w_id).get()
         watchlist_id = watchlist.watchList_id
+        watchlist_name = watchlist.watchList_name
 
         for stock in watchlist.stockResults.all():
             stocks.append(stock)
@@ -215,6 +262,7 @@ def edit_watchlist(request, w_id):
         'year': datetime.now().year,
         'user': request.user,
         'watchlist_id': watchlist_id,
+        'watchlist_name': watchlist_name,
         'stocks': stocks,
     }
 
@@ -240,65 +288,37 @@ def watchlists(request):
         watchlists = WatchList.objects.filter(user=request.user).all()
         
         # Store the stocks in each watchlist in a dictionary
-        # Each key is the watchList_id from the user's watchlists
+        # Each key is the watchList_name from the user's watchlists
         # Each value is a list of Stocks (as StockList model objects) 
         # present in the watchlist
-        stocks = {}
+        stocks = []
+        counter = 0
 
         for w in watchlists:
-            stocks[w.watchList_id] = []
+            stocks.append([])
             for stock in w.stockResults.all():
                 # No need to check if key is in the dict, since 
                 # it is added above
-                stocks[w.watchList_id].append(stock)
+                stocks[counter].append(stock)
+            counter += 1
 
     except UserData.DoesNotExist:
         # Unable to find a matching user, default to no watchlists & stocks
         watchlists = None
         stocks = None
     
-    # DEBUG
-    #print(stocks)
+    watchlist_stocks = zip(watchlists, stocks)
 
     context = {
         'title':'Watchlists',
         'message':'Your Watchlist page.',
         'year':datetime.now().year,
         'user': request.user,
-        'stocks': stocks,
+        'data': watchlist_stocks,
     }
 
     return render(
         request,
         'app/watchlists_test.html',
         context
-    )
-    
-
-def accountSettings(request):
-    """
-    Allows Users to edit their account info, such as their email and password.
-
-    Implementation of the AccountSettingsView.
-    """
-    assert isinstance(request, HttpRequest)
-
-    try:
-        user = request.user
-        change_user_form = UserChangeForm()
-        change_password_form = AdminPasswordChangeForm()
-    except UserData.DoesNotExist:
-        return redirect('register')
-        
-    context = {
-        'title': 'User Profile',
-        'message': 'Edit Account Settings',
-        'year': datetime.now().year,
-        'user': request.user,
-    }
-
-    return render(
-        request,
-        'app/accountSettings.html',
-        context,
     )

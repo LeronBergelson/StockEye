@@ -24,7 +24,11 @@
         <table>
             {% for watchlist in watchlists %}
             <tr>
-                <td>Watchlist {{ watchlist.watchList_id }}</td>
+                {% if watchlist.watchList_name %}
+                    <td>{{ watchlist.watchList_name }}</td>
+                {% else %}
+                    <td>Watchlist {{ watchlist.watchList_id }}</td>
+                {% endif %}
                 <td><a href="{% url 'delete_watchlist' w_id=watchlist.watchList_id %}" class="btn btn-danger">Delete</a></td>
             </tr>
             {% endfor %}
