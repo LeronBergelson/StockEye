@@ -6,7 +6,8 @@
     <title>{{ title }} - StockEye</title>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap.min.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}" />
+    {% now "U" as u_time %}
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}?{{ u_time }}" />
     <script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
 </head>
 

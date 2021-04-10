@@ -27,6 +27,17 @@ class CreateWatchListForm(forms.ModelForm):
         fields = ['watchList_name']
         exclude = ['user', 'stockResults', 'watchList_id']
 
+class EditWatchListForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(EditWatchListForm, self).__init__(*args, **kwargs)
+        self.initial['stockResults'] = [s.pk for s in self.instance.stockResults.all()]
+        self.initial['watchList_id'] = [self.instance.watchList_id]
+
+    class Meta:
+        model = WatchList
+        fields = ['stockResults']
+        exclude = ['watchList_name', 'user', 'watchList_id']
+
 class UserChangeForm(forms.ModelForm):
     class Meta:
         model = User

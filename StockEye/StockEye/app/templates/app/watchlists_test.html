@@ -18,14 +18,18 @@
             <p>Username: {{ user.username }} (Not a valid user)</p>
         {% endif %}
 
+        {% if data %}
         <a href="{% url 'manage_watchlists' %}" class="btn btn-warning">Manage Watchlists</a>
+        {% else %}
+        <a href="{% url 'create_watchlist' %}">Create a new Watchlist</a>
+        {% endif %}
         {% for watchlist, stocklist in data %}
         <table>
             <tr>
                 {% if watchlist.watchList_name %}
-                    <th><a href="{% url 'edit_watchlist' w_id=watchlist.watchList_id %}">{{ watchlist.watchList_name }}</a></th>
+                    <td colspan="4" style="text-align: center;"><a href="{% url 'edit_watchlist' w_id=watchlist.watchList_id %}">{{ watchlist.watchList_name }}</a></th>
                 {% else %}
-                <th><a href="{% url 'edit_watchlist' w_id=watchlist.watchList_id %}">Watchlist {{ watchlist.watchList_id }}</a></th>
+                <td colspan="4" style="text-align: center;"><a href="{% url 'edit_watchlist' w_id=watchlist.watchList_id %}">Watchlist {{ watchlist.watchList_id }}</a></th>
                 {% endif %}
             </tr>
             <tr>
