@@ -5,8 +5,14 @@
 
 <body>
 <div class="jumbotron text-center">
-        <h1>StockEye: Watchlists</h1>
-        <p>Personalized Watchlists</p>
+        {% if watchlist_name %}
+            <h1>Watchlist: {{ watchlist_name }}</h1>
+        {% elif watchlist_id %}
+            <h1>Watchlist: {{ watchlist_id }}</h1>
+        {% else %}
+            <h1>StockEye: Watchlist</h1>
+        {% endif %}
+        <p>Edit your Watchlist</p>
     </div>
 
     <!-- Container (Watchlist Section) -->
@@ -18,14 +24,12 @@
             <p>Username: {{ user.username }} (Not a valid user)</p>
         {% endif %}
 
-        <a href="{% url 'manage_watchlists' %}" class="btn btn-warning">Manage Watchlists</a>
-        {% for watchlist, stocklist in data %}
         <table>
             <tr>
-                {% if watchlist.watchList_name %}
-                    <th><a href="{% url 'edit_watchlist' w_id=watchlist.watchList_id %}">{{ watchlist.watchList_name }}</a></th>
+                {% if watchlist_name %}
+                    <th>{{ watchlist_name }}</th>
                 {% else %}
-                <th><a href="{% url 'edit_watchlist' w_id=watchlist.watchList_id %}">Watchlist {{ watchlist.watchList_id }}</a></th>
+                    <th>Watchlist {{watchlist_id}}</th>
                 {% endif %}
             </tr>
             <tr>
@@ -34,7 +38,7 @@
                 <th># - Sentiments</th>
                 <th>Value</th>
             </tr>
-            {% for stock in stocklist %}
+            {% for stock in stocks %}
             <tr>
                 <td>{{ stock.symbol }}</td>
                 <td>{{ stock.positiveSentimentCount }}</td>
@@ -43,7 +47,6 @@
             </tr>
             {% endfor %}
         </table>
-        {% endfor %}
     </div>
    
 </body>
