@@ -97,15 +97,15 @@ def account_settings(request):
         context,
     )
 
-def search(request):
-    """renders the search page"""
+def trending(request):
+    """renders the trending page"""
     assert isinstance(request, HttpRequest)
     return render (
         request,
-        'app/search.html',
+        'app/trending.html',
         {
-            'title': 'search',
-            'message': 'Your search page',
+            'title': 'trending',
+            'message': 'Your trending page',
             'year': datetime.now().year,
         }
     )
