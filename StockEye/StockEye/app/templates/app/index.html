@@ -1,16 +1,26 @@
+<!DOCTYPE html>
+<html>
 {% extends "app/layout.html" %}
 {#{% load staticfiles %}#}
 {% load static %}
 {% block content %}
-
+<link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap.min.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}" />
 <body>
-<div class="jumbotron text-center">
+    <div class="jumbotron text-center">
         <h1>StockEye</h1>
-        <p>Slogan</p>
+        <p>slogan</p>
     </div>
 
-    <!-- Container (About Section) -->
- 
+
+    <!-- Container (About Section)  -->
+   
+    
+    <img class= "invest" src="{% static 'Images/laptop.png'%}">
+    <div class= "test">
+    </div>
    
 </body>
+
 {% endblock %}
+</html>
