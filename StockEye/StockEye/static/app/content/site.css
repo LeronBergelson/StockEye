@@ -45,7 +45,7 @@ h1{
 
 
 .container-fluid {
-    padding: 60px 50px;
+    padding: 30px 20px;
 }
 
 .bg-grey {
@@ -161,7 +161,11 @@ h1{
         color: #000000 !important;
     }
 
-.navbar-nav li a:hover, .navbar-nav li.active a {
+    .navbar .navbar-brand {
+        color: #000000 !important;
+    }
+
+.navbar-nav li a:hover, li.active a {
     color: #0078E7 !important;
     background-color: #fff !important;
 }
@@ -256,7 +260,7 @@ footer .glyphicon {
 .twitter {
     position:absolute;
     left: 90px;
-    top: 396px;
+    top: 96px;
 
 }
 .customh{
@@ -270,7 +274,7 @@ footer .glyphicon {
     width: 718px;
     height: 190px;
     left: 300px;
-    top: 534px;
+    top: 200px;
 
     
 
@@ -287,7 +291,7 @@ footer .glyphicon {
     width: 718px;
     height: 190px;
     left: 300px;
-    top: 604px;
+    top: 254px;
 
     
 
@@ -304,7 +308,7 @@ footer .glyphicon {
     width: 693px;
     height: 41px;
     left: 450px;
-    top: 850px; 
+    top: 500px; 
    
 }
 
@@ -340,7 +344,7 @@ footer .glyphicon {
     width: 140px;
     height: 22px;
     left: 280px;
-    top: 680px;
+    top: 328px;
 }
 .green_dot{
     height: 25px;
