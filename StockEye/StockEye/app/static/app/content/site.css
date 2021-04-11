@@ -228,3 +228,24 @@ footer .glyphicon {
 .downloadDiv {
     float: left
 }
+
+.invest {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    left: 30px;
+    bottom: 300px;
+    border: 1px solid #000000;
+    
+}
+.test {
+    border: 1px solid #000000;
+    border-radius: 0 !important;
+    transition: box-shadow 0.5s;
+}
+
+.hi {
+    border: 1px solid #f4511e;
+    border-radius: 0 !important;
+    transition: box-shadow 0.5s;
+}
