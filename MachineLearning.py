@@ -67,7 +67,7 @@ def connection(db):
 
 def updateDatabase(result, stock_id, symbol, tweet_id):
 
-    conn = connection(r"C:\Users\USER\Documents\GitHub\StockEye\db.sqlite3")
+    conn = connection(r"\StockEye\StockEye\db.sqlite3")
     cursor = conn.cursor()
     
     if result == "Positive":        
