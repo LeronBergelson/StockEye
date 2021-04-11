@@ -19,6 +19,9 @@ h4 {
     font-weight: 400;
     margin-bottom: 30px;
 }
+h5{
+    color: #000000;
+}
 
 .jumbotron {
     background-color: #0d0051;
@@ -230,15 +233,98 @@ footer .glyphicon {
 }
 
 .invest {
-    position: absolute;
-    width: 593px;
-    height: 470px;
-    left: 1027px;
-    top: 196px;
-    border: 1px solid #f4511e;
+   position: relative;
+    left: 600px;
+    top: 40px;
+    
 }
-.test {
-    border: 1px solid #f4511e;
-    border-radius: 0 !important;
-    transition: box-shadow 0.5s;
+
+.twitter {
+    position:absolute;
+    left: 90px;
+    top: 396px;
+
+}
+.customh{
+    font-family: Nunito;
+    font-size:50px;
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 800; 
+    line-height: 95.48px;
+    position: absolute;
+    width: 718px;
+    height: 190px;
+    left: 300px;
+    top: 534px;
+
+    
+
+    
+}
+.customf{
+    font-family: Nunito;
+    font-size:50px;
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 800; 
+    line-height: 95.48px;
+    position: absolute;
+    width: 718px;
+    height: 190px;
+    left: 300px;
+    top: 604px;
+
+    
+
+    
+}
+.custom2{
+    font-family: Nunito;
+    font-size: 20px;
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 800; 
+    line-height: 40.92px; 
+    position: absolute;
+    width: 693px;
+    height: 41px;
+    left: 450px;
+    top: 850px; 
+   
+}
+
+.custom3{
+    font-family: Nunito;
+    font-size: 15px;
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 800; 
+    line-height: 44.1px; 
+    color: #cacaca;
+    margin-top: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+    kerning: 10px;
+    
+
+}
+
+.cont1{
+    height:270px;
+    background-color: #fcfcfc;
+
+}
+
+.cont2{
+    height:270px;
+    background-color: #0078E7;
+
+}
+.vect{
+    position: absolute;
+    width: 140px;
+    height: 22px;
+    left: 280px;
+    top: 680px;
 }
