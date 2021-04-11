@@ -1,4 +1,5 @@
 {% extends "app/layout.html" %}
+{#{% load staticfiles %}#}
 {% load static %}
 {% block content %}
 
@@ -24,28 +25,31 @@
 
 </div>
 <div class="content">
+    {% for stocklist in data%}
     <table>
   	    <tr>
-  	        {% for stock in StockList %}
-
-                <th>Symbol</th>
-                <th>Price</th>
-                <th>Sentiment</th>
+  	       
+  	        <p><a href="{% url 'trending' %}"> viewing stocks</a></p>
+              <th>Symbol</th>
+              <th># + Sentiments</th>
+              <th># - Sentiments</th>
+              <th>Value</th>
                 
-            </tr>
-            
-            
-           
+        </tr>
+            {% for stock in stocklist %}
             <tr>
-                <td>{{ trending.symbol }}</td>
-                <td>{{ trending.value }}</td>
-                <td>{{ stocks.sentiment}}</td>
+                <td>{{ stock.symbol }}</td>
+                <td>{{ stock.positiveSentimentCount }}</td>
+                <td>{{ stock.negativeSentimentCount }}</td>
+                <td>${{ stock.value }}</td>
             </tr>
-            </table>
             {% endfor %}
+      </table>
+     {% endfor %}
   </div>
 
     
 
-</body>
+    </body>
+
 {% endblock %}
