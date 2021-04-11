@@ -347,3 +347,16 @@ footer .glyphicon {
       float:right;
       
   }
+  table {
+    
+    background: #0078E7;
+    font-size:15px ;
+    width: 33%;
+    position: relative;
+  }
+.btn{
+
+    margin-right: 33%;
+    margin-left: 66%;
+
+}
