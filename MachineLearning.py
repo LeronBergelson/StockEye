@@ -70,10 +70,7 @@ def updateDatabase(result, stock_id, symbol, tweet_id):
     conn = connection(r"C:\Users\USER\Documents\GitHub\StockEye\db.sqlite3")
     cursor = conn.cursor()
     
-    #params = (stock_id, symbol, tweet_id)
-    
-    if result == "Positive":
-        
+    if result == "Positive":        
         update = ''' INSERT INTO app_stocklist(stock_id, symbol, positiveSentimentCount, negativeSentimentCount, value, tweet_id) VALUES('{}', '{}', "1", "0", "0.0", '{}') ON CONFLICT(stock_id) DO UPDATE SET positiveSentimentCount = positiveSentimentCount + 1 '''.format(stock_id, symbol, tweet_id)
         
     else: 
