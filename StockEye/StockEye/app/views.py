@@ -9,8 +9,8 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 
-from .models import UserData, WatchList
-from .forms import CreateWatchListForm, UserChangeForm
+from .models import UserData, WatchList, StockList
+from .forms import CreateWatchListForm, UserChangeForm, EditWatchListForm
 
 def home(request):
     """
@@ -18,6 +18,7 @@ def home(request):
 
     Direct implementation of the HomeView.
     """
+
     assert isinstance(request, HttpRequest)
     return render(
         request,
@@ -29,11 +30,7 @@ def home(request):
     )
 
 def contact(request):
-    """
-    Provides Users with information on how to contact the StockEye team.
-
-    Does not directly implement a view.
-    """
+    """Renders the contact page."""
     assert isinstance(request, HttpRequest)
     return render(
         request,
@@ -46,11 +43,7 @@ def contact(request):
     )
 
 def about(request):
-    """
-    Includes various information about the StockEye project itself.
-
-    Does not directly implement a view.
-    """
+    """Renders the about page."""
     assert isinstance(request, HttpRequest)
     return render(
         request,
@@ -63,12 +56,6 @@ def about(request):
     )
 
 def register(request):
-    """
-    Allows guest Users to register for an account, allowing them to track 
-    Stocks of their choosing in Watchlists.
-
-    Direct implementation of the RegistrationView.
-    """
     form = UserCreationForm()
 
     if request.method == 'POST':
@@ -110,18 +97,19 @@ def account_settings(request):
         context,
     )
 
-def search(request):
+def trending(request):
     """renders the trending page"""
     assert isinstance(request, HttpRequest)
     return render (
         request,
-        'app/search.html',
+        'app/trending.html',
         {
-            'title': 'Trending',
+            'title': 'trending',
             'message': 'Your trending page',
             'year': datetime.now().year,
         }
     )
+
 def stocks(request):
     """
     Displays all stocks. User is able to filter stocks, using buttons 
@@ -131,15 +119,59 @@ def stocks(request):
     Direct implementation of the FilterStockView.
     """
 
-
+    try:
+        stocks = StockList.objects.all()
+    except StockList.DoesNotExist:
+        stocks = None
 
     context = {
-
+        'title': 'Filter Stocks',
+        'year': datetime.now().year,
+        'user': request.user,
+        'stocks': stocks,
     }
 
     return render(
         request,
-        'app/'
+        'app/stocksview.html',
+        context,
+    )
+
+def stock(request, s_id):
+    """
+    Displays the selected stock, providing the name, sentiment, and the price of said stock.
+
+    Direct implementation of the StockView.
+
+    Parameters: s_id - is the id of the desired stock to view.
+    """
+    assert isinstance(request, HttpRequest)
+
+    try:
+        # Get the requested stock (stock_id) from stockList
+        stocks = StockList.objects.filter(stock_id=s_id).get()
+        stock_id = stocks.stock_id
+        stock_name = stocks.symbol
+        stock_value = stocks.value
+        #do we have a sentiment object?
+
+    except StockList.DoesNotExist:
+        # If no stocks exist aka no list, redirected to manage_watchlist to create one. 
+        return redirect('manage_watchlists')
+   
+    context = {
+        'title': 'Stocks',
+        'year': datetime.now().year,
+        'user': request.user,
+        'stock_id': stock_id,
+        'stock_name': symbol,
+        'stock_value': value,
+    }
+
+    return render(
+        request,
+        'app/stock.html',
+        context
     )
 
 @login_required
@@ -236,27 +268,40 @@ def edit_watchlist(request, w_id):
     """
     assert isinstance(request, HttpRequest)
 
-    stocks = []
-
+    # Get the user's watchlist that matches the provided id
     try:
-        # Get the user's watchlist that matches the provided id
         watchlist = WatchList.objects.filter(user=request.user, watchList_id=w_id).get()
         watchlist_id = watchlist.watchList_id
         watchlist_name = watchlist.watchList_name
 
-        for stock in watchlist.stockResults.all():
-            stocks.append(stock)
-
-        print(f'Stocks: {stocks}')
+        stocks = []
 
     except WatchList.DoesNotExist:
         # Given an invalid watchlist id
-        # For now, redirect to the watchlists page
-        # TODO: Possibly change the behaviour of invalid ids (maybe 
-        #       show a message on the watchlists page that a watchlist 
-        #       with the given id doesn't exist?)
-        return redirect('watchlists')
-    
+            # For now, redirect to the watchlists page
+            # TODO: Possibly change the behaviour of invalid ids (maybe 
+            #       show a message on the watchlists page that a watchlist 
+            #       with the given id doesn't exist?)
+            return redirect('watchlists')
+
+    if request.method == 'POST':
+        form = EditWatchListForm(request.POST, instance=watchlist)
+        if form.is_valid:
+            updated_watchlist = form.save(commit=False)
+            updated_watchlist.watchList_id = watchlist_id
+            updated_watchlist.user = request.user
+            updated_watchlist.name = watchlist_name
+            updated_watchlist.save()
+            form.save_m2m()
+    else:
+
+        form = EditWatchListForm(instance=watchlist)
+
+    for stock in watchlist.stockResults.all():
+        stocks.append(stock)
+
+    print(f'Stocks: {stocks}')
+
     context = {
         'title': 'Edit Watchlist',
         'year': datetime.now().year,
@@ -264,6 +309,7 @@ def edit_watchlist(request, w_id):
         'watchlist_id': watchlist_id,
         'watchlist_name': watchlist_name,
         'stocks': stocks,
+        'form': form,
     }
 
     return render(
@@ -274,40 +320,37 @@ def edit_watchlist(request, w_id):
 
 @login_required
 def watchlists(request):
-    """ 
-    Page where Users can view their Watchlists.
-
-    Direct implementation of the WatchlistView.
+    """ Renders the watchlists page """
     """
-
+    Alternative to @login_required decorator: manually test with:
+        request.user.is_authenticated
+    """
     assert isinstance(request, HttpRequest)
 
-    # Since these can throw Django errors if they don't exist, catch them
-    try:
-        # Get all of the user's watchlists
-        watchlists = WatchList.objects.filter(user=request.user).all()
-        
-        # Store the stocks in each watchlist in a dictionary
-        # Each key is the watchList_name from the user's watchlists
-        # Each value is a list of Stocks (as StockList model objects) 
-        # present in the watchlist
-        stocks = []
-        counter = 0
-
-        for w in watchlists:
-            stocks.append([])
-            for stock in w.stockResults.all():
-                # No need to check if key is in the dict, since 
-                # it is added above
-                stocks[counter].append(stock)
-            counter += 1
-
-    except UserData.DoesNotExist:
-        # Unable to find a matching user, default to no watchlists & stocks
-        watchlists = None
-        stocks = None
+    # Get all of the user's watchlists
+    watchlists = WatchList.objects.filter(user=request.user).all()
     
-    watchlist_stocks = zip(watchlists, stocks)
+    # Store the stocks in each watchlist in a dictionary
+    # Each key is the watchList_name from the user's watchlists
+    # Each value is a list of Stocks (as StockList model objects) 
+    # present in the watchlist
+    stocks = []
+    counter = 0
+
+    for w in watchlists:
+        stocks.append([])
+        for stock in w.stockResults.all():
+            # No need to check if key is in the dict, since 
+            # it is added above
+            stocks[counter].append(stock)
+        counter += 1
+
+    print(f'Watchlists:{watchlists}\tStocks:{stocks}')
+
+    if watchlists.count() != 0 and len(stocks) != 0:
+        watchlist_stocks = zip(watchlists, stocks)
+    else:
+        watchlist_stocks = None
 
     context = {
         'title':'Watchlists',
@@ -319,6 +362,6 @@ def watchlists(request):
 
     return render(
         request,
-        'app/watchlists_test.html',
+        'app/watchlists.html',
         context
     )

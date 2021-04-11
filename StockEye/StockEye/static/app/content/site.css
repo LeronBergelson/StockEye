@@ -2,6 +2,7 @@ body {
     font: 400 15px Lato, sans-serif;
     line-height: 1.8;
     color: #818181;
+    background: url("/static/Images/double-bubble-outline.png");
 }
 
 h2 {
@@ -328,3 +329,21 @@ footer .glyphicon {
     left: 280px;
     top: 680px;
 }
+.green_dot{
+    height: 25px;
+    width: 25px;
+    background-color: #57B889;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .red_dot {
+    height: 25px;
+    width: 25px;
+    background-color: #B8575D;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .sentiments{
+      float:right;
+      
+  }
