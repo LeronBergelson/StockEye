@@ -54,7 +54,7 @@ class MyStreamListener(tweepy.StreamListener):
 
         if stock_id != -1:
             # Construct Tweet object from streamed data
-            currentTweet = Tweet(text, status.id, status.created_at, self.stocks[stock_id], stock_id)
+            currentTweet = Tweet(text, status.id, status.created_at, self.stocks[stock_id][1:], stock_id)
 
             #print(text)
             MachineLearning.evaluate(currentTweet)
