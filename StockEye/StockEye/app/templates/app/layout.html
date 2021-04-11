@@ -12,6 +12,7 @@
 </head>
 
 <body>
+    
     <div class="navbar navbar-inverse">
         <div class="container">
             <div class="navbar-header">
@@ -25,26 +26,26 @@
                 {% if user.is_authenticated %}
                     <ul class="nav navbar-nav navbar-left">
                         <!--<li><span class="navbar-brand">Hello {{ user.username }}!</span></li>-->
-                        <li><a href="{% url 'home' %}">Home</a></li>
-                        <li><a href="{% url 'trending' %}">Trending</a></li>   
-                        <li><a href="{% url 'watchlists' %}">My Watchlists</a></li>      
+                        <li><a class="nav_button" href="{% url 'home' %}">Home</a></li>
+                        <li><a class="nav_button" href="{% url 'trending' %}">Trending</a></li>   
+                        <li><a class="nav_button" href="{% url 'watchlists' %}">My Watchlists</a></li>      
                     </ul>
                     <form id="logoutForm" action="/logout/" method="post" class="navbar-right">
                         {% csrf_token %}
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="{% url 'profile' %}">Profile Settings</a></li>         
-                            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                            <li><a class="register_button" href="{% url 'profile' %}">Profile Settings</a></li>         
+                            <li><a class="login_button" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
                         </ul>
                     </form>
                 {% else %}
                     <ul class="nav navbar-nav navbar-left">
-                        <li><a href="{% url 'home' %}">Home</a></li>
-                        <li><a href="{% url 'trending' %}">Trending</a></li>
+                        <li><a class="nav_button" href="{% url 'home' %}">Home</a></li>
+                        <li><a class="nav_button" href="{% url 'trending' %}">Trending</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         
-                        <li><a href="{% url 'register' %}">Register</a></li>
-                        <li><a href="{% url 'login' %}">Log in</a></li>
+                        <li><a class="register_button" href="{% url 'register' %}">Register</a></li>
+                        <li><a class="login_button" href="{% url 'login' %}">Log in</a></li>
                     </ul>
                 {% endif %}
             </div>
