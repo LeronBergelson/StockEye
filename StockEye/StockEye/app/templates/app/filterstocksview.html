@@ -4,31 +4,23 @@
 <h2>Filter Stock View</h2>
 
 
-ls
-
-<div class = "content"></div>
+<div class = "content">
      <table>
-      {% for stock in watchlists %}
-                <tr>
-                  <td>{{stock.id}}</td>
-                    <td>{{stock.stocks}}</td>
-                </tr>
-                {% endfor %}
       <tr>
-        {% if stock.stocks.id}
-          <p><a> href = "{url 'stock' s_id = stocks.stock_id}>{{stocks.tweet_id}}</a></p>
+        {% if stocks.stock.id %}
+          <p><a> href = "{% url 'stock' s_id = stocks.stock_id %}">{{% stocks.tweet_id %}}</a></p>
             <th>Name</th>
             <th>Price</th>
             <th>Sentiment</th>
-        <tr>
-         {% stocks = Stocklist.objects.filter(stock_id = s_id).get()%}
-        </tr>
+        {% endif %}
+      </tr>
+      <tr>
           <td>{{stocks.name}}</td>
           <td>{{stocks.price}}</td>
           <td>{{stocks.sentiment}}</td>
       </tr>
       </table>
-      {% endfor %}
+    </div>   
 
 {% endblock %}
 
