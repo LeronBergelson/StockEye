@@ -12,9 +12,9 @@
 </head>
 
 <body>
-<div class="jumbotron text-center">
-        <h1>Trending Stocks</h1>
-</div>
+
+    <h1>Trending Stocks</h1>
+
 
     <div class = "sentiments"> 
         <h2><span class="green_dot"></span> = Positive Sentiment
@@ -22,10 +22,28 @@
         <span class="red_dot"></span> = Negative Sentiment </h2>
     </div>
 
-  <div>
-      
-  </div>
+</div>
+<div class="content">
+    <table>
+  	    <tr>
+  	        {% for stock in StockList %}
 
+                <th>Symbol</th>
+                <th>Price</th>
+                <th>Sentiment</th>
+                
+            </tr>
+            
+            
+           
+            <tr>
+                <td>{{ trending.symbol }}</td>
+                <td>{{ trending.value }}</td>
+                <td>{{ stocks.sentiment}}</td>
+            </tr>
+            </table>
+            {% endfor %}
+  </div>
 
     
 

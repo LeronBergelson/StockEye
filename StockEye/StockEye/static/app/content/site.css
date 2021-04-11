@@ -23,13 +23,26 @@ h4 {
 h5{
     color: #000000;
 }
-
-.jumbotron {
-    background-color: #0d0051;
-    color: #fff;
-    padding: 100px 25px;
+h1{
+    font-size: 38px;
+    text-transform: uppercase;
+    color: #000000;
+    margin-left: 10px;
+    padding-top: 100px;
+    padding-bottom: 0px;
+    font-weight: 600;
     font-family: Montserrat, sans-serif;
 }
+.jumbotron {
+    background-color: #0000;
+    color: #000000;
+    margin-left: 10px;
+    padding-top: 0px;
+    padding-bottom: 0%;
+    font-family: Montserrat, sans-serif;
+}
+  
+
 
 .container-fluid {
     padding: 60px 50px;
@@ -134,7 +147,7 @@ h5{
 
 .navbar {
     margin-bottom: 0;
-    background-color: #353535;
+    background-color: #0000;
     z-index: 9999;
     border: 0;
     font-size: 12px !important;
@@ -145,11 +158,11 @@ h5{
 }
 
     .navbar li a, .navbar .navbar-brand {
-        color: #fff !important;
+        color: #000000 !important;
     }
 
 .navbar-nav li a:hover, .navbar-nav li.active a {
-    color: #353535 !important;
+    color: #0078E7 !important;
     background-color: #fff !important;
 }
 
@@ -347,3 +360,16 @@ footer .glyphicon {
       float:right;
       
   }
+  table {
+    
+    background: #0078E7;
+    font-size:15px ;
+    width: 33%;
+    position: relative;
+  }
+.btn{
+
+    margin-right: 33%;
+    margin-left: 66%;
+
+}
