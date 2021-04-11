@@ -101,24 +101,32 @@ def trending(request):
     """renders the trending page"""
     assert isinstance(request, HttpRequest)
 
+   
+   
     try:
-        stocks = StockList.objects.all()
-       
-       
-
+        all_stocks = StockList.objects.all()
+        stocks = []
     except StockList.DoesNotExist:
-        stock= None
+        return ("no stocklist available")
+
+    for s in all_stocks:
+        stocks.append([])
+
+    print(f'All_stocks:{all_stocks}\tStocks:{stocks}')
+    
+    stock_Array = zip(all_stocks, stocks)
 
     context = {
-        'title': 'Trending',
+        'title': 'trending',
         'year': datetime.now().year,
+        'data': stock_Array,
     }
 
-    return render (
+    
+    return render(
         request,
         'app/trending.html',
-        context
-       
+        context,
     )
 
 def stocks(request):
