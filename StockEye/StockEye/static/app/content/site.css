@@ -23,13 +23,26 @@ h4 {
 h5{
     color: #000000;
 }
-
-.jumbotron {
-    background-color: #0d0051;
-    color: #fff;
-    padding: 100px 25px;
+h1{
+    font-size: 38px;
+    text-transform: uppercase;
+    color: #000000;
+    margin-left: 10px;
+    padding-top: 100px;
+    padding-bottom: 0px;
+    font-weight: 600;
     font-family: Montserrat, sans-serif;
 }
+.jumbotron {
+    background-color: #0000;
+    color: #000000;
+    margin-left: 10px;
+    padding-top: 0px;
+    padding-bottom: 0%;
+    font-family: Montserrat, sans-serif;
+}
+  
+
 
 .container-fluid {
     padding: 60px 50px;

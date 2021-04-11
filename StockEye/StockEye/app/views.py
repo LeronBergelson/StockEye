@@ -97,33 +97,27 @@ def account_settings(request):
         context,
     )
 
-def trending(request,s_id= all):
+def trending(request):
     """renders the trending page"""
     assert isinstance(request, HttpRequest)
 
     try:
-        stocks = StockList.objects.filter(stock_id=s_id).get()
-        stock_id = stocks.stock_id
-        stock_name = stocks.symbol
-        stock_value = stocks.value
+        stocks = StockList.objects.all()
+       
        
 
     except StockList.DoesNotExist:
-        return ('No stocklist')
+        stock= None
 
-    context={
+    context = {
         'title': 'Trending',
         'year': datetime.now().year,
-
-        'stock_id': stock_id,
-        'stock_name': symbol,
-        'stock_value': value,
     }
 
     return render (
         request,
         'app/trending.html',
-        context,
+        context
        
     )
 
