@@ -4,10 +4,46 @@ from nltk.corpus import twitter_samples, stopwords
 from nltk.tag import pos_tag
 from nltk import FreqDist, classify, NaiveBayesClassifier
 
+import sqlite3
+from sqlite3 import Error
+
 import re, string, random
 
 
 # TODO create sentiment class
+"""class Sentiment():
+    
+    __weight = 0
+    __message_ID = ""
+    __stock_ID = -1
+    __date = None
+    __symbol = None
+    
+    def __init__(self, result, message, stock_ID, date, symbol):
+    
+        self.__weight = result
+        self.__message_ID = message
+        self.__stock_id = stock_ID
+        self.__date = date
+        self.__symbol = symbol
+        
+        return
+    
+    def getWeight(self):
+        return self.__weight
+    
+    def getMessage(self):
+        return self.__message_ID
+
+    def getID(self):
+        return self.__stock_id
+
+    def getDate(self):
+        return self.__date
+    
+    def getSymbol(self):
+        return self.__symbol    
+"""
 
 def remove_noise(tweet_tokens, stop_words = ()):
 
@@ -37,8 +73,27 @@ def remove_noise(tweet_tokens, stop_words = ()):
 def get_tweets_for_model(cleaned_tokens_list):
     for tweet_tokens in cleaned_tokens_list:
         yield dict([token, True] for token in tweet_tokens)
+       
+def connection(db):
+    
+    connection = None
+    try:
+        connection = sqlite3.connect(db)
+    except Error as e:
+        print(e)
+        
+    return connection
 
-
+def updateDatabase(connection, update):
+    
+    sql_code = ''' UPDATE stock SET ? = ? + 1 WHERE stock_id = ? '''
+    
+    cursor = connection.cursor()
+    cursor.execute(sql_code, update)
+    connection.commit()
+    
+    return cursor.lastrowid
+    
 def evaluate(tweet):
     
     symbol = tweet.getSymbol()
@@ -46,11 +101,25 @@ def evaluate(tweet):
 
     # result is "Postive" or "Negative"
     result = classifier.classify(dict([token, True] for token in current_tokens))
+    
+    #current_sentiment = Sentiment(result, getText(tweet), getID(tweet), getDate(tweet), getSymbol(tweet))
+    
+    if result == "Positive":
+        update = (positive_sentiment, positive_sentiment, getStock_id(tweet))
+    else:
+        update = (negative_sentiment, negative_sentiment, getStock_id(tweet))
+        
+    current_connection = connection(r"StockEye\StockEye\db.sqlite3")
+    
+    updateDatabase(current_connection, update)
 
     #print(result)
 
     # TODO Create a sentiment object
+    
     # TODO Pass sentiment object to function for updating database
+    
+
 
 if __name__ != "__main__":
     positive_tweets = twitter_samples.strings('positive_tweets.json')
