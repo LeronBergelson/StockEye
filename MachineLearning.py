@@ -77,7 +77,7 @@ def updateDatabase(result, stock_id, symbol, tweet_id):
         update = ''' INSERT INTO app_stocklist(stock_id, symbol, positiveSentimentCount, negativeSentimentCount, value, tweet_id) VALUES('{}', '{}', "1", "0", "0.0", '{}') ON CONFLICT(stock_id) DO UPDATE SET positiveSentimentCount = positiveSentimentCount + 1 '''.format(stock_id, symbol, tweet_id)
         
     else: 
-        update = ''' INSERT INTO app_stocklist(stock_id, symbol, positiveSentimentCount, negativeSentimentCount, value, tweet_id) VALUES('{}', '{}', "0", "1", "0.0", '{}') ON CONFLICT('stock_id') DO UPDATE SET negativeSentimentCount = negativeSentimentCount + 1 '''.format(stock_id, symbol, tweet_id)
+        update = ''' INSERT INTO app_stocklist(stock_id, symbol, positiveSentimentCount, negativeSentimentCount, value, tweet_id) VALUES('{}', '{}', "0", "1", "0.0", '{}') ON CONFLICT(stock_id) DO UPDATE SET negativeSentimentCount = negativeSentimentCount + 1 '''.format(stock_id, symbol, tweet_id)
 
     cursor.execute(update)
         
