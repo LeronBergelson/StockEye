@@ -100,22 +100,31 @@ def account_settings(request):
 def trending(request):
     """renders the trending page"""
     assert isinstance(request, HttpRequest)
-
+    
     try:
         stocks = StockList.objects.all()
+        hold = []
+        count = 0
     except StockList.DoesNotExist:
         return print("No Stocks Available")
 
-    for s in stocks:
-        p = [s.positiveSentimentCount]
-        n = [s.negativeSentimentCount]
-        trend =  (p[0]) + (n[0])
+
+
+    while len(hold) < 10:
+        for  stock in stocks:
+            
+            trend =  stock.positiveSentimentCount + stock.negativeSentimentCount
+            if trend>= count:
+                hold.append(stock)
+                count = trend
+
     context = {
         'title': 'Filter Stocks',
         'year': datetime.now().year,
         'user': request.user,
         'stocks': stocks,
-        'trend': trend,
+        'hold': hold,
+        'trend' : trend
 
     }
 
