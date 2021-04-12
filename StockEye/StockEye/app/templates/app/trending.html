@@ -25,27 +25,27 @@
 
 </div>
 <div class="content">
-    {% for stocklist in data%}
+   
     <table>
-  	    <tr>
-  	       
-  	        <p><a href="{% url 'trending' %}"> viewing stocks</a></p>
-              <th>Symbol</th>
-              <th># + Sentiments</th>
-              <th># - Sentiments</th>
-              <th>Value</th>
+        <tr>
+        
+            <p><a href="{% url 'trending' %}"> Trending Stocks</a></p>
+            <th>Symbol</th>
+            <th>Total Number of Mentions</th>
+            
+            <th>Value</th>
                 
         </tr>
-            {% for stock in stocklist %}
+            {% for stock in stocks %}
             <tr>
                 <td>{{ stock.symbol }}</td>
-                <td>{{ stock.positiveSentimentCount }}</td>
-                <td>{{ stock.negativeSentimentCount }}</td>
+                <td>{{ trend }}</td>
+                
                 <td>${{ stock.value }}</td>
             </tr>
             {% endfor %}
-      </table>
-     {% endfor %}
+    </table>
+     
   </div>
 
     
