@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 
 from .models import UserData, WatchList, StockList
 from .forms import CreateWatchListForm, UserChangeForm, EditWatchListForm
+from stocklive import live_price
 
 def home(request):
     """
