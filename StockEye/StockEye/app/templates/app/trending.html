@@ -60,7 +60,7 @@
                         {{ stock.symbol }}
                     </div>
                     <img src="{% static 'Images/stock.svg'%}">
-                    <div class = "sentiment_card">No. of Mentions: {{ trend }}</div>
+                    <div class = "sentiment_card">No. of Mentions: {{ stock.trend}}</div>
                     <p> <img src="{% static 'Images/dollar.svg'%}">
                         {{ stock.value }}
 

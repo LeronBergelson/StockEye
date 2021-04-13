@@ -112,11 +112,12 @@ def trending(request):
 
     while len(hold) < 10:
         for  stock in stocks:
+            stock.trend = stock.positiveSentimentCount + stock.negativeSentimentCount
+            if stock.trend>= count:
+               hold.append(stock)
+               count = stock.trend
+               
             
-            trend =  stock.positiveSentimentCount + stock.negativeSentimentCount
-            if trend>= count:
-                hold.append(stock)
-                count = trend
 
     context = {
         'title': 'Filter Stocks',
@@ -124,7 +125,7 @@ def trending(request):
         'user': request.user,
         'stocks': stocks,
         'hold': hold,
-        'trend' : trend
+       # 'trend' : trend
 
     }
 
