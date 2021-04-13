@@ -355,25 +355,25 @@ footer .glyphicon {
 }
 
 
-.table {
-   
-    background: #cacaca;
+table {
+    position:relative;
     font-size:15px ;
-    width: 50%;
     position: relative;
     border-color: #cacaca;
-    border-radius: 25px;
     border-collapse: separate;
     border-spacing:20px;
-
 }
-tr,td,th{
+
+
+tr,th,td{
     color: #000000;
+    width: 50%;
     font-weight:14px ;
     background-color: #0078E7;
     border-color: #0078E7;
     border-radius: 15px;
 }
+
 
 .btn{
 	padding: 15px 40px !important;
@@ -453,6 +453,7 @@ tr,td,th{
 	font-size: 14px;
     letter-spacing: 2px;
     line-height: 5px;
+  
 }
 
 .sentiment_card {
@@ -466,5 +467,14 @@ tr,td,th{
     font-family: Arial;
 	font-weight: bolder;
 	font-size: 14px;
+    
+
+}
+.col-xs-3{
+    position: relative;
+    background-color: #cacaca;
+    border-radius: 25px;
+    width: 47%;
+   margin: 15px;
 
 }

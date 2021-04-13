@@ -110,7 +110,7 @@ def trending(request):
 
 
 
-    while len(hold) < 10:
+    while len(hold) < 8:
         for  stock in stocks:
             stock.trend = stock.positiveSentimentCount + stock.negativeSentimentCount
             if stock.trend>= count:
@@ -125,7 +125,6 @@ def trending(request):
         'user': request.user,
         'stocks': stocks,
         'hold': hold,
-       # 'trend' : trend
 
     }
 

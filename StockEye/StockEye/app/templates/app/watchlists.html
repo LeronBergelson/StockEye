@@ -24,10 +24,15 @@
         {% else %}
         <a href="{% url 'create_watchlist' %}">Create a new Watchlist</a>
         {% endif %}
+  
         {% for watchlist, stocklist in data %}
-      
-        <table class="table table-bordered">
             
+        <div class="col-xs-3">
+            
+           
+            
+            <table class="table bordered-table">
+                
             <tr>
                 {% if watchlist.watchList_name %}
                     <td colspan="4" style="text-align: center;"><a href="{% url 'edit_watchlist' w_id=watchlist.watchList_id %}">{{ watchlist.watchList_name }}</a></th>
@@ -36,14 +41,16 @@
                 {% endif %}
             </tr>
             
-            <tr >
+            <tr> 
                 <th>Symbol</th>
                 <th># + Sentiments</th>
                 <th># - Sentiments</th>
                 <th>Value</th>
-            
             </tr>
+        
+       
             {% for stock in stocklist %}
+            
             <tr>
                 <td>{{ stock.symbol }}</td>
                 <td>{{ stock.positiveSentimentCount }}</td>
@@ -51,9 +58,19 @@
                 <td>${{ stock.value }}</td>
             </tr>
             {% endfor %}
+            
+        
         </table>
-        {% endfor %}
+        
+
     </div>
+
+    
+        {% endfor %}
+
+    </div>
+
+   
 
 </body>
 {% endblock %}
