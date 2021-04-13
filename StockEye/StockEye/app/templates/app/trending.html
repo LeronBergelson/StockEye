@@ -19,7 +19,8 @@
         <p>Check Out Which Stocks are Being Talked About!</p>
     </div>
 
-
+</div>
+<!--
 <div class="content">
    
     <table class="table ">
@@ -32,6 +33,7 @@
         </tr>
             {% for stock in hold %}
             <tr>
+                
                 <td>{{ stock.symbol }}</td>
                 <td>{{ trend }}</td>
                 
@@ -41,6 +43,28 @@
     </table>
      
   </div>
+-->
+
+       <div class="container-fluid">
+        
+           <div class="row">
+            {% for stock in hold %}
+                <div class="col-md-3">
+                    <div class = "stock.name">
+                        {{ stock.symbol }}
+                    </div>
+                    <img src="{% static 'Images/stock.svg'%}">
+                    <div class = "sentiment_card">No. of Mentions: {{ stock.trend}}</div>
+                    <p> <img src="{% static 'Images/dollar.svg'%}">
+                        {{ stock.value }}
+
+                    </p>
+                
+                </div>
+                {% endfor %}
+           </div>
+           
+       </div>               
 
     
 
