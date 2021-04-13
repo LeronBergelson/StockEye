@@ -355,13 +355,15 @@ footer .glyphicon {
 }
 
 
-table {
+.table {
+
     position:relative;
     font-size:15px ;
     position: relative;
     border-color: #cacaca;
     border-collapse: separate;
     border-spacing:20px;
+
 }
 
 
@@ -475,6 +477,6 @@ tr,th,td{
     background-color: #cacaca;
     border-radius: 25px;
     width: 47%;
-   margin: 15px;
+    margin: 15px;
 
 }

@@ -27,15 +27,12 @@
   
         {% for watchlist, stocklist in data %}
             
-        <div class="col-xs-3">
-            
-           
-            
-            <table class="table bordered-table">
+        <div class="col-xs-3"> 
+            <table class="table bordered-table;">
                 
             <tr>
                 {% if watchlist.watchList_name %}
-                    <td colspan="4" style="text-align: center;"><a href="{% url 'edit_watchlist' w_id=watchlist.watchList_id %}">{{ watchlist.watchList_name }}</a></th>
+                    <td colspan="4" style="text-align: center;"><a href="{% url 'edit_watchlist' w_id=watchlist.watchList_id %};">{{ watchlist.watchList_name }}</a></th>
                 {% else %}
                 <td colspan="4" style="text-align: center;"><a href="{% url 'edit_watchlist' w_id=watchlist.watchList_id %}">Watchlist {{ watchlist.watchList_id }}</a></th>
                 {% endif %}
@@ -70,7 +67,9 @@
 
     </div>
 
+
    
 
+    </div>
 </body>
 {% endblock %}
