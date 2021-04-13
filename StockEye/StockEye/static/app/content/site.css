@@ -394,7 +394,7 @@ tr,th,td{
 }
 
 .register_button {
-    display: flex;
+    display: inline-table !important;
 	padding: 15px 40px !important;
     margin: 5px 10px 0 0 !important;
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
@@ -417,7 +417,7 @@ tr,th,td{
 }
 
 .login_button {
-    display: flex;
+    display: inline-table !important;
 	padding: 15px 40px !important;
     margin: 5px 0px 0 0 !important;
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
