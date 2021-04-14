@@ -3,10 +3,13 @@ Definition of views.
 """
 
 from datetime import datetime
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpRequest
+from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
+
+from .models import UserData, WatchList
 
 def home(request):
     """Renders the home page."""
@@ -52,7 +55,9 @@ def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            login(request, user)
+            return redirect('home')
 
     return render(request, 'app/registration.html', {'form':form})
 
@@ -65,19 +70,46 @@ def watchlists(request):
     """
     assert isinstance(request, HttpRequest)
 
-    # Get the current user
-    user = UserData.objects.filter(user=request.user).get()
+    # Since these can throw Django errors if they don't exist, catch them
+    try:
+        # Get all of the user's watchlists
+        watchlists = WatchList.objects.filter(user=request.user).all()
+        
+        # Store the stocks in each watchlist in a dictionary
+        # Each key is the watchList_id from the user's watchlists
+        # Each value is a list of Stocks present in the watchlist
+        stocks = {}
 
-    # Get all of the user's watchlists
-    watchlists = user.stockResults.all()
+        for w in watchlists:
+            for stock in w.stockResults.all():
+                # Check if this is the first stock of the watchlist
+                if w.watchList_id in stocks.keys():
+                    # Already present, append to list at this key
+                    stocks[w.watchList_id].append(stock)
+                else:
+                    # Key not in dict, set key and create list for this stock
+                    stocks[w.watchList_id] = [stock]
+                    # stock is of type StockList(models.Model) which is 
+                    # not iterable, so use [] instead of list()        
 
+    except UserData.DoesNotExist:
+        # Unable to find a matching user, default to no watchlists & stocks
+        watchlists = None
+        stocks = None
+ 
     # Additional data to pass to the templating engine
     context = {
         'title':'Watchlists',
         'message':'Your Watchlist page.',
         'year':datetime.now().year,
         'user': request.user,
-        'watchlists': watchlists,
+        'valid_user': True if watchlists is not None else False,
+        'watchlists': watchlists,   # Not sure if this is really needed 
+                                    # since the stocks dict has the 
+                                    # watchlist_id as its keys
+        'stocks': stocks,
+        # Previously included the watchlist ids, but since the keys of the 
+        # stock dict *are* the watchlist_ids, no need to include them
     }
 
     return render(
