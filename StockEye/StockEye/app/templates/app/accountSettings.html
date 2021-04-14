@@ -2,14 +2,13 @@
 {% load static %}
 {% block content %}
 
-<div class="form-group">
+<div class="jumbotron">
 	<h1>User Profile</h1>
-    <div class="jumbotron">
+    <div class="navbar">
         <p>Change your Account Settings</p>
     </div>
-</div>
-<div class="form-group">
-    <div class="col-md-8">
+<div class="navbar">
+    <div class="col-md-12">
         <section id="UserChangeForm">
             <form action="." method="POST" class="form-horizontal">
                 {% csrf_token %}
@@ -33,14 +32,11 @@
                 	Please enter a valid email address and/or password.
                 </div>
                 {% endif %}
-                
-            </div>
-        </div>
-                
             </form>
         </section>
     </div>
 </div>
+</div> 
 
 {% endblock %}
 
