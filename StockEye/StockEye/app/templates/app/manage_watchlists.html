@@ -13,26 +13,29 @@
         <form method="POST">
             {% csrf_token %}
             {% for watchlist in watchlists %}
-            <div class="card text-white bg-primary bg-gradient">
-                <div class="row g-0">
+            <div class="thumbnail watchlist-card">
+                <div class="row justify-content-md-center">
                     <div class="col-md-4">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ watchlist.watchList_name }}</h5>
+                        <div class="caption">
+                            <h5 class="watchlist-caption">{{ watchlist.watchList_name }}</h5>
                         </div>
                     </div>
+                    <div class="col-md-4"></div>
                     <div class="col-md-4">
-                        <input class="form-check-input" name="delWatchListId" type="checkbox" value="{{watchlist.watchList_id}}">
+                        <br>
+                        <input class="form-check-input larger" name="delWatchListId" type="checkbox" value="{{watchlist.watchList_id}}">
                     </div>
                 </div>
             </div>
+            <br>
             {% endfor %}
             
 
             <div class="container overflow-hidden">
                 <div class="btn-group" role="group" aria-label="Create or Delete Watchlist">
                     <div class="row gx-5">
-                        <a href="{% url 'create_watchlist' %}" class="btn btn-dark">Create Watchlist</a>
-                        <button type="submit" class="btn btn-danger">Delete Selected Watchlists</button>
+                        <a href="{% url 'create_watchlist' %}" class="btn btn-dark rounded">Create Watchlist</a>
+                        <button type="submit" class="btn btn-danger rounded">Delete Selected Watchlists</button>
                     </div>
                 </div>
             </div>

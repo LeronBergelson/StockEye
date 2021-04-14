@@ -354,33 +354,40 @@ footer .glyphicon {
     top: 328px;
 }
 
-.btn-bs {
-    display: inline-block;
-    font-weight: 400;
-    line-height: 1.5;
-    color: #212529;
-    text-align: center;
-    text-decoration: none;
-    vertical-align: middle;
-    cursor: pointer;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
-    background-color: transparent;
-    border: 1px solid transparent;
-    padding: .375rem .75rem;
-    font-size: 1rem;
-    border-radius: .25rem;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out
-}
-
 .btn-dark {
     color: #fff;
     background-color: #212529;
     border-color: #212529;
 }
 
+.watchlist-card {
+    max-width: 25rem;
+    background-color: #007bff;
+    border-radius: 20px;
+}
 
+.watchlist-caption {
+    color: #fff;
+    background-color: transparent;
+    font-family: Arial;
+    font-weight: bolder;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+input.larger {
+    width: 30px;
+    height: 30px;
+}
+
+.rounded {
+    border-radius: 10px;
+    font-family: Arial;
+	font-weight: bolder;
+	font-size: 14px;
+    letter-spacing: 2px;
+	color: #fff !important;
+}
 
 .btn-custom {
 	padding: 15px 40px !important;
