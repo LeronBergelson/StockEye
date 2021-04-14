@@ -5,37 +5,38 @@
 
 <body>
 
-    <h1>StockEye: Watchlist {{ watchlist_id }}</h1>
-<div class="jumbotron">
-        <p>Edit your Watchlist</p>
-    </div>
-
     <!-- Container (Watchlist Section) -->
-    <div class="content">
-
-        {% if user.is_authenticated %}
-            <p>Username: {{ user.username }}</p>
-        {% else %}
-            <p>Username: {{ user.username }} (Not a valid user)</p>
-        {% endif %}
+    <div class="container overflow-hidden">
 
         <h2>Manage Watchlists</h2>
-        <a href="{% url 'create_watchlist' %}">Create a new Watchlist</a>
-        {% if watchlists %}
-        <table>
+        <br><br>
+        <form method="POST">
+            {% csrf_token %}
             {% for watchlist in watchlists %}
-            <tr>
-                {% if watchlist.watchList_name %}
-                    <td>{{ watchlist.watchList_name }}</td>
-                {% else %}
-                    <td>Watchlist {{ watchlist.watchList_id }}</td>
-                {% endif %}
-                <td><a href="{% url 'delete_watchlist' w_id=watchlist.watchList_id %}" class="btn btn-danger">Delete</a></td>
-                <td><a href="{% url 'edit_watchlist' w_id=watchlist.watchList_id %}" class="btn btn-danger">Edit watchlist</a></td>
-            </tr>
+            <div class="card text-white bg-primary bg-gradient">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ watchlist.watchList_name }}</h5>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <input class="form-check-input" name="delWatchListId" type="checkbox" value="{{watchlist.watchList_id}}">
+                    </div>
+                </div>
+            </div>
             {% endfor %}
-        </table>
-        {% endif %}
+            
+
+            <div class="container overflow-hidden">
+                <div class="btn-group" role="group" aria-label="Create or Delete Watchlist">
+                    <div class="row gx-5">
+                        <a href="{% url 'create_watchlist' %}" class="btn btn-dark">Create Watchlist</a>
+                        <button type="submit" class="btn btn-danger">Delete Selected Watchlists</button>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
    
 </body>
