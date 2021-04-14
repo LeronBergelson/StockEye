@@ -1,4 +1,5 @@
 {% extends "app/layout.html" %}
+{#{% load staticfiles %}#}
 {% load static %}
 {% block content %}
 
@@ -12,22 +13,36 @@
 </head>
 
 <body>
-<div class="jumbotron text-center">
-        <h1>Trending Stocks</h1>
-</div>
 
-    <div class = "sentiments"> 
-        <h2><span class="green_dot"></span> = Positive Sentiment
-        <br>
-        <span class="red_dot"></span> = Negative Sentiment </h2>
+    <h1>Trending Stocks</h1>
+    <div class="jumbotron">
+        <p>Check Out Which Stocks are Being Talked About!</p>
     </div>
 
-  <div>
-      
-  </div>
+</div>
+       <div class="container-fluid">
+        
+           <div class="row2">
+            {% for stock in hold %}
+                <div class="col-md-3">
+                    <div class = "stock.name">
+                        {{ stock.symbol }}
+                    </div>
+                    <img src="{% static 'Images/stock.svg'%}">
+                    <div class = "sentiment_card">No. of Mentions: {{ stock.trend}}</div>
+                    <p> <img src="{% static 'Images/dollar.svg'%}">
+                        {{ stock.value }}
 
+                    </p>
+                
+                </div>
+                {% endfor %}
+           </div>
+           
+       </div>               
 
     
 
-</body>
+    </body>
+
 {% endblock %}

@@ -1,14 +1,14 @@
 {% extends "app/layout.html" %}
-
+{% load static %}
 {% block content %}
 
-<h2>{{ title }}</h2>
+<h3>Log in</h3>
+<h4>Sign and start tracking stock sentiments.</h4>
 <div class="row">
     <div class="col-md-8">
         <section id="loginForm">
             <form action="." method="post" class="form-horizontal">
                 {% csrf_token %}
-                <h4>Use a local account to log in.</h4>
                 <hr />
                 <div class="form-group">
                     <label for="id_username" class="col-md-2 control-label">User name</label>
@@ -25,18 +25,12 @@
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <input type="hidden" name="next" value="/" />
-                        <input type="submit" value="Log in" class="btn btn-default" />
+                        <input type="submit" value="Log in" class="register_button" />
                     </div>
                 </div>
                 {% if form.errors %}
                 <p class="validation-summary-errors">Please enter a correct user name and password.</p>
                 {% endif %}
-                <div class="border-top pt-3">
-                    <small class="text-muted">
-                        Don't Have An Account? <a class="ml-2" href="../register/">Register</a>
-                    </small>
-
-                </div>
             </form>
         </section>
     </div>
