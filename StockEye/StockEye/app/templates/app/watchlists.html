@@ -1,5 +1,5 @@
 {% extends "app/layout.html" %}
-{#{% load staticfiles %}#}
+
 {% load static %}
 {% block content %}
 
@@ -7,7 +7,7 @@
      <h1>StockEye: Watchlists</h1>
 <div class="jumbotron"> <p>Personalized Watchlists</p></div>
 
-
+    <!-- Container (Watchlist Section) -->
     <div class="container">
 
         {% if user.is_authenticated %}
