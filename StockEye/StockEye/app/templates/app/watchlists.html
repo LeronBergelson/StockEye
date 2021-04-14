@@ -5,13 +5,10 @@
 
 <body>
      <h1>StockEye: Watchlists</h1>
-<div class="jumbotron">
-       
-        <p>Personalized Watchlists</p>
-    </div>
+<div class="jumbotron"> <p>Personalized Watchlists</p></div>
 
-    <!-- Container (Watchlist Section) -->
-    <div class="content">
+
+    <div class="container">
 
         {% if user.is_authenticated %}
             <p>Username: {{ user.username }}</p>
@@ -19,57 +16,57 @@
             <p>Username: {{ user.username }} (Not a valid user)</p>
         {% endif %}
 
+
         {% if data %}
-        <a href="{% url 'manage_watchlists' %}" class="btn btn-warning">Manage Watchlists</a>
+            <a href="{% url 'manage_watchlists' %}" class="btn btn-warning">Manage Watchlists</a>
+            <br>
+            <br>
         {% else %}
-        <a href="{% url 'create_watchlist' %}">Create a new Watchlist</a>
+            <a href="{% url 'create_watchlist' %}">Create a new Watchlist</a>
         {% endif %}
-  
-        {% for watchlist, stocklist in data %}
-            
-        <div class="col-xs-3"> 
-            <table class="table bordered-table;">
+   
+        <div  class = "row">
+
+            {% for watchlist, stocklist in data %}
+            <div style="clear:both; margin-bottom:20px"></div>
+            <div class="col-md-3 ">
                 
-            <tr>
                 {% if watchlist.watchList_name %}
-                    <td colspan="4" style="text-align: center;"><a href="{% url 'edit_watchlist' w_id=watchlist.watchList_id %};">{{ watchlist.watchList_name }}</a></th>
+                    <td style="text-align: center; "><a href="{% url 'edit_watchlist' w_id=watchlist.watchList_id %};">{{ watchlist.watchList_name }}</a></td>
                 {% else %}
-                <td colspan="4" style="text-align: center;"><a href="{% url 'edit_watchlist' w_id=watchlist.watchList_id %}">Watchlist {{ watchlist.watchList_id }}</a></th>
+                    <td style="text-align: center;"><a href="{% url 'edit_watchlist' w_id=watchlist.watchList_id %}">Watchlist {{ watchlist.watchList_id }}</a></td>
                 {% endif %}
-            </tr>
+            </div>
             
-            <tr> 
-                <th>Symbol</th>
-                <th># + Sentiments</th>
-                <th># - Sentiments</th>
-                <th>Value</th>
-            </tr>
-        
        
-            {% for stock in stocklist %}
+        </div>
+                
+        <div class="row3">
+            {% for stock in stocklist  %}
+            <div class="col-md-3" style="text-align: center;">
+
+                <div class = "stock.name">{{ stock.symbol }}</div>
+                    <img src="{% static 'Images/stock.svg'%}">
+                    <br>
+                <div class = "positive_card"style="text-align:center;">{{ stock.positiveSentimentCount}}</div>
+                
+                <div class = "negative_card">{{stock.negativeSentimentCount}}</div>
+                    
+                    <p> <img src="{% static 'Images/dollar.svg'%}">{{ stock.value }} </p>
             
-            <tr>
-                <td>{{ stock.symbol }}</td>
-                <td>{{ stock.positiveSentimentCount }}</td>
-                <td>{{ stock.negativeSentimentCount }}</td>
-                <td>${{ stock.value }}</td>
-            </tr>
+                </div>
+       
+                {% endfor %}
+            
             {% endfor %}
             
-        
-        </table>
-        
+        </div>
 
-    </div>
-
-    
-        {% endfor %}
-
-    </div>
+    </div>               
 
 
-   
 
-    </div>
 </body>
+
 {% endblock %}
+

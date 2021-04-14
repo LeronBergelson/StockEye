@@ -355,28 +355,6 @@ footer .glyphicon {
 }
 
 
-.table {
-
-    position:relative;
-    font-size:15px ;
-    position: relative;
-    border-color: #cacaca;
-    border-collapse: separate;
-    border-spacing:20px;
-
-}
-
-
-tr,th,td{
-    color: #000000;
-    width: 50%;
-    font-weight:14px ;
-    background-color: #0078E7;
-    border-color: #0078E7;
-    border-radius: 15px;
-}
-
-
 .btn{
 	padding: 15px 40px !important;
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
@@ -469,14 +447,45 @@ tr,th,td{
     font-family: Arial;
 	font-weight: bolder;
 	font-size: 14px;
-    
-
 }
-.col-xs-3{
-    position: relative;
-    background-color: #cacaca;
-    border-radius: 25px;
-    width: 47%;
-    margin: 15px;
+.positive_card{
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+    font-family: Arial;
+	font-weight: bolder;
+	font-size: 14px;
+    height: 31.5px;
+    width: 31.5px;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: #57B889;
+    text-align: center;
+    font-family: Arial;
+	font-weight: bolder;
+	font-size: 14px;
+}
+.negative_card{
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+    font-family: Arial;
+	font-weight: bolder;
+	font-size: 14px;
+    height: 31.5px;
+    width: 31.5px;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: rgb(252, 93, 93);
+    text-align: center;
+    font-family: Arial;
+	font-weight: bolder;
+	font-size: 14px;
+}
+.row3{
+    background-color:#9bcfff;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    width:50%;
+    
+}
 
+.titles{
+    margin-left: 30%;
 }
