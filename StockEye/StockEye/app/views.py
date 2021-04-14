@@ -236,6 +236,7 @@ def create_watchlist(request):
 
     context = {
         'form': form,
+        'year': datetime.now().year,
     }
 
     return render(
