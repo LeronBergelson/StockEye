@@ -32,12 +32,12 @@
             <div class="col-md-3 ">
                 
                 {% if watchlist.watchList_name %}
-                    <td style="text-align: center; "><a href="{% url 'edit_watchlist' w_id=watchlist.watchList_id %};">{{ watchlist.watchList_name }}</a></td>
+                    <td style="text-align: center; ">{{ watchlist.watchList_name }}</a></td>
                 {% else %}
-                    <td style="text-align: center;"><a href="{% url 'edit_watchlist' w_id=watchlist.watchList_id %}">Watchlist {{ watchlist.watchList_id }}</a></td>
+                    <td style="text-align: center;">Watchlist {{ watchlist.watchList_id }}</a></td>
                 {% endif %}
             </div>
-            
+
        
         </div>
                 
