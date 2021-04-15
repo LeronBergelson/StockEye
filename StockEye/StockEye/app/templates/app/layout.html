@@ -25,7 +25,6 @@
             </div>
                 {% if user.is_authenticated %}
                     <ul class="nav navbar-nav navbar-left">
-                        <!--<li><span class="navbar-brand">Hello {{ user.username }}!</span></li>-->
                         <li><a class="nav_button" href="{% url 'home' %}">Home</a></li>
                         <li><a class="nav_button" href="{% url 'trending' %}">Trending</a></li>   
                         <li><a class="nav_button" href="{% url 'watchlists' %}">My Watchlists</a></li>      

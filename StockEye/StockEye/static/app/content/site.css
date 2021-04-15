@@ -354,8 +354,42 @@ footer .glyphicon {
     top: 328px;
 }
 
+.btn-dark {
+    color: #fff;
+    background-color: #212529;
+    border-color: #212529;
+}
 
-.btn{
+.watchlist-card {
+    max-width: 25rem;
+    background-color: #007bff;
+    border-radius: 20px;
+}
+
+.watchlist-caption {
+    color: #fff;
+    background-color: transparent;
+    font-family: Arial;
+    font-weight: bolder;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+input.larger {
+    width: 30px;
+    height: 30px;
+}
+
+.rounded {
+    border-radius: 10px;
+    font-family: Arial;
+	font-weight: bolder;
+	font-size: 14px;
+    letter-spacing: 2px;
+	color: #fff !important;
+}
+
+.btn-custom {
 	padding: 15px 40px !important;
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
     font-family: Arial;
