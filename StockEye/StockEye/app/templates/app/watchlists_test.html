@@ -4,28 +4,32 @@
 {% block content %}
 
 <body>
-<div class="jumbotron text-center">
-        <h1>StockEye: Watchlists</h1>
+    <h1>StockEye: Watchlists</h1>
+<div class="jumbotron">
         <p>Personalized Watchlists</p>
     </div>
 
     <!-- Container (Watchlist Section) -->
     <div class="content">
 
-        {% if valid_user %}
+        {% if user.is_authenticated %}
             <p>Username: {{ user.username }}</p>
         {% else %}
             <p>Username: {{ user.username }} (Not a valid user)</p>
         {% endif %}
 
+        {% if data %}
         <a href="{% url 'manage_watchlists' %}" class="btn btn-warning">Manage Watchlists</a>
+        {% else %}
+        <a href="{% url 'create_watchlist' %}">Create a new Watchlist</a>
+        {% endif %}
         {% for watchlist, stocklist in data %}
         <table>
             <tr>
                 {% if watchlist.watchList_name %}
-                    <th><a href="{% url 'edit_watchlist' w_id=watchlist.watchList_id %}">{{ watchlist.watchList_name }}</a></th>
+                    <td colspan="4" style="text-align: center;"><a href="{% url 'edit_watchlist' w_id=watchlist.watchList_id %}">{{ watchlist.watchList_name }}</a></th>
                 {% else %}
-                <th><a href="{% url 'edit_watchlist' w_id=watchlist.watchList_id %}">Watchlist {{ watchlist.watchList_id }}</a></th>
+                <td colspan="4" style="text-align: center;"><a href="{% url 'edit_watchlist' w_id=watchlist.watchList_id %}">Watchlist {{ watchlist.watchList_id }}</a></th>
                 {% endif %}
             </tr>
             <tr>

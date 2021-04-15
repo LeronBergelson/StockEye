@@ -1,10 +1,9 @@
 {% extends "app/layout.html" %}
-{#{% load staticfiles %}#}
 {% load static %}
 {% block content %}
 
 <body>
-<div class="jumbotron text-center">
+
         {% if watchlist_name %}
             <h1>Watchlist: {{ watchlist_name }}</h1>
         {% elif watchlist_id %}
@@ -13,7 +12,7 @@
             <h1>StockEye: Watchlist</h1>
         {% endif %}
         <p>Edit your Watchlist</p>
-    </div>
+   
 
     <!-- Container (Watchlist Section) -->
     <div class="content">
@@ -24,12 +23,12 @@
             <p>Username: {{ user.username }} (Not a valid user)</p>
         {% endif %}
 
-        <table>
+        <table class="table table-bordered">
             <tr>
                 {% if watchlist_name %}
-                    <th>{{ watchlist_name }}</th>
+                    <td colspan="4" style="text-align: center;">{{ watchlist_name }}</th>
                 {% else %}
-                    <th>Watchlist {{watchlist_id}}</th>
+                    <td colspan="4" style="text-align: center;">Watchlist {{watchlist_id}}</th>
                 {% endif %}
             </tr>
             <tr>
@@ -47,6 +46,19 @@
             </tr>
             {% endfor %}
         </table>
+
+        <form id="editWatchListForm" action="{% url 'edit_watchlist' w_id=watchlist_id %}" method="post">
+            {% csrf_token %}
+            <br><br>
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Edit your Watchlist</legend>
+                {{ form }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn-outline-info" type="submit">Save Changes</button>
+            </div>
+        </form>
+
     </div>
    
 </body>

@@ -4,10 +4,12 @@ from nltk.corpus import twitter_samples, stopwords
 from nltk.tag import pos_tag
 from nltk import FreqDist, classify, NaiveBayesClassifier
 
+import sys
+import sqlite3
+from sqlite3 import Error
+
 import re, string, random
 
-
-# TODO create sentiment class
 
 def remove_noise(tweet_tokens, stop_words = ()):
 
@@ -37,20 +39,48 @@ def remove_noise(tweet_tokens, stop_words = ()):
 def get_tweets_for_model(cleaned_tokens_list):
     for tweet_tokens in cleaned_tokens_list:
         yield dict([token, True] for token in tweet_tokens)
-
-
+       
+    
 def evaluate(tweet):
     
     symbol = tweet.getSymbol()
     current_tokens = remove_noise(word_tokenize(tweet.getText()))
 
-    # result is "Postive" or "Negative"
+    # Result is "Postive" or "Negative"
     result = classifier.classify(dict([token, True] for token in current_tokens))
-
     #print(result)
 
-    # TODO Create a sentiment object
-    # TODO Pass sentiment object to function for updating database
+    # Update database accordingly
+    updateDatabase(result, tweet.getStock_id(), tweet.getSymbol(), tweet.getID())
+
+
+def connection(db):
+    try:
+        connection = sqlite3.connect(db)
+
+    except:
+        print("ERROR: Failed to connect to database")
+        sys.exit(1)
+
+    return connection
+
+
+def updateDatabase(result, stock_id, symbol, tweet_id):
+
+    conn = connection(r"StockEye\StockEye\db.sqlite3")
+    cursor = conn.cursor()
+    
+    if result == "Positive":        
+        update = ''' INSERT INTO app_stocklist(stock_id, symbol, positiveSentimentCount, negativeSentimentCount, value, tweet_id) VALUES('{}', '{}', "1", "0", "0.0", '{}') ON CONFLICT(stock_id) DO UPDATE SET positiveSentimentCount = positiveSentimentCount + 1 '''.format(stock_id, symbol, tweet_id)
+        
+    else: 
+        update = ''' INSERT INTO app_stocklist(stock_id, symbol, positiveSentimentCount, negativeSentimentCount, value, tweet_id) VALUES('{}', '{}', "0", "1", "0.0", '{}') ON CONFLICT(stock_id) DO UPDATE SET negativeSentimentCount = negativeSentimentCount + 1 '''.format(stock_id, symbol, tweet_id)
+
+    cursor.execute(update)
+        
+    conn.commit()
+    conn.close()
+
 
 if __name__ != "__main__":
     positive_tweets = twitter_samples.strings('positive_tweets.json')
