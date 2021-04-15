@@ -1,0 +1,64 @@
+﻿{% extends "app/layout.html" %}
+{% load static %}
+{% block content %}
+
+<h3>Account Registration</h3>
+<h4>Get started with StockEye</h4>
+
+<div>
+    <section id="registrationForm">
+        <form action="." method="post" class="form-horizontal">
+            {% csrf_token %}
+            
+            <hr />
+            <div class="form-group">
+                <label for="id_username" class="col-md-5 control-label">Username:</label>
+                <div class="col-md-6">
+                    {{ form.username }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="id_password" class="col-md-5 control-label">Password:</label>
+                <div class="col-md-6">
+                    {{ form.password1 }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="id_password2" class="col-md-5 control-label">Confirm Password:</label>
+                <div class="col-md-6">
+                    {{ form.password2 }}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="id_email" class="col-md-5 control-label">Email:</label>
+                <div class="col-md-6">
+                    {{ form.email }}
+                </div>
+            </div>
+            <div align="center" class="form-group">
+                <button class="register_button" type="submit">Confirm Registration</button>
+            </div>
+            {% if form.errors %}
+            <p class="validation-summary-errors">Please ensure valid registration information is provided.</p>
+            {% endif %}
+        </form>
+    </section>
+</div>
+
+<div class="border-top pt-3">
+    <center>
+        <small class="text-muted">
+            Already have an account? <a class="ml-2" href="../login/">Sign In</a>
+        </small>
+    </center>
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+{% load static %}
+<script src="{% static 'app/scripts/jquery.validate.min.js' %}"></script>
+
+{% endblock %}

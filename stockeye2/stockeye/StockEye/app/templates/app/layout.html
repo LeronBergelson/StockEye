@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - StockEye</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap.min.css' %}" />
+    {% now "U" as u_time %}
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/site.css' %}?{{ u_time }}" />
+    <script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
+</head>
+
+<body>
+    
+    <div class="navbar navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="/" class="navbar-brand">StockEye</a>
+            </div>
+                {% if user.is_authenticated %}
+                    <ul class="nav navbar-nav navbar-left">
+                        <!--<li><span class="navbar-brand">Hello {{ user.username }}!</span></li>-->
+                        <li><a class="nav_button" href="{% url 'home' %}">Home</a></li>
+                        <li><a class="nav_button" href="{% url 'trending' %}">Trending</a></li>   
+                        <li><a class="nav_button" href="{% url 'watchlists' %}">My Watchlists</a></li>      
+                    </ul>
+                    <form id="logoutForm" action="/logout/" method="post" class="navbar-right">
+                        {% csrf_token %}
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a class="register_button" href="{% url 'profile' %}">Profile Settings</a></li>         
+                            <li><a class="login_button" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                        </ul>
+                    </form>
+                {% else %}
+                    <ul class="nav navbar-nav navbar-left">
+                        <li><a class="nav_button" href="{% url 'home' %}">Home</a></li>
+                        <li><a class="nav_button" href="{% url 'trending' %}">Trending</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        
+                        <li><a class="register_button" href="{% url 'register' %}">Register</a></li>
+                        <li><a class="login_button" href="{% url 'login' %}">Log in</a></li>
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+{% block content %}{% endblock %}
+        <hr/>
+        <footer>
+            <center><p>&copy; {{ year }} StockEye</p></center>
+        </footer>
+    </div>
+
+    <script src="{% static 'app/scripts/jquery-1.10.2.js' %}"></script>
+    <script src="{% static 'app/scripts/bootstrap.js' %}"></script>
+    <script src="{% static 'app/scripts/respond.js' %}"></script>
+{% block scripts %}{% endblock %}
+
+</body>
+</html>
