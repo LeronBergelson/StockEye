@@ -3,7 +3,7 @@
 {% block content %}
 
 <body>
-
+    <div class="navbar">
         {% if watchlist_name %}
             <h1>Watchlist: {{ watchlist_name }}</h1>
         {% elif watchlist_id %}
@@ -11,24 +11,27 @@
         {% else %}
             <h1>StockEye: Watchlist</h1>
         {% endif %}
-        <p>Edit your Watchlist</p>
-   
+            <h4>Edit your Watchlist</h4>
+    </div>
 
     <!-- Container (Watchlist Section) -->
     <div class="content">
-
         {% if user.is_authenticated %}
             <p>Username: {{ user.username }}</p>
         {% else %}
             <p>Username: {{ user.username }} (Not a valid user)</p>
         {% endif %}
-
+        <div>
+            <button type="submit" class="btn-danger">Delete Selected Watchlists</button>
+            <button type="submit" class="btn-danger">Select All</button>
+        </div>
+        <br></br>
         <table class="table table-bordered">
             <tr>
                 {% if watchlist_name %}
-                    <td colspan="4" style="text-align: center;">{{ watchlist_name }}</th>
+                    <td colspan="5" style="text-align: center;">{{ watchlist_name }}</th>
                 {% else %}
-                    <td colspan="4" style="text-align: center;">Watchlist {{watchlist_id}}</th>
+                    <td colspan="5" style="text-align: center;">Watchlist {{watchlist_id}}</th>
                 {% endif %}
             </tr>
             <tr>
@@ -36,6 +39,7 @@
                 <th># + Sentiments</th>
                 <th># - Sentiments</th>
                 <th>Value</th>
+                <th>Select</th>
             </tr>
             {% for stock in stocks %}
             <tr>
@@ -43,23 +47,24 @@
                 <td>{{ stock.positiveSentimentCount }}</td>
                 <td>{{ stock.negativeSentimentCount }}</td>
                 <td>${{ stock.value }}</td>
-            </tr>
+                <td>
+                    <input class ="form-check-input larger" name="delWatchListId" type="checkbox" value="{{watchlist.watchList_id}}">
+                </td>
+                </tr>
             {% endfor %}
         </table>
-
-        <form id="editWatchListForm" action="{% url 'edit_watchlist' w_id=watchlist_id %}" method="post">
-            {% csrf_token %}
-            <br><br>
-            <fieldset class="form-group">
-                <legend class="border-bottom mb-4">Edit your Watchlist</legend>
-                {{ form }}
-            </fieldset>
-            <div class="form-group">
-                <button class="btn-outline-info" type="submit">Save Changes</button>
-            </div>
-        </form>
-
     </div>
+        
+        
+
+    
+
+        <div class="form-group">
+            <button class="btn-outline-info" type="submit">Save Changes</button>
+        </div>
+        
+
+    
    
 </body>
 {% endblock %}
