@@ -1,7 +1,7 @@
 body {
     font: 400 15px Lato, sans-serif;
     line-height: 1.8;
-    color: #818181;
+    color: #000000;
     background: url("/static/Images/double-bubble-outline.png");
 }
 
@@ -353,40 +353,28 @@ footer .glyphicon {
     left: 280px;
     top: 328px;
 }
-.green_dot{
-    height: 25px;
-    width: 25px;
-    background-color: #57B889;
-    border-radius: 50%;
-    display: inline-block;
-  }
-  .red_dot {
-    height: 25px;
-    width: 25px;
-    background-color: #B8575D;
-    border-radius: 50%;
-    display: inline-block;
-  }
-  .sentiments{
-      float:right;
-      
-  }
-  table {
-    
-    background: #95c9fa;
-    font-size:15px ;
-    width: 33%;
-    position: relative;
-  }
-.btn{
 
+
+.btn{
+	padding: 15px 40px !important;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+    font-family: Arial;
+	font-weight: bolder;
+	font-size: 14px;
+    letter-spacing: 2px;
+    line-height: 5px !important;
+	color: #fff !important;
+	background-color: #0078E7 !important;
+	text-align: center;
+	border-radius: 27.5px;
+	transition: 0.5s;
     margin-right: 33%;
     margin-left: 66%;
 
 }
 
 .register_button {
-    display: flex;
+    display: inline-table !important;
 	padding: 15px 40px !important;
     margin: 5px 10px 0 0 !important;
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
@@ -409,7 +397,7 @@ footer .glyphicon {
 }
 
 .login_button {
-    display: flex;
+    display: inline-table !important;
 	padding: 15px 40px !important;
     margin: 5px 0px 0 0 !important;
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
@@ -445,6 +433,7 @@ footer .glyphicon {
 	font-size: 14px;
     letter-spacing: 2px;
     line-height: 5px;
+  
 }
 
 .sentiment_card {
@@ -458,5 +447,45 @@ footer .glyphicon {
     font-family: Arial;
 	font-weight: bolder;
 	font-size: 14px;
+}
+.positive_card{
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+    font-family: Arial;
+	font-weight: bolder;
+	font-size: 14px;
+    height: 31.5px;
+    width: 31.5px;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: #57B889;
+    text-align: center;
+    font-family: Arial;
+	font-weight: bolder;
+	font-size: 14px;
+}
+.negative_card{
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+    font-family: Arial;
+	font-weight: bolder;
+	font-size: 14px;
+    height: 31.5px;
+    width: 31.5px;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: rgb(252, 93, 93);
+    text-align: center;
+    font-family: Arial;
+	font-weight: bolder;
+	font-size: 14px;
+}
+.row3{
+    background-color:#9bcfff;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    width:50%;
+    
+}
 
+.titles{
+    margin-left: 30%;
 }

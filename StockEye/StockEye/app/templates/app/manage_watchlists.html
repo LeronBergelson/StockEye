@@ -31,6 +31,7 @@
                     <td>Watchlist {{ watchlist.watchList_id }}</td>
                 {% endif %}
                 <td><a href="{% url 'delete_watchlist' w_id=watchlist.watchList_id %}" class="btn btn-danger">Delete</a></td>
+                <td><a href="{% url 'edit_watchlist' w_id=watchlist.watchList_id %}" class="btn btn-danger">Edit watchlist</a></td>
             </tr>
             {% endfor %}
         </table>

@@ -15,45 +15,14 @@
 <body>
 
     <h1>Trending Stocks</h1>
-
-
-    <div class = "sentiments"> 
-        <h2><span class="green_dot"></span> = Positive Sentiment
-        <br>
-        <span class="red_dot"></span> = Negative Sentiment </h2>
+    <div class="jumbotron">
+        <p>Check Out Which Stocks are Being Talked About!</p>
     </div>
 
 </div>
-<!--
-<div class="content">
-   
-    <table>
-        <tr>
-        
-            <p><a href="{% url 'trending' %}"> Trending Stocks</a></p>
-            <th>Symbol</th>
-            <th>Total Number of Mentions</th>
-            
-            <th>Value</th>
-                
-        </tr>
-            {% for stock in hold %}
-            <tr>
-                
-                <td>{{ stock.symbol }}</td>
-                <td>{{ trend }}</td>
-                
-                <td>${{ stock.value }}</td>
-            </tr>
-            {% endfor %}
-    </table>
-     
-  </div>
--->
-
        <div class="container-fluid">
         
-           <div class="row">
+           <div class="row2">
             {% for stock in hold %}
                 <div class="col-md-3">
                     <div class = "stock.name">

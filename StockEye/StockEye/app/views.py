@@ -56,6 +56,7 @@ def about(request):
     )
 
 def register(request):
+    assert isinstance(request, HttpRequest)
     form = UserCreationForm()
 
     if request.method == 'POST':
@@ -65,7 +66,13 @@ def register(request):
             login(request, user)
             return redirect('home')
 
-    return render(request, 'app/registration.html', {'form':form})
+    context = {
+        'title': 'Register',
+        'form': form,
+        'year': datetime.now().year,
+    }
+    
+    return render(request, 'app/registration.html', context)
 
 @login_required
 def account_settings(request):
@@ -100,7 +107,6 @@ def account_settings(request):
 def trending(request):
     """renders the trending page"""
     assert isinstance(request, HttpRequest)
-    
     try:
         stocks = StockList.objects.all()
         hold = []
@@ -110,7 +116,7 @@ def trending(request):
 
 
 
-    while len(hold) < 10:
+    while len(hold) < 8:
         for  stock in stocks:
             stock.trend = stock.positiveSentimentCount + stock.negativeSentimentCount
             if stock.trend>= count:  
@@ -120,12 +126,11 @@ def trending(request):
             
 
     context = {
-        'title': 'Filter Stocks',
+        'title': 'Trending',
         'year': datetime.now().year,
         'user': request.user,
         'stocks': stocks,
         'hold': hold,
-       # 'trend' : trend
 
     }
 
