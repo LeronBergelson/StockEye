@@ -18,22 +18,28 @@
 
 
         {% if data %}
-            <a href="{% url 'manage_watchlists' %}" class="btn btn-warning">Manage Watchlists</a>
+            <a href="{% url 'manage_watchlists' %}" class="btn-custom" style="align-content: right;">Manage Watchlists</a>
             <br>
             <br>
         {% else %}
             <a href="{% url 'create_watchlist' %}">Create a new Watchlist</a>
         {% endif %}
    
-        <div  class = "row">
+        
+        
 
+        <div  class = "row">
             {% for watchlist, stocklist in data %}
+            
             <div style="clear:both; margin-bottom:20px"></div>
+            
             <div class="col-md-3 ">
-                
+            
                 {% if watchlist.watchList_name %}
+                
                     <td style="text-align: center; ">{{ watchlist.watchList_name }}</a></td>
                 {% else %}
+                
                     <td style="text-align: center;">Watchlist {{ watchlist.watchList_id }}</a></td>
                 {% endif %}
             </div>
@@ -42,7 +48,9 @@
         </div>
                 
         <div class="row3">
+            
             {% for stock in stocklist  %}
+                 
             <div class="col-md-3" style="text-align: center;">
 
                 <div class = "stock.name">{{ stock.symbol }}</div>
@@ -55,7 +63,7 @@
                     <p> <img src="{% static 'Images/dollar.svg'%}">{{ stock.value }} </p>
             
                 </div>
-       
+                
                 {% endfor %}
             
             {% endfor %}
