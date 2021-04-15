@@ -1,0 +1,31 @@
+{% extends "app/layout.html" %}
+{% load static %}
+{% block content %}
+
+
+<div class="jumbotron">
+<h1>StockEye - Stock View</h1>
+
+</div>
+  <div class="content">
+    <table>
+  	    <tr>
+  	        {% if stocks.stock_id %}
+  	        <p><a href="{% url 'stock' s_id=stocks.stock_id %}">{{ stocks.tweet_id}}</a></p>
+                <th>Symbol</th>
+                <th>Price</th>
+                <th>Sentiment</th>
+                
+            </tr>
+            
+ 
+            {% stocks = StockList.objects.filter(stock_id=s_id).get() %}
+            <tr>
+                <td>{{ stocks.symbol }}</td>
+                <td>{{ stocks.value }}</td>
+                <td>{{ stocks.sentiment}}</td>
+            </tr>
+            </table>
+            {% endfor %}
+  </div>
+{% endblock %}

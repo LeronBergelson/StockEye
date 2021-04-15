@@ -1,7 +1,8 @@
 body {
     font: 400 15px Lato, sans-serif;
     line-height: 1.8;
-    color: #818181;
+    color: #000000;
+    background: url("/static/Images/double-bubble-outline.png");
 }
 
 h2 {
@@ -19,16 +20,32 @@ h4 {
     font-weight: 400;
     margin-bottom: 30px;
 }
-
-.jumbotron {
-    background-color: #0d0051;
-    color: #fff;
-    padding: 100px 25px;
+h5{
+    color: #000000;
+}
+h1{
+    font-size: 38px;
+    text-transform: uppercase;
+    color: #000000;
+    margin-left: 10px;
+    padding-top: 100px;
+    padding-bottom: 0px;
+    font-weight: 600;
     font-family: Montserrat, sans-serif;
 }
+.jumbotron {
+    background-color: #0000;
+    color: #000000;
+    margin-left: 10px;
+    padding-top: 0px;
+    padding-bottom: 0%;
+    font-family: Montserrat, sans-serif;
+}
+  
+
 
 .container-fluid {
-    padding: 60px 50px;
+    padding: 30px 20px;
 }
 
 .bg-grey {
@@ -130,7 +147,8 @@ h4 {
 
 .navbar {
     margin-bottom: 0;
-    background-color: #353535;
+    margin-top: 10px;
+    background-color: #0000;
     z-index: 9999;
     border: 0;
     font-size: 12px !important;
@@ -140,13 +158,23 @@ h4 {
     font-family: Montserrat, sans-serif;
 }
 
-    .navbar li a, .navbar .navbar-brand {
-        color: #fff !important;
-    }
 
-.navbar-nav li a:hover, .navbar-nav li.active a {
-    color: #353535 !important;
-    background-color: #fff !important;
+.navbar {
+    color: #000000 !important;
+}
+
+.navbar-brand {
+    color: #0078E7 !important;
+    letter-spacing: 0px;
+    font-size: 20px !important;
+    font-family: Helvetica;
+    font-style: bolder !important;
+    font-weight: 800 !important;
+}
+
+.navbar-nav li a:hover, li.active a {
+    color: #0078E7;
+    background-color: #fff;
 }
 
 .navbar-default .navbar-toggle {
@@ -227,4 +255,237 @@ footer .glyphicon {
 
 .downloadDiv {
     float: left
+}
+
+.invest {
+   position: relative;
+    left: 600px;
+    top: 40px;
+    
+}
+
+.twitter {
+    position:absolute;
+    left: 90px;
+    top: 96px;
+
+}
+.customh{
+    font-family: Nunito;
+    font-size:50px;
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 800; 
+    line-height: 95.48px;
+    position: absolute;
+    width: 718px;
+    height: 190px;
+    left: 300px;
+    top: 200px;
+
+    
+
+    
+}
+.customf{
+    font-family: Nunito;
+    font-size:50px;
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 800; 
+    line-height: 95.48px;
+    position: absolute;
+    width: 718px;
+    height: 190px;
+    left: 300px;
+    top: 254px;
+
+    
+
+    
+}
+.custom2{
+    font-family: Nunito;
+    font-size: 20px;
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 800; 
+    line-height: 40.92px; 
+    position: absolute;
+    width: 693px;
+    height: 41px;
+    left: 450px;
+    top: 500px; 
+   
+}
+
+.custom3{
+    font-family: Nunito;
+    font-size: 15px;
+    font-style: normal; 
+    font-variant: normal; 
+    font-weight: 800; 
+    line-height: 44.1px; 
+    color: #cacaca;
+    margin-top: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+    kerning: 10px;
+    
+
+}
+
+.cont1{
+    height:270px;
+    background-color: #fcfcfc;
+
+}
+
+.cont2{
+    height:270px;
+    background-color: #0078E7;
+
+}
+.vect{
+    position: absolute;
+    width: 140px;
+    height: 22px;
+    left: 280px;
+    top: 328px;
+}
+
+
+.btn{
+	padding: 15px 40px !important;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+    font-family: Arial;
+	font-weight: bolder;
+	font-size: 14px;
+    letter-spacing: 2px;
+    line-height: 5px !important;
+	color: #fff !important;
+	background-color: #0078E7 !important;
+	text-align: center;
+	border-radius: 27.5px;
+	transition: 0.5s;
+    margin-right: 33%;
+    margin-left: 66%;
+
+}
+
+.register_button {
+    display: inline-table !important;
+	padding: 15px 40px !important;
+    margin: 5px 10px 0 0 !important;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+    font-family: Arial;
+	font-weight: bolder;
+	font-size: 14px;
+    letter-spacing: 2px;
+    line-height: 5px !important;
+	color: #fff !important;
+	background-color: #0078E7 !important;
+	text-align: center;
+	border-radius: 27.5px;
+	transition: 0.5s;
+}
+
+.register_button:hover {
+	opacity: 0.5;
+    color: #fff !important;
+	background-color: #0078E7 !important;
+}
+
+.login_button {
+    display: inline-table !important;
+	padding: 15px 40px !important;
+    margin: 5px 0px 0 0 !important;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+    font-family: Arial;
+	font-weight: bolder;
+	font-size: 14px;
+    letter-spacing: 2px;
+    line-height: 5px !important;
+	color: #0078E7 !important;
+	background-color: #fff;
+	text-align: center;
+	border-radius: 27.5px;
+	transition: 0.5s;
+}
+
+.login_button:hover {
+    opacity: 0.5;
+}
+
+.nav_button {
+	transition: 0.5s;
+}
+
+.nav_button:hover {
+    color: #0078E7 !important;
+    opacity: 0.9;
+}
+
+.stockname {
+    
+    font-family: Arial;
+	font-weight: bolder;
+	font-size: 14px;
+    letter-spacing: 2px;
+    line-height: 5px;
+  
+}
+
+.sentiment_card {
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+    font-family: Arial;
+	font-weight: bolder;
+	font-size: 14px;
+    border-radius: 27.5px;
+    background-color: #fff;
+    text-align: center;
+    font-family: Arial;
+	font-weight: bolder;
+	font-size: 14px;
+}
+.positive_card{
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+    font-family: Arial;
+	font-weight: bolder;
+	font-size: 14px;
+    height: 31.5px;
+    width: 31.5px;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: #57B889;
+    text-align: center;
+    font-family: Arial;
+	font-weight: bolder;
+	font-size: 14px;
+}
+.negative_card{
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+    font-family: Arial;
+	font-weight: bolder;
+	font-size: 14px;
+    height: 31.5px;
+    width: 31.5px;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: rgb(252, 93, 93);
+    text-align: center;
+    font-family: Arial;
+	font-weight: bolder;
+	font-size: 14px;
+}
+.row3{
+    background-color:#9bcfff;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    width:50%;
+    
+}
+
+.titles{
+    margin-left: 30%;
 }

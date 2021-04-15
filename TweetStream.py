@@ -2,6 +2,7 @@
 # Date: March 18th, 2021
 # Additional Contributors: 
 
+import MachineLearning
 import tweepy
 import sys
 import time
@@ -11,13 +12,15 @@ class Tweet():
     __id = -1
     __date = None
     __symbol = None
+    __stock_id = -1
 
     # Class constructor
-    def __init__(self, text, id, date, symbol):
+    def __init__(self, text, id, date, symbol, stock_id):
         self.__text = text
         self.__id = id
         self.__date = date
         self.__symbol = symbol
+        self.__stock_id = stock_id
         return
 
     # Getter methods
@@ -32,6 +35,9 @@ class Tweet():
 
     def getSymbol(self):
         return self.__symbol
+
+    def getStock_id(self):
+        return self.__stock_id
         
 
 class MyStreamListener(tweepy.StreamListener):
@@ -44,13 +50,14 @@ class MyStreamListener(tweepy.StreamListener):
         else:
             text = status.text
 
-        symbol = self.__parseSymbol(text)
+        stock_id = self.__parseSymbol(text)
 
-        if symbol != -1:
+        if stock_id != -1:
             # Construct Tweet object from streamed data
-            currentTweet = Tweet(text, status.id, status.created_at, symbol)
+            currentTweet = Tweet(text, status.id, status.created_at, self.stocks[stock_id][1:], stock_id)
 
-            #TODO Pass tweet object to Machine Learning Module by calling evaluate(currentTweet)
+            #print(text)
+            MachineLearning.evaluate(currentTweet)
 
 
     def on_error(self, status_code):
@@ -61,10 +68,10 @@ class MyStreamListener(tweepy.StreamListener):
 
     def __parseSymbol(self, text):
 
-        for symbol in self.stocks:
+        for i in range(len(self.stocks)):
 
-            if symbol in text:
-                return symbol
+            if self.stocks[i] in text:
+                return i
 
         return -1
 
@@ -114,3 +121,6 @@ class MyStreamListener(tweepy.StreamListener):
         stream.filter(languages=["en"], track=streamListener.stocks, is_async=True)
 
         # is_async parameter sets stream filter to its own thread, allowing execution to continue
+        
+#if __name__ != "__main__":
+MyStreamListener.start()
