@@ -87,7 +87,6 @@ def account_settings(request):
         form = UserChangeForm(request.POST, instance=request.user)
         if form.is_valid():
             user = form.save()
-            print(f'Password: {request.POST["password"]}')
             user.set_password(request.POST["password"])
             user.save()
             login(request, user)
