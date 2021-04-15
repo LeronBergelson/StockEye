@@ -269,8 +269,16 @@ def manage_watchlists(request):
     assert isinstance(request, HttpRequest)
 
     try:
-        watchlists = WatchList.objects.filter(user=request.user).all()
-        
+        # Handling deleting Watchlist(s)
+        if request.method == "POST":
+            # Get list of selected checkmark boxes
+            watchlists_to_delete = request.POST.getlist('delWatchListId')
+            for watchlist_id in watchlists_to_delete:
+                # Grab the specified watchlist from the database
+                watchlist = WatchList.objects.filter(user=request.user, watchList_id=watchlist_id).get()
+                watchlist.delete()
+        # User just loads this page again, so grab their (newly updated) WatchLists
+        watchlists = WatchList.objects.filter(user=request.user).all()   
     except WatchList.DoesNotExist:
         watchlists = []
 
