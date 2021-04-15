@@ -83,19 +83,23 @@ def account_settings(request):
     """
     assert isinstance(request, HttpRequest)
 
-    try:
-        user = request.user
-        change_user_form = UserChangeForm()
-        #change_password_form = AdminPasswordChangeForm()
-    except UserData.DoesNotExist:
-        return redirect('register')
+    if request.method == "POST":
+        form = UserChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            user = form.save()
+            print(f'Password: {request.POST["password"]}')
+            user.set_password(request.POST["password"])
+            user.save()
+            login(request, user)
+    else:
+        form = UserChangeForm()
         
     context = {
         'title': 'User Profile',
         'message': 'Edit Account Settings',
         'year': datetime.now().year,
         'user': request.user,
-        'form': change_user_form,
+        'form': form,
     }
 
     return render(
