@@ -1,5 +1,5 @@
 {% extends "app/layout.html" %}
-{% block contents %}
+{% block content %}
 
 <h2>Filter Stock View</h2>
 
@@ -15,7 +15,7 @@
         {% endif %}
       </tr>
       <tr>
-          <td>{{stocks.name}}</td>
+          <td>{stocks.name}}</td>
           <td>{{stocks.price}}</td>
           <td>{{stocks.sentiment}}</td>
       </tr>
