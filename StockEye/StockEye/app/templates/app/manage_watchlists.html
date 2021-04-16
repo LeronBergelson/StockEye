@@ -17,7 +17,7 @@
                 <div class="row justify-content-md-center">
                     <div class="col-md-4">
                         <div class="caption">
-                            <h5 class="watchlist-caption">{{ watchlist.watchList_name }}</h5>
+                            <h5 class="watchlist-caption"><a href="{% url 'edit_watchlist' w_id=watchlist.watchList_id %}" style="color: black;">{{ watchlist.watchList_name }}</a></h5>
                         </div>
                     </div>
                     <div class="col-md-4"></div>
@@ -28,8 +28,8 @@
                 </div>
             </div>
             <br>
+
             {% endfor %}
-            
 
             <div class="container overflow-hidden">
                 <div class="btn-group" role="group" aria-label="Create or Delete Watchlist">
