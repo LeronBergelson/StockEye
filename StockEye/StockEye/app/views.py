@@ -83,19 +83,22 @@ def account_settings(request):
     """
     assert isinstance(request, HttpRequest)
 
-    try:
-        user = request.user
-        change_user_form = UserChangeForm()
-        #change_password_form = AdminPasswordChangeForm()
-    except UserData.DoesNotExist:
-        return redirect('register')
+    if request.method == "POST":
+        form = UserChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            user = form.save()
+            user.set_password(request.POST["password"])
+            user.save()
+            login(request, user)
+    else:
+        form = UserChangeForm()
         
     context = {
         'title': 'User Profile',
         'message': 'Edit Account Settings',
         'year': datetime.now().year,
         'user': request.user,
-        'form': change_user_form,
+        'form': form,
     }
 
     return render(
@@ -179,7 +182,7 @@ def stock(request, s_id):
     assert isinstance(request, HttpRequest)
 
     try:
-        # Get the requested stock (stock_id) from stockList
+        #Get the requested stock with (stock_id)
         stocks = StockList.objects.filter(stock_id=s_id).get()
         stock_id = stocks.stock_id
         stock_name = stocks.symbol
@@ -187,8 +190,8 @@ def stock(request, s_id):
         #do we have a sentiment object?
 
     except StockList.DoesNotExist:
-        # If no stocks exist aka no list, redirected to manage_watchlist to create one. 
-        return redirect('manage_watchlists')
+        #If no stock is not found, returns to stock view to search for new one.
+        return redirect('stock')
    
     context = {
         'title': 'Stocks',

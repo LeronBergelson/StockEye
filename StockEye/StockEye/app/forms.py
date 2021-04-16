@@ -39,6 +39,7 @@ class EditWatchListForm(forms.ModelForm):
         exclude = ['watchList_name', 'user', 'watchList_id']
 
 class UserChangeForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
     class Meta:
         model = User
         fields = ['email', 'password']
