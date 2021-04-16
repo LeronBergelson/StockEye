@@ -24,27 +24,25 @@
         
         
 
-        <div  class = "row">
+        <div  class = "row3">
             {% for watchlist, stocklist in data %}
-            
+            </div>
+            <div class="row3">
             <div style="clear:both; margin-bottom:20px"></div>
             
             <div class="col-md-3 ">
             
                 {% if watchlist.watchList_name %}
                 
-                    <td style="text-align: center; ">{{ watchlist.watchList_name }}</a></td>
+                    <td style="text-align: center;">{{ watchlist.watchList_name }}</a></td>
                 {% else %}
                 
-                    <td style="text-align: center;">Watchlist {{ watchlist.watchList_id }}</a></td>
+                    <td style="text-align: center; ">Watchlist {{ watchlist.watchList_id }}</a></td>
                 {% endif %}
             </div>
 
        
-        </div>
-                
-        <div class="row3">
-            
+       
             {% for stock in stocklist  %}
                  
             <div class="col-md-3" style="text-align: center;">
@@ -65,6 +63,7 @@
             {% endfor %}
             
         </div>
+    </div>
 
     </div>               
 
