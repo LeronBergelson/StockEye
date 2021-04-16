@@ -113,6 +113,7 @@ h1{
     border: 1px solid #f4511e;
     background-color: #fff !important;
     color: #f4511e;
+    
 }
 
 .panel-heading {
@@ -128,21 +129,26 @@ h1{
 
 .panel-footer {
     background-color: white !important;
+    
+    
 }
 
     .panel-footer h3 {
         font-size: 32px;
+        
     }
 
     .panel-footer h4 {
         color: #aaa;
         font-size: 14px;
+        
     }
 
     .panel-footer .btn {
         margin: 15px 0;
         background-color: #f4511e;
         color: #fff;
+        
     }
 
 .navbar {
@@ -186,6 +192,7 @@ footer .glyphicon {
     font-size: 20px;
     margin-bottom: 20px;
     color: #f4511e;
+    
 }
 
 .slideanim {
@@ -354,8 +361,42 @@ footer .glyphicon {
     top: 328px;
 }
 
+.btn-dark {
+    color: #fff;
+    background-color: #212529;
+    border-color: #212529;
+}
 
-.btn{
+.watchlist-card {
+    max-width: 25rem;
+    background-color: #007bff;
+    border-radius: 20px;
+}
+
+.watchlist-caption {
+    color: #fff;
+    background-color: transparent;
+    font-family: Arial;
+    font-weight: bolder;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+
+input.larger {
+    width: 30px;
+    height: 30px;
+}
+
+.rounded {
+    border-radius: 10px;
+    font-family: Arial;
+	font-weight: bolder;
+	font-size: 14px;
+    letter-spacing: 2px;
+	color: #fff !important;
+}
+
+.btn-custom {
 	padding: 15px 40px !important;
     box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
     font-family: Arial;
@@ -368,8 +409,7 @@ footer .glyphicon {
 	text-align: center;
 	border-radius: 27.5px;
 	transition: 0.5s;
-    margin-right: 33%;
-    margin-left: 66%;
+    float:right;
 
 }
 
@@ -483,9 +523,12 @@ footer .glyphicon {
     border-radius: 15px;
     margin-bottom: 25px;
     width:50%;
+    display: inline-block;
     
+
 }
 
-.titles{
-    margin-left: 30%;
+.trending_align{
+    border-width: 20px ;
+    float:center;
 }

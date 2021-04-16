@@ -83,19 +83,23 @@ def account_settings(request):
     """
     assert isinstance(request, HttpRequest)
 
-    try:
+    if request.method == "POST":
+        form = UserChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            user = form.save()
+            user.set_password(request.POST["password"])
+            user.save()
+            login(request, user)
+    else:
         user = request.user
-        change_user_form = UserChangeForm()
-        #change_password_form = AdminPasswordChangeForm()
-    except UserData.DoesNotExist:
-        return redirect('register')
+        form = UserChangeForm(initial={'email': user.email})
         
     context = {
         'title': 'User Profile',
         'message': 'Edit Account Settings',
         'year': datetime.now().year,
         'user': request.user,
-        'form': change_user_form,
+        'form': form,
     }
 
     return render(
@@ -236,6 +240,7 @@ def create_watchlist(request):
 
     context = {
         'form': form,
+        'year': datetime.now().year,
     }
 
     return render(
@@ -268,8 +273,16 @@ def manage_watchlists(request):
     assert isinstance(request, HttpRequest)
 
     try:
-        watchlists = WatchList.objects.filter(user=request.user).all()
-        
+        # Handling deleting Watchlist(s)
+        if request.method == "POST":
+            # Get list of selected checkmark boxes
+            watchlists_to_delete = request.POST.getlist('delWatchListId')
+            for watchlist_id in watchlists_to_delete:
+                # Grab the specified watchlist from the database
+                watchlist = WatchList.objects.filter(user=request.user, watchList_id=watchlist_id).get()
+                watchlist.delete()
+        # User just loads this page again, so grab their (newly updated) WatchLists
+        watchlists = WatchList.objects.filter(user=request.user).all()   
     except WatchList.DoesNotExist:
         watchlists = []
 
