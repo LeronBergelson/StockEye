@@ -91,7 +91,8 @@ def account_settings(request):
             user.save()
             login(request, user)
     else:
-        form = UserChangeForm()
+        user = request.user
+        form = UserChangeForm(initial={'email': user.email})
         
     context = {
         'title': 'User Profile',
