@@ -4,18 +4,14 @@
 {% block content %}
 
 <body>
-     <h1>StockEye: Watchlists</h1>
-<div class="jumbotron"> <p>Personalized Watchlists</p></div>
+    
+    <h3>My Watchlists</h3>
+    {% if user.is_authenticated %}
+        <h4>{{ user.username }}'s Current Watchlists</h4>
+    {% endif %}
 
     <!-- Container (Watchlist Section) -->
     <div class="container">
-
-        {% if user.is_authenticated %}
-            <p>Username: {{ user.username }}</p>
-        {% else %}
-            <p>Username: {{ user.username }} (Not a valid user)</p>
-        {% endif %}
-
 
         {% if data %}
             <a href="{% url 'manage_watchlists' %}" class="btn-custom" style="align-content: right;">Manage Watchlists</a>

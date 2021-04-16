@@ -87,13 +87,10 @@ def account_settings(request):
     if request.method == "POST":
         form = UserChangeForm(request.POST, instance=request.user)
         if form.is_valid():
-            user = form.save()
-            if len(request.POST["password"]) != 0:
-                user.set_password(request.POST["password"])
-                update_session_auth_hash(request, user)
-            else:
-                user.set_password(request.user)
-                
+            user = form.save(commit=False)
+            if len(form.cleaned_data["password"]) > 0:
+                user.set_password(form.cleaned_data["password"])
+
             user.save()
             login(request, user)
             messages.info(request, "Changes saved.")
