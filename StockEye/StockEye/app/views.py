@@ -8,7 +8,8 @@ from django.http import HttpRequest
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
 from .models import UserData, WatchList, StockList
 from .forms import CreateWatchListForm, UserChangeForm, EditWatchListForm
 
@@ -87,9 +88,15 @@ def account_settings(request):
         form = UserChangeForm(request.POST, instance=request.user)
         if form.is_valid():
             user = form.save()
-            user.set_password(request.POST["password"])
+            if len(request.POST["password"]) != 0:
+                user.set_password(request.POST["password"])
+                update_session_auth_hash(request, user)
+            else:
+                user.set_password(request.user)
+                
             user.save()
             login(request, user)
+            messages.info(request, "Changes saved.")
     else:
         user = request.user
         form = UserChangeForm(initial={'email': user.email})

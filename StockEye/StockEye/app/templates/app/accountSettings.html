@@ -13,7 +13,6 @@
             <form action="." method="POST" class="form-horizontal">
                 {% csrf_token %}
                 <fieldset class ="form-group">
-                    <legend class="border-bottom mb-4">Edit User</legend>
                         <div class="form-group">
                             <label for="id_email" class="col-md-2 control-label">Email</label>
                             {{ form.email }}
@@ -24,14 +23,24 @@
                         </div>
           				<br>
                         <input type="hidden" name="next" value="/" />
-                        <input type="Submit" value="Save Changes" class="btn btn-default" />
+                        <input type="Submit" value="Save Changes" class="register_button" />
                 
-                       
+                <br>
+                <br>
                 <div class="validation-summary-errors">
                     {% if form.errors %} 
                 	Please enter a valid email address and/or password.
+                    {% endif %}
+
+                    {% if messages %}
+                        {% for message in messages %}
+                        <ul style="list-style-type:none; padding-left: 0px;">
+                            <li>{{ message }}</li>
+                        </ul>
+                        {% endfor %}
+                    {% endif %}
                 </div>
-                {% endif %}
+
             </form>
         </section>
     </div>
