@@ -223,9 +223,12 @@ def create_watchlist(request):
     #       is available.
 
     # Get the current highest watchList_id
-    watchlist = WatchList.objects.latest()
-    watchlist_id = watchlist.watchList_id
-    watchlist_id += 1
+    try:
+        watchlist = WatchList.objects.latest()
+        watchlist_id = watchlist.watchList_id + 1
+
+    except:
+        watchlist_id = 0
 
     if request.method == 'POST':
         form = CreateWatchListForm(request.POST)
