@@ -8,14 +8,14 @@
      <table>
       <tr>
         {% if stocks.stock.id %}
-          <p><a> href = "{% url 'stock' s_id = stocks.stock_id %}">{{stocks.tweet_id}}</a></p>
+        <p><a> href = "{% url 'stock' s_id = stocks.stock_id %}">{{stocks.tweet_id}}</a></p>
             <th>Name</th>
             <th>Price</th>
             <th>Sentiment</th>
         {% endif %}
       </tr>
       <tr>
-          <td>{{stocks.name}}</td>
+          <td>{stocks.name}}</td>
           <td>{{stocks.price}}</td>
           <td>{{stocks.sentiment}}</td>
       </tr>
@@ -23,11 +23,6 @@
     </div>   
 
 {% endblock %}
-
-
-
-
-
 
 
            
