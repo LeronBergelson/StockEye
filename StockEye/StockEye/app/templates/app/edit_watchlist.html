@@ -54,16 +54,16 @@
             {% endfor %}
         </table>
     </div>
-        
-        
-
-    
-
+    <form id="editWatchListForm" action="{% url 'edit_watchlist' w_id=watchlist_id %}" method="post">
+        {% csrf_token %}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Add Stocks</legend>
+            {{ form }}
+        </fieldset>
         <div class="form-group">
-            <button class="btn-outline-info" type="submit">Save Changes</button>
+             <button class="btn-outline-info" type="submit">Save Changes</button>
         </div>
-        
-
+    </form>
     
    
 </body>
