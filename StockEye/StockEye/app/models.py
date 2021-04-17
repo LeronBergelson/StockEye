@@ -20,7 +20,7 @@ class WatchList(models.Model):
 
 
 class StockList(models.Model):
-    stock_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    stock_id = models.IntegerField(primary_key=True, unique=True, editable=False)
     symbol = models.CharField(max_length=6, blank=False, default = '')
     positiveSentimentCount = models.PositiveIntegerField(blank=False, default=0)
     negativeSentimentCount = models.PositiveIntegerField(blank=False, default=0)
