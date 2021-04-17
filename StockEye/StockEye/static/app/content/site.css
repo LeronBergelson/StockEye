@@ -532,3 +532,19 @@ input.larger {
     border-width: 20px ;
     float:center;
 }
+
+input{
+    border: 1px solid black;
+    border-radius: 2px;
+    background-color: #EEE;
+    padding: 4px 5px;
+  }
+
+.copyright {
+	margin-top: 5px;
+	margin-bottom: 0px;
+	font-style: italic;
+	font-size: 8pt;
+	color: #777;
+	text-align: center;
+}

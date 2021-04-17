@@ -8,7 +8,7 @@ from django.http import HttpRequest
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-
+from django.contrib import messages
 from .models import UserData, WatchList, StockList
 from .forms import CreateWatchListForm, UserChangeForm, EditWatchListForm
 
@@ -83,19 +83,26 @@ def account_settings(request):
     """
     assert isinstance(request, HttpRequest)
 
-    try:
+    if request.method == "POST":
+        form = UserChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            user = form.save(commit=False)
+            if len(form.cleaned_data["password"]) > 0:
+                user.set_password(form.cleaned_data["password"])
+
+            user.save()
+            login(request, user)
+            messages.info(request, "Changes saved.")
+    else:
         user = request.user
-        change_user_form = UserChangeForm()
-        #change_password_form = AdminPasswordChangeForm()
-    except UserData.DoesNotExist:
-        return redirect('register')
+        form = UserChangeForm(initial={'email': user.email})
         
     context = {
         'title': 'User Profile',
         'message': 'Edit Account Settings',
         'year': datetime.now().year,
         'user': request.user,
-        'form': change_user_form,
+        'form': form,
     }
 
     return render(
@@ -236,6 +243,7 @@ def create_watchlist(request):
 
     context = {
         'form': form,
+        'year': datetime.now().year,
     }
 
     return render(

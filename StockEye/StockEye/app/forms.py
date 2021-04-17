@@ -4,6 +4,7 @@ Definition of forms.
 
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
+from django.forms.fields import EmailField
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
@@ -14,11 +15,9 @@ class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
     username = forms.CharField(max_length=254,
                                widget=forms.TextInput({
-                                   'class': 'form-control',
-                                   'placeholder': 'User name'}))
+                                   'placeholder': 'Username'}))
     password = forms.CharField(label=_("Password"),
                                widget=forms.PasswordInput({
-                                   'class': 'form-control',
                                    'placeholder':'Password'}))
 
 class CreateWatchListForm(forms.ModelForm):
@@ -39,8 +38,10 @@ class EditWatchListForm(forms.ModelForm):
         exclude = ['watchList_name', 'user', 'watchList_id']
 
 class UserChangeForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput(),required=False)
+    email = forms.EmailField(widget=forms.EmailInput(), required=False, help_text="Hehee")
     class Meta:
         model = User
-        fields = ['email', 'password']
+        fields = ['email']
 
 

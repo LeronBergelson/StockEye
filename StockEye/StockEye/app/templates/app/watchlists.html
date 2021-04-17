@@ -4,18 +4,14 @@
 {% block content %}
 
 <body>
-     <h1>StockEye: Watchlists</h1>
-<div class="jumbotron"> <p>Personalized Watchlists</p></div>
+    
+    <h3>My Watchlists</h3>
+    {% if user.is_authenticated %}
+        <h4>{{ user.username }}'s Current Watchlists</h4>
+    {% endif %}
 
     <!-- Container (Watchlist Section) -->
     <div class="container">
-
-        {% if user.is_authenticated %}
-            <p>Username: {{ user.username }}</p>
-        {% else %}
-            <p>Username: {{ user.username }} (Not a valid user)</p>
-        {% endif %}
-
 
         {% if data %}
             <a href="{% url 'manage_watchlists' %}" class="btn-custom" style="align-content: right;">Manage Watchlists</a>
@@ -28,27 +24,25 @@
         
         
 
-        <div  class = "row">
+        <div  class = "row3">
             {% for watchlist, stocklist in data %}
-            
+            </div>
+            <div class="row3">
             <div style="clear:both; margin-bottom:20px"></div>
             
             <div class="col-md-3 ">
             
                 {% if watchlist.watchList_name %}
                 
-                    <td style="text-align: center; ">{{ watchlist.watchList_name }}</a></td>
+                    <td style="text-align: center;">{{ watchlist.watchList_name }}</a></td>
                 {% else %}
                 
-                    <td style="text-align: center;">Watchlist {{ watchlist.watchList_id }}</a></td>
+                    <td style="text-align: center; ">Watchlist {{ watchlist.watchList_id }}</a></td>
                 {% endif %}
             </div>
 
        
-        </div>
-                
-        <div class="row3">
-            
+       
             {% for stock in stocklist  %}
                  
             <div class="col-md-3" style="text-align: center;">
@@ -69,6 +63,7 @@
             {% endfor %}
             
         </div>
+    </div>
 
     </div>               
 
