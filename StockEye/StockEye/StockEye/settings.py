@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 
 import os
 import posixpath
+from django.core.management.utils import get_random_secret_key
 
 # Set the login URL, where an un-logged in user gets redirected to 
 # when they try to access a page with @login_required
@@ -24,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '4f81f714-7447-4a1c-9b32-8321ecd02055'
+SECRET_KEY = get_random_secret_key() 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
